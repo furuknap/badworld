@@ -1,0 +1,40 @@
+﻿{
+  "intro": "You are in a cold, dark place",
+  "wakeup": "Opening your eyes, you see the wreck of your ship and most of your crew dead around you. You have no idea how long you were out but some of your surviving crew have already woken up. Your ship is a total loss but you can salvage some parts and use them to build some shelter.",
+  "firsthut": "You tell your crew to gather materials and set up some temporary shelter. \"These huts will provide some basic shelter,\" you say to your crew. \"but we are going to need better shelter before we can start looking for a way home.\"",
+  "largerhut": "More space means we can start learning more about where we are. This larger hut will be very useful.",
+  "surroundings": "The crash cleared a large area of woods and jungle where we can build what we need. There's debris everywhere. We should probably make sure we're safe in our huts first and then start exploring.",
+  "junglenoises": "Late one night, two of your crew hear ruffling sounds from the nearby jungle. Something other than wind is out there. Maybe we should investigate. Or maybe they were just hearing things.",
+  "junglenoises2": "This time, you were there yourself to hear the noises. There's definitely something out in the jungle. Maybe it's animals we can hunt for food, or maybe we'll be the hunted.",
+  "firstwounded": "We got our first casualty after the crash, and most likely it will not be the last. We need to build medical facility to treat the wounded",
+  "medicalstation": "Searching through the wreckage, we found some medical kits that survived the crash. It won't last long but it's the best we have for now. Perhaps we can look for medical plants in the jungle",
+  "sourceofnoises": "During an expedition, a crew member noticed a creature hiding in some bushes. When they approached, the creature ran away. The crew member said it looked like a humanoid creature.",
+  "directionofalienship": "We believe we have found where the alien ship is located. We need to send out expeditions to learn more.",
+  "medicinalplants": "It took a long time but we've managed to find some plants that seem to speed up wound recover and dull pain.",
+
+  "building.hut.name": "Small Hut",
+  "building.largerhut.name": "Larger Hut",
+  "building.medicalstation.name": "Medical Station",
+
+
+  "research.surroundings.name": "Surroundings",
+  "research.secureshelter.name": "Secure Shelter",
+  "research.searchjungle.name": "Search Nearby Jungle",
+
+
+  "discovery.medicalplants.name": "Medicinal Plants",
+  "discovery.pointsearned": "You made an interesting discovery",
+  "discovery.shipintro.name": "Direction of Alien Ship",
+  "discovery.noises.name": "Source of Noises",
+
+
+
+  "UI.ok": "OK",
+  "UI.cancel": "Cancel",
+  "UI.yes": "Yes",
+  "UI.no": "No",
+  "UI.continue": "Continue",
+
+
+  "": ""
+}

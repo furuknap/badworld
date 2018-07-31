@@ -1,0 +1,92 @@
+﻿import { GameService } from "./gameService.js"
+import { Discovery } from "../entities/Discovery.js"
+import * as Services from "./services.js"
+import { DiscoveryDefinition } from "../entities/Discovery.js"
+import { Language } from "../utilities/LanguageUtilities.js";
+import { Notification } from "../entities/entities.js";
+
+
+
+export class DiscoveryService extends GameService {
+    updateGame(game, deltaTime) {
+        if (DiscoveryService.getActiveDiscovery(game) != undefined && DiscoveryService.getActiveDiscovery(game).iscomplete()) {
+            DiscoveryService.getActiveDiscovery(game).active = false;
+        }
+        return game;
+    }
+    static getActiveDiscovery(game) {
+        return game.discoveries.find(d => d.active);
+    }
+    static setActiveDiscovery(game, discoveryid) {
+        game.discoveries.forEach(function (element) {
+            game.discoveries.find(d => d.definition.id == element.definition.id).active = false;
+        });
+        if (!game.discoveries.some(d=>d.definition.id == discoveryid)) {
+            var discovery = Discovery.getFromDefintion(this.availableDefinitions(game).find(d=>d.id == discoveryid));
+            game.discoveries.push(discovery);
+        }
+        var discovery = game.discoveries.find(d => d.definition.id == discoveryid);
+        discovery.active = true;
+        discovery.pointsproduced = game.discoverypoints; // May want to redo this to collect overflow points. Or maybe not.
+        game.discoverypoints = 0;
+        return game;
+    }
+    static availableDefinitions(game) {
+        var availableDefinitinos = [];
+        var allDefinitions = this.allDefinitions();
+        for (var i = 0; i < allDefinitions.length; i++) {
+            var definition = allDefinitions[i];
+            var completed = game.discoveries.some(gb => gb.definition.id == definition.id && (gb.iscomplete()));
+            var researchReqsMet = definition.prerequisiteresearch.every(r => game.research.some(gr => gr.definition.id == r.id && gr.iscomplete()));
+            var buildingsReqsMet = definition.prerequisitebuildings.every(b => game.buildings.some(gb => gb.definition.id == b.id && gb.iscomplete()));
+            var shipReqsMet = definition.prerequisiteshipresearch.every(s => game.shipresearch.some(gs => gs.definition.id == s.id && gs.iscomplete()));
+            var unlocked = definition.unlockcondition(game);
+
+            if (!completed && researchReqsMet && buildingsReqsMet && unlocked) {
+                availableDefinitinos.push(definition);
+            }
+        }
+        return availableDefinitinos;
+    }
+    static addPoints(game, points) {
+        var discovery = this.getActiveDiscovery(game);
+        if (discovery != undefined) {
+            discovery.pointsproduced += points;
+            game.discoverypoints -= points;
+            game.discoverypoints = Math.max(0, game.discoverypoints);
+        }
+        else {
+            game.discoverypoints += points;
+        }
+        game.notifications.push(new Notification(Language.getText("discovery.pointsearned")));
+    }
+    static allDefinitions() {
+        if (DiscoveryService.definitions == undefined || DiscoveryService.definitions.length == 0) {
+            DiscoveryService.definitions = [];
+
+            var shipintro = new DiscoveryDefinition(Language.getText("discovery.shipintro.name"));
+            shipintro.id = "shipintro";
+            shipintro.pointsrequired = 5;
+            shipintro.unlockcondition = function (game) { return game.discoverypoints > 0; };
+            DiscoveryService.definitions.push(shipintro);
+
+            var sourceofnoises = new DiscoveryDefinition(Language.getText("discovery.noises.name"));
+            sourceofnoises.id = "noisesintro";
+            sourceofnoises.pointsrequired = 5;
+            sourceofnoises.unlockcondition = function (game) { return game.texts.some(t => t.id == 7) > 0; };
+            DiscoveryService.definitions.push(sourceofnoises);
+
+
+            var medicalplants = new DiscoveryDefinition(Language.getText("discovery.medicalplants.name"));
+            medicalplants.id = "medicalplants";
+            medicalplants.pointsrequired = 20;
+            medicalplants.prerequisitebuildings = Services.BuildingService.allDefinitions().filter(b => b.id == "medicalstation");
+            DiscoveryService.definitions.push(medicalplants);
+
+        }
+
+        return DiscoveryService.definitions;
+    }
+
+
+}

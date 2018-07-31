@@ -1,0 +1,89 @@
+﻿.unlockable {
+    display: none;
+}
+
+body {
+    padding-top: 75px;
+    padding-bottom: 20px;
+    background-color: white;
+}
+
+
+body.night {
+    background-color: black;
+}
+
+/* Wrapping element */
+/* Set some basic padding to keep content from hitting the edges */
+.body-content {
+    background-color: white;
+}
+
+    .body-content.night {
+        padding-left: 15px;
+        padding-right: 15px;
+        background-color: black;
+    }
+
+
+
+/* Make .svg files in the carousel display properly in older browsers */
+.carousel-inner .item img[src$=".svg"] {
+    width: 100%;
+}
+
+
+/* Hide/rearrange for smaller screens */
+@media screen and (max-width: 767px) {
+    /* Hide captions */
+    .carousel-caption {
+        display: none;
+    }
+}
+
+.btn {
+    color: black;
+    background-color: white;
+    border-color: black;
+    border-radius: 0px;
+}
+
+    .btn:active, .btn:hover {
+        color: white;
+        background-color: black;
+        border-color: white;
+    }
+
+    .btn.night {
+        color: white;
+        background-color: black;
+        border-color: white;
+    }
+
+        .btn.night:active {
+            color: black;
+            background-color: white;
+            border-color: black;
+        }
+
+.messageEntry {
+    margin: 3px;
+}
+
+.discoveryAvailableCard.active  {
+    font-weight: bold;
+    font-style: italic;
+}
+
+.progress {
+    width: 10vw;
+    background-color: black;
+    height: 14px;
+    border: 2px solid black;
+    border-radius: 0px;
+}
+
+    .progress .bar {
+        height: 10px;
+        background-color: white;
+    }
