@@ -36,10 +36,15 @@ export class QuestService extends GameService {
             }
         }
         if (typeof foundRefinition != typeof undefined) {
-            var quest = Quest.getFromDefintion(foundRefinition);
-            quest.inprogress = true;
-            game = quest.definition.onstart(game);
-            game.quests.push(quest);
+            if (r.crewrequired <= game.crew.available) {
+                var quest = Quest.getFromDefintion(foundRefinition);
+                quest.inprogress = true;
+                game = quest.definition.onstart(game);
+                game.quests.push(quest);
+            }
+            else {
+                game.notifications.push(new Notification(Language.getText("notenoughcrewavailable")));
+            }
         }
     }
 

@@ -86,9 +86,14 @@ export class BuildingService extends GameService {
             }
         }
         if (typeof foundDefinition != typeof undefined) {
-            var building = Building.getFromDefintion(foundDefinition);
-            building.inprogress = true;
-            game.buildings.push(building);
+            if (r.crewrequired <= game.crew.available) {
+                var building = Building.getFromDefintion(foundDefinition);
+                building.inprogress = true;
+                game.buildings.push(building);
+            }
+            else {
+                game.notifications.push(new Notification(Language.getText("notenoughcrewavailable")));
+            }
         }
     }
 }

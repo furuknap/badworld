@@ -1,0 +1,40 @@
+{
+  "intro": "Estás en un lugar frío y oscuro.",
+  "wakeup": "Al abrir tus ojos, ves los restos de tu nave y a la mayoría de tu tripulación muertos. No sabes cuánto tiempo has estado ahí, pero algunos de los supervivientes ya despertaron. Tu nave es una pérdida total, pero puedes recuperar algunas de las partes y usarlas para construir refugio.",
+  "firsthut": "Ordenas a tu tripulación recolectar materiales y construir un refugio temporal. —Estas chozas nos darán un refugio básico —le dices a tu tripulación— pero necesitaremos algo mejor antes de poder buscar un camino de regreso a casa.",
+  "largerhut": "Más espacio significa que podemos aprender más de dónde estamos. Esta choza más grande será muy útil.",
+  "surroundings": "La colisión limpió un área grande del bosque y selva donde podemos construir lo que necesitemos. Hay escombros por doquier. Probablemente debeíamos asegurarnos de que estamos a salvo en nuestras chozas primero y después empezar a explorar.",
+  "junglenoises": "A altas horas de la noche, dos miembros de tu tripulación escuchan sonidos agitados que vienen de la selva. Hay algo más que el viento ahí fuera. Tal vez deberíamos investigar. O tal vez es sólo nuestra imaginación.",
+  "junglenoises2": "Esta vez fuiste tú el que escuchó los ruidos. Definitivamente hay algo en la selva. Tal vez son animales que podemos cazar por comida o tal vez nosotros seremos la presa.",
+  "firstwounded": "Tuvimos nuestra primera baja tras la colisión, probablemente no será la última. Debemos construir un centro médico para tratar a nuestros heridos.",
+  "medicalstation": "Al buscar en los escombros encontramos algunos botiquines. No durarán mucho, pero es lo mejor que tenemos por el momento. Tal vez podamos encontrar plantas medicinales en la selva.",
+  "sourceofnoises": "Durante la expedición, un miembro de la tripulación advirtió una creatura escondida en los arbustos. Cuando se acercaron, la creatura escapó. El miembro de la tripulación dice que parecía ser humanoide.",
+  "directionofalienship": "Creemos haber encontrado comida donde la nave alienígena está situada. Debemos enviar expediciones para saber más.",
+  "medicinalplants": "Tomó un largo tiempo, pero hemos logrado encontrar algunas plantas que parecen ayudar a la recuperación de las heridas y ser analgésicas.",
+
+  "building.hut.name": "Choza pequeña",
+  "building.largerhut.name": "Choza grande",
+  "building.medicalstation.name": "Centro médico",
+
+
+  "research.surroundings.name": "Alrededores",
+  "research.secureshelter.name": "Refugio seguro",
+  "research.searchjungle.name": "Buscar en la jungla cercana",
+
+
+  "discovery.medicalplants.name": "Plantas medicinales",
+  "discovery.pointsearned": "Descubriste algo interesante",
+  "discovery.shipintro.name": "Dirección de la nave alienígena",
+  "discovery.noises.name": "Fuente de los ruidos",
+
+
+
+  "UI.ok": "OK",
+  "UI.cancel": "Cancelar",
+  "UI.yes": "Sí",
+  "UI.no": "No",
+  "UI.continue": "Continuar",
+
+
+  "": ""
+}

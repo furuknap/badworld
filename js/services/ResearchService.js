@@ -29,9 +29,14 @@ export class ResearchService extends GameService {
             }
         }
         if (typeof foundResearchDefinition != typeof undefined) {
-            var research = Research.getFromResearchDefintion(foundResearchDefinition);
-            research.inprogress = true;
-            game.research.push(research);
+            if (r.crewrequired <= game.crew.available) {
+                var research = Research.getFromResearchDefintion(foundResearchDefinition);
+                research.inprogress = true;
+                game.research.push(research);
+            }
+            else {
+                game.notifications.push(new Notification(Language.getText("notenoughcrewavailable")));
+            }
         }
     }
 
