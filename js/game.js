@@ -28,6 +28,7 @@ import * as UI from "./ui/uielements.js"
 
 $(document).ready(function () {
     Utilities.Language.load().done(function () {
+        translateUI();
         setInterval(saveGame, saveInterval * 1000);
         setInterval(updateGame, updateInterval * 1000);
 
@@ -88,6 +89,13 @@ function setupButtons() {
         game = Services.DiscoveryService.setActiveDiscovery(game, definitionid);
     })
 
+}
+
+function translateUI() {
+    $("[data-textid]").each(function (element) {
+        var text = Utilities.Language.getText($(this).data("textid"));
+        $(this).html(text);
+    })
 }
 
 function updateGame() {
@@ -153,10 +161,13 @@ function refreshView() {
 function updateDetails() {
     $(detailsSelector).html();
     var crewHTML = "<div>" +
-        "<strong>Crew</strong><br/>" +
-        "Available: " + game.crew.available + "<br/>" +
-        (game.crew.sick > 0 ? "Wounded: " + game.crew.sick + "<br/>" : "") +
-        (game.crew.quest > 0 ? "Quest: " + game.crew.quest + "<br/>" : "") + "<br/>" +
+        "<strong>" + Utilities.Language.getText("ui.heading.crew")+"</strong><br/>" +
+        Utilities.Language.getText("ui.heading.crew.available") + ": " + game.crew.available + "<br/>" +
+        (game.crew.sick > 0 ? Utilities.Language.getText("ui.heading.crew.wounded") +": " + game.crew.sick + "<br/>" : "") +
+        (game.crew.quest > 0 ? Utilities.Language.getText("ui.heading.crew.quests") + ": " + game.crew.quest + "<br/>" : "") +
+        (game.crew.building > 0 ? Utilities.Language.getText("ui.heading.crew.building") + ": " + game.crew.building + "<br/>" : "") +
+        (game.crew.research > 0 ? Utilities.Language.getText("ui.heading.crew.research") + ": " + game.crew.research + "<br/>" : "") +
+        "<br/>" +
         "</div>"
         ;
 
@@ -177,7 +188,7 @@ function updateDiscoveries() {
                     (discovery != undefined ? "<div class=\"progress\"><div class=\"bar\" style=\"width: " + (discovery.pointsproduced / definition.pointsrequired) * 100 + "%\"></div>" : "")
                 ) +
                 "</div>" +
-                (discovery == undefined || !discovery.active ? "<div class=\"\"><a href=\"#\" data-discoverydefinitionid=\"" + definition.id + "\" class=\"btn btn-xs setActiveDiscoveryButton\">Activate</a></div>" : "") +
+                (discovery == undefined || !discovery.active ? "<div class=\"\"><a href=\"#\" data-discoverydefinitionid=\"" + definition.id + "\" class=\"btn btn-xs setActiveDiscoveryButton\">" + Utilities.Language.getText("ui.activate") +"</a></div>" : "") +
 
                 "</div>";
 
@@ -185,7 +196,7 @@ function updateDiscoveries() {
 
 
         var pointsHTML = "<div>" +
-            (game.discoverypoints > 0 ? "Points: " + game.discoverypoints + "<br/>" : "") +
+            (game.discoverypoints > 0 ? Utilities.Language.getText("ui.heading.discoveries.points") +": " + game.discoverypoints + "<br/>" : "") +
             "</div>"
             ;
 
@@ -223,8 +234,8 @@ function updateQuests() {
         var quest = available[i];
         availableHTML += "<div class=\"questAvailableCard card\">" +
             "<div data-questdefinitionid=\"" + quest.id + "\" class=\"questHeader\">" + quest.name + "</div>" +
-            "<div class=\"\">Time: " + formatTimeSpan(quest.timerequired) + "</div>" +
-            "<div class=\"\"><a href=\"#\" data-questdefinitionid=\"" + quest.id + "\" class=\"btn btn-xs startQuestButton\">Start</a></div>" +
+            "<div class=\"\">" + Utilities.Language.getText("ui.time") +": " + formatTimeSpan(quest.timerequired) + "</div>" +
+            "<div class=\"\"><a href=\"#\" data-questdefinitionid=\"" + quest.id + "\" class=\"btn btn-xs startQuestButton\">" + Utilities.Language.getText("ui.start") +"</a></div>" +
 
             "</div>";
 
@@ -258,8 +269,8 @@ function updateResearch() {
         var research = availableResearch[i];
         researchAvailableHTML += "<div class=\"researchAvailableCard card\">" +
             "<div data-researchdefinitionid=\"" + research.id + "\" class=\"researchHeader\">" + research.name + "</div>" +
-            "<div class=\"\">Time: " + formatTimeSpan(research.timerequired) + "</div>" +
-            "<div class=\"\"><a href=\"#\" data-researchdefinitionid=\"" + research.id + "\" class=\"btn btn-xs startResearchButton\">Start</a></div>" +
+            "<div class=\"\">" + Utilities.Language.getText("ui.time") +": " + formatTimeSpan(research.timerequired) + "</div>" +
+            "<div class=\"\"><a href=\"#\" data-researchdefinitionid=\"" + research.id + "\" class=\"btn btn-xs startResearchButton\">" + Utilities.Language.getText("ui.start") +"</a></div>" +
 
             "</div>";
 
@@ -291,8 +302,8 @@ function updateBuildings() {
         var building = available[i];
         availableHTML += "<div class=\"buildingAvailableCard card\">" +
             "<div data-buildingdefinitionid=\"" + building.id + "\" class=\"buildingHeader\">" + building.name + "</div>" +
-            "<div class=\"\">Time: " + formatTimeSpan(building.timerequired) + "</div>" +
-            "<div class=\"\"><a href=\"#\" data-buildingdefinitionid=\"" + building.id + "\" class=\"btn btn-xs startBuildingButton\">Start</a></div>" +
+            "<div class=\"\">" + Utilities.Language.getText("ui.time") +": " + formatTimeSpan(building.timerequired) + "</div>" +
+            "<div class=\"\"><a href=\"#\" data-buildingdefinitionid=\"" + building.id + "\" class=\"btn btn-xs startBuildingButton\">" + Utilities.Language.getText("ui.start") +"</a></div>" +
 
             "</div>";
 

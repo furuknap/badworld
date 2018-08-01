@@ -27,17 +27,17 @@ export class QuestService extends GameService {
     }
 
     static startQuest(game, definitionID) {
-        var foundRefinition;
+        var foundDefinition;
         for (var i = 0; i < this.availableDefinitions(game).length; i++) {
             var e = this.availableDefinitions(game)[i];
             if (e.id == definitionID) {
-                foundRefinition = e;
+                foundDefinition = e;
                 break;
             }
         }
-        if (typeof foundRefinition != typeof undefined) {
-            if (r.crewrequired <= game.crew.available) {
-                var quest = Quest.getFromDefintion(foundRefinition);
+        if (typeof foundDefinition != typeof undefined) {
+            if (foundDefinition.crewrequired <= game.crew.available) {
+                var quest = Quest.getFromDefintion(foundDefinition);
                 quest.inprogress = true;
                 game = quest.definition.onstart(game);
                 game.quests.push(quest);

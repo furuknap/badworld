@@ -20,17 +20,17 @@ export class ResearchService extends GameService {
     }
 
     static startResearch(game, researchDefinitionID) {
-        var foundResearchDefinition;
+        var foundDefinition;
         for (var i = 0; i < this.availableResearchDefinitions(game).length; i++) {
             var r = this.availableResearchDefinitions(game)[i];
             if (r.id == researchDefinitionID) {
-                foundResearchDefinition = r;
+                foundDefinition = r;
                 break;
             }
         }
-        if (typeof foundResearchDefinition != typeof undefined) {
-            if (r.crewrequired <= game.crew.available) {
-                var research = Research.getFromResearchDefintion(foundResearchDefinition);
+        if (typeof foundDefinition != typeof undefined) {
+            if (foundDefinition.crewrequired <= game.crew.available) {
+                var research = Research.getFromResearchDefintion(foundDefinition);
                 research.inprogress = true;
                 game.research.push(research);
             }

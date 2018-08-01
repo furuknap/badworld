@@ -86,7 +86,7 @@ export class BuildingService extends GameService {
             }
         }
         if (typeof foundDefinition != typeof undefined) {
-            if (r.crewrequired <= game.crew.available) {
+            if (foundDefinition.crewrequired <= game.crew.available) {
                 var building = Building.getFromDefintion(foundDefinition);
                 building.inprogress = true;
                 game.buildings.push(building);

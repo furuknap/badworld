@@ -29,11 +29,27 @@
 
 
 
-  "UI.ok": "OK",
-  "UI.cancel": "Cancel",
-  "UI.yes": "Yes",
-  "UI.no": "No",
-  "UI.continue": "Continue",
+  "ui.ok": "OK",
+  "ui.cancel": "Cancel",
+  "ui.yes": "Yes",
+  "ui.no": "No",
+  "ui.continue": "Continue",
+  "ui.time": "Time",
+  "ui.start": "Start",
+  "ui.activate": "Activate",
+
+
+  "ui.heading.crew": "Crew",
+  "ui.heading.crew.available": "Available",
+  "ui.heading.crew.wounded": "Wounded",
+  "ui.heading.crew.quests": "Expedition",
+  "ui.heading.crew.building": "Building",
+  "ui.heading.crew.research": "Research",
+  "ui.heading.expeditions": "Expeditions",
+  "ui.heading.research": "Research",
+  "ui.heading.build": "Build",
+  "ui.heading.discoveries": "Discoveries",
+  "ui.heading.discoveries.points": "Items",
 
   "notenoughcrewavailable": "Not enough crew available",
 

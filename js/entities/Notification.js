@@ -7,7 +7,7 @@ export class Notification extends Entity {
         this.textid = textid;
         if (date==undefined)
             this.date = new Date();
-        this.buttons = [ new Button(Language.getText("UI.ok")) ];
+        this.buttons = [ new Button(Language.getText("ui.ok")) ];
         this.duration = 30;
     };
 }
