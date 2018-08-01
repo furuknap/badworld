@@ -1,6 +1,6 @@
-﻿export class Language  {
+﻿export class Language {
     constructor() {
-        
+
 
 
     }
@@ -12,10 +12,10 @@
             Language.entexts = data;
         }).done(function () {
         })
-        .fail(function (a, b, c) {
+            .fail(function (a, b, c) {
 
-            console.warn("Unable to load default language!");
-        });
+                console.warn("Unable to load default language!");
+            });
 
 
         if (Language.language.indexOf("-") > 0) {
@@ -26,17 +26,17 @@
         }).done(function () {
             deferred.resolve();
         })
-        .fail(function (a,b,c) {
-            $.get("./js/languages/en.json", function (data) {
-                Language.texts = data;
-            }).done(function () {
-                deferred.resolve();
-            })
-                .fail(function (a, b, c) {
+            .fail(function (a, b, c) {
+                $.get("./js/languages/en.json", function (data) {
+                    Language.texts = data;
+                }).done(function () {
+                    deferred.resolve();
+                })
+                    .fail(function (a, b, c) {
 
-                    deferred.reject(a, b, c);
-                });
-        });
+                        deferred.reject(a, b, c);
+                    });
+            });
 
         return deferred.promise();
     }
@@ -44,9 +44,17 @@
         var text = Language.texts[textID];
         if (text == undefined) {
             console.warn("Text " + textID + " for language " + this.language + " is not defined");
-            text = "[NEED_TRANS(" + textID+"/"+Language.language+")] "+Language.entexts[textID];
+            text = "[NEED_TRANS(" + textID + "/" + Language.language + ")] " + Language.entexts[textID];
         }
         return text;
+    }
+    static getTextFile() {
+        for (var textid in Language.entexts) {
+            if (Language.texts[textid] == undefined) {
+                Language.texts[textid] = "";
+            }
+        }
+        return Language.texts;
     }
     //updateGame(game, deltaTime) {
     //    console.warn("service does not implement updateGame");
