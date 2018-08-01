@@ -29,12 +29,31 @@
 
 
 
+  "ui.gametitle": "BadWorld",
   "ui.ok": "OK",
   "ui.cancel": "Cancelar",
   "ui.yes": "Sí",
   "ui.no": "No",
   "ui.continue": "Continuar",
+  "ui.time": "Tiempo",
+  "ui.start": "Empezar",
+  "ui.activate": "Enfocar",
+  "ui.reset": "Reiniciar",
 
+
+  "ui.heading.crew": "Tripulación",
+  "ui.heading.crew.available": "Disponible",
+  "ui.heading.crew.wounded": "Herida",
+  "ui.heading.crew.quests": "Expedición",
+  "ui.heading.crew.building": "Construcción",
+  "ui.heading.crew.research": "Investigación",
+  "ui.heading.expeditions": "Expediciones",
+  "ui.heading.research": "Investigar",
+  "ui.heading.build": "Construir",
+  "ui.heading.discoveries": "Descubrimientos",
+  "ui.heading.discoveries.points": "Objetos",
+
+  "notenoughcrewavailable": "No hay suficiente tripulación disponible",
 
   "": ""
 }
