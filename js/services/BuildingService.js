@@ -12,8 +12,9 @@ export class BuildingService extends GameService {
             game = building.definition.onupdate(game);
             if (building.inprogress && !building.iscomplete()) {
                 building.timeproduced += deltaTime;
+                game = building.definition.onupdate(game);
                 if (building.iscomplete() && !building.wascomplete) {
-                    
+                    game = building.definition.completed(game);
                 }
             }
         }
@@ -89,6 +90,7 @@ export class BuildingService extends GameService {
             if (foundDefinition.crewrequired <= game.crew.available) {
                 var building = Building.getFromDefintion(foundDefinition);
                 building.inprogress = true;
+                game = building.definition.onstart(game);
                 game.buildings.push(building);
             }
             else {

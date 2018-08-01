@@ -8,7 +8,7 @@
         this.prerequisitebuildings = [];
         this.prerequisitediscoveries = [];
         this.unlockelements = "";
-        this.crewrequired = 0;
+        this.crewrequired = 1;
 
         this.unlockcondition = function () { return true; };
         this.completed = function (game) { return game; };

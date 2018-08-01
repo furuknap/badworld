@@ -11,8 +11,9 @@ export class ResearchService extends GameService {
             var wascomplete = research.iscomplete;
             if (research.inprogress && !research.iscomplete()) {
                 research.timeproduced += deltaTime;
+                game = research.definition.onupdate(game);
                 if (research.iscomplete() && !research.wascomplete) {
-                    
+                    game = research.definition.completed(game);
                 }
             }
         }
@@ -33,6 +34,7 @@ export class ResearchService extends GameService {
                 var research = Research.getFromResearchDefintion(foundDefinition);
                 research.inprogress = true;
                 game.research.push(research);
+                game = research.definition.onstart(game);
             }
             else {
                 game.notifications.push(new Notification(Language.getText("notenoughcrewavailable")));
