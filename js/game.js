@@ -5,6 +5,7 @@ var services = [];
 var isRunningUpdates = false;
 var pauseUpdates = false;
 var runViewUpdates = true;
+var autoScroll = true;
 //region Selector
 var researchAvailableListSelector = ".researchAvailableList";
 var researchListSelector = ".researchList";
@@ -73,6 +74,9 @@ function setupButtons() {
 
     $(document).on("click", ".toggleUpdates", function () {
         runViewUpdates = !runViewUpdates;
+    })
+    $(document).on("click", ".toggleScroll", function () {
+        autoScroll = !autoScroll;
     })
     $(document).on("click", ".startResearchButton", function (sender) {
         var target = $(sender.target);
@@ -437,8 +441,10 @@ function getDefaultGame() {
     };
 }
 function updateScroll() {
-    var element = document.getElementById("messages");
-    element.scrollTop = element.scrollHeight;
+    if (autoScroll) {
+        var element = document.getElementById("messages");
+        element.scrollTop = element.scrollHeight;
+    }
 }
 //endregion
 
