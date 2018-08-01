@@ -414,7 +414,7 @@ function deleteGame() {
 
 function getDefaultGame() {
     return {
-        crew: { available: 25, sick: 0, quest: 0, build: 0, research: 0 },
+        crew: { available: 25, sick: 0, quest: 0, building: 0, research: 0 },
         startGame: true,
         night: true,
         discoverypoints: 0,

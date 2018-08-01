@@ -45,6 +45,7 @@ export class ResearchService extends GameService {
     static allDefinitions() {
         var surroundings = new ResearchDefinition(Language.getText("research.surroundings.name"), "surroundings");
         surroundings.timerequired = 5;
+        surroundings.crewrequired = 6;
 
         var safeShelter = new ResearchDefinition(Language.getText("research.secureshelter.name"), "safeShelter");
         safeShelter.prerequisiteresearch.push(surroundings)

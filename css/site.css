@@ -69,6 +69,9 @@ body.night {
 .messageEntry {
     margin: 3px;
 }
+.messageEntry:last-child {
+    font-weight: bolder;
+}
 
 .discoveryAvailableCard.active  {
     font-weight: bold;

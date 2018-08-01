@@ -52,11 +52,13 @@ export class BuildingService extends GameService {
             largerHut.id = "largerhut";
             largerHut.prerequisitebuildings.push(hut)
             largerHut.timerequired = 15;
+            largerHut.crewrequired = 3;
             largerHut.unlockelements = ".researchControls"
             BuildingService.buildingdefinitions.push(largerHut);
 
             var medicalStation = new BuildingDefinition(Language.getText("building.medicalstation.name"));
             medicalStation.id = "medicalstation";
+            medicalStation.crewrequired = 0;
             medicalStation.unlockcondition = function (game) { return game.crew.sick > 0;  }
             medicalStation.timerequired = 30;
             medicalStation.postrender = function (game) { return game };
