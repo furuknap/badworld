@@ -154,9 +154,39 @@ function refreshView() {
         updateDiscoveries();
 
         updateDetails();
+        showNotifications();
     }
 
 }
+
+function showNotifications() {
+    if (game.notifications.length > 0 && Object.keys(vex.getAll()).length==0) {
+        var notification = game.notifications[0];
+        var notificationdate = new Date(notification.date);
+        var nowdate = new Date();
+        if (notificationdate.setSeconds(notificationdate.getSeconds() + notification.duration) > nowdate) {
+
+            var buttons = [];
+            notification.buttons.forEach((b) => {
+                buttons.push(
+                    $.extend({}, vex.dialog.buttons.YES, {
+                        className: 'vex-dialog-button-primary',
+                        text: b.text,
+                        click: function () { game.notifications.pop(); }
+                    }),
+                );
+            });
+            vex.dialog.open({
+                message: Utilities.Language.getText(notification.textid),
+                buttons: buttons,
+            });
+        }
+        else {
+            game.notifications.pop();
+        }
+    }
+}
+
 
 function updateDetails() {
     $(detailsSelector).html();

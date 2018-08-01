@@ -15,6 +15,7 @@ export class Notification extends Entity {
 export class Button {
     constructor(text) {
         this.text = text;
+        this.click = function () { return true; };
     }
 
 }

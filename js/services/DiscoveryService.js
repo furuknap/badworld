@@ -58,7 +58,7 @@ export class DiscoveryService extends GameService {
         else {
             game.discoverypoints += points;
         }
-        game.notifications.push(new Notification(Language.getText("discovery.pointsearned")));
+        game.notifications.push(new Notification("discovery.pointsearned"));
     }
     static allDefinitions() {
         if (DiscoveryService.definitions == undefined || DiscoveryService.definitions.length == 0) {

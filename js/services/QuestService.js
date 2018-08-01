@@ -15,10 +15,16 @@ export class QuestService extends GameService {
                 game = quest.definition.onupdate(game);
                 if (quest.iscomplete() && !quest.wascomplete) {
                     game = quest.definition.completed(game);
-                    completedQuestIndexes.push(i);
                 }
             }
         }
+
+        for (var i = 0; i < game.quests.length; i++) {
+            if (game.quests[i].iscomplete()) {
+                completedQuestIndexes.push(i);
+            }
+        }
+
         for (var i = 0; i < completedQuestIndexes.length; i++) {
             game.quests.splice(completedQuestIndexes[i], 1);
         }

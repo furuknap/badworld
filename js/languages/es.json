@@ -29,11 +29,11 @@
 
 
 
-  "UI.ok": "OK",
-  "UI.cancel": "Cancelar",
-  "UI.yes": "Sí",
-  "UI.no": "No",
-  "UI.continue": "Continuar",
+  "ui.ok": "OK",
+  "ui.cancel": "Cancelar",
+  "ui.yes": "Sí",
+  "ui.no": "No",
+  "ui.continue": "Continuar",
 
 
   "": ""
