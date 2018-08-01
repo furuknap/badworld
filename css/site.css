@@ -66,6 +66,12 @@ body.night {
             border-color: black;
         }
 
+#messages {
+    max-height: 50vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
 .messageEntry {
     margin: 3px;
 }
@@ -77,6 +83,10 @@ body.night {
     font-weight: bold;
     font-style: italic;
 }
+.discoveryPoints {
+    color: red;
+}
+
 
 .progress {
     width: 10vw;

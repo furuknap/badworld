@@ -27,7 +27,7 @@ export class DiscoveryService extends GameService {
         }
         var discovery = game.discoveries.find(d => d.definition.id == discoveryid);
         discovery.active = true;
-        discovery.pointsproduced = game.discoverypoints; // May want to redo this to collect overflow points. Or maybe not.
+        discovery.pointsproduced += game.discoverypoints; // May want to redo this to collect overflow points. Or maybe not.
         game.discoverypoints = 0;
         return game;
     }
@@ -49,16 +49,20 @@ export class DiscoveryService extends GameService {
         return availableDefinitinos;
     }
     static addPoints(game, points) {
-        var discovery = this.getActiveDiscovery(game);
-        if (discovery != undefined) {
-            discovery.pointsproduced += points;
-            game.discoverypoints -= points;
-            game.discoverypoints = Math.max(0, game.discoverypoints);
+        if (points > 0) {
+            var discovery = this.getActiveDiscovery(game);
+            if (discovery != undefined) {
+                discovery.pointsproduced += points;
+                game.discoverypoints -= points;
+                game.discoverypoints = Math.max(0, game.discoverypoints);
+            }
+            else {
+                game.discoverypoints += points;
+            }
+            if (game.discoverypoints == points && !game.discoveries.some(d => d.active)) {
+                game.notifications.push(new Notification("discovery.pointsearned"));
+            }
         }
-        else {
-            game.discoverypoints += points;
-        }
-        game.notifications.push(new Notification("discovery.pointsearned"));
     }
     static allDefinitions() {
         if (DiscoveryService.definitions == undefined || DiscoveryService.definitions.length == 0) {
@@ -67,7 +71,7 @@ export class DiscoveryService extends GameService {
             var shipintro = new DiscoveryDefinition(Language.getText("discovery.shipintro.name"));
             shipintro.id = "shipintro";
             shipintro.pointsrequired = 5;
-            shipintro.unlockcondition = function (game) { return game.discoverypoints > 0; };
+            shipintro.unlockcondition = function (game) { return game.discoverypoints > 0 || game.discoveries.length>0; };
             DiscoveryService.definitions.push(shipintro);
 
             var sourceofnoises = new DiscoveryDefinition(Language.getText("discovery.noises.name"));

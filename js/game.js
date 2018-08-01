@@ -147,6 +147,7 @@ function refreshView() {
             messageHTML += "<div class=\"messageEntry\">" + texto + "</div>";
         });
         $("#messages").html(messageHTML);
+        updateScroll();
 
         updateResearch();
         updateBuildings();
@@ -227,7 +228,7 @@ function updateDiscoveries() {
         }
 
 
-        var pointsHTML = "<div>" +
+        var pointsHTML = "<div class=\"discoveryPoints\">" +
             (game.discoverypoints > 0 ? Utilities.Language.getText("ui.heading.discoveries.points") +": " + game.discoverypoints + "<br/>" : "") +
             "</div>"
             ;
@@ -429,6 +430,9 @@ function getDefaultGame() {
         notifications: []
     };
 }
-
+function updateScroll() {
+    var element = document.getElementById("messages");
+    element.scrollTop = element.scrollHeight;
+}
 //endregion
 
