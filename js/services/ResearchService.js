@@ -43,20 +43,36 @@ export class ResearchService extends GameService {
     }
 
     static allDefinitions() {
-        var surroundings = new ResearchDefinition(Language.getText("research.surroundings.name"), "surroundings");
-        surroundings.timerequired = 5;
-        surroundings.crewrequired = 6;
+        if (ResearchService.definitions == null || ResearchService.definitions.length == 0) {
+            ResearchService.definitions = [];
+            var surroundings = new ResearchDefinition(Language.getText("research.surroundings.name"), "surroundings");
+            surroundings.timerequired = 5;
+            surroundings.crewrequired = 6;
+            ResearchService.definitions.push(surroundings);
 
-        var safeShelter = new ResearchDefinition(Language.getText("research.secureshelter.name"), "safeShelter");
-        safeShelter.prerequisiteresearch.push(surroundings)
-        safeShelter.timerequired = 30;
+            var safeShelter = new ResearchDefinition(Language.getText("research.secureshelter.name"), "safeShelter");
+            safeShelter.prerequisiteresearch.push(surroundings)
+            safeShelter.timerequired = 30;
+            surroundings.crewrequired = 3;
+            ResearchService.definitions.push(safeShelter);
 
-        //var searchjungle = new ResearchDefinition(Language.getText("research.searchjungle.name"), "searchjungle");
-        //searchjungle.prerequisitebuildings = Services.BuildingService.allBuildingDefinitions().filter(b => b.id == "largerhut");
-        //searchjungle.prerequisiteresearch.push(safeShelter);
-        //searchjungle.timerequired = 5;
+            var medicinalplants = new ResearchDefinition(Language.getText("research.medicinalplants.name"), "medicinalplants");
+            medicinalplants.prerequisitediscoveries = Services.DiscoveryService.allDefinitions().filter(d => d.id == "medicalplants");
+            medicinalplants.timerequired = 120;
+            ResearchService.definitions.push(medicinalplants);
 
-        return [surroundings, safeShelter];
+            var medicinalplantsbase = new ResearchDefinition(Language.getText("research.medicinalplantsbase.name"), "medicinalplantsbase");
+            medicinalplantsbase.prerequisiteresearch = Services.ResearchService.allDefinitions().filter(b => b.id == "medicinalplants");
+            medicinalplantsbase.timerequired = 120;
+            ResearchService.definitions.push(medicinalplantsbase);
+
+            //var searchjungle = new ResearchDefinition(Language.getText("research.searchjungle.name"), "searchjungle");
+            //searchjungle.prerequisitebuildings = Services.BuildingService.allBuildingDefinitions().filter(b => b.id == "largerhut");
+            //searchjungle.prerequisiteresearch.push(safeShelter);
+            //searchjungle.timerequired = 5;
+        }
+
+        return ResearchService.definitions;
     }
 
     static availableResearchDefinitions(game) {
@@ -68,9 +84,10 @@ export class ResearchService extends GameService {
             var researchReqsMet = researchDefinition.prerequisiteresearch.every(r => game.research.some(gr => gr.definition.id == r.id && gr.iscomplete()));
             var buildingsReqsMet = researchDefinition.prerequisitebuildings.every(b => game.buildings.some(gb => gb.definition.id == b.id && gb.iscomplete()));
             var shipReqsMet = researchDefinition.prerequisiteshipresearch.every(s => game.shipresearch.some(gs => gs.definition.id == s.id && gs.iscomplete()));
+            var discoveriesReqsMet = researchDefinition.prerequisitediscoveries.every(d => game.discoveries.some(gd => gd.definition.id == d.id && gd.iscomplete()));
             var unlocked = researchDefinition.unlockcondition(game);
 
-            if (! completed && researchReqsMet && buildingsReqsMet && unlocked) {
+            if (! completed && researchReqsMet && buildingsReqsMet && discoveriesReqsMet && unlocked) {
                 availableResearchDefinitions.push(researchDefinition);
             }
         }

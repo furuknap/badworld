@@ -3,6 +3,7 @@ import { Quest } from "../entities/Quest.js"
 import * as Services from "./services.js"
 import { QuestDefinition } from "../entities/Quest.js"
 import { Language } from "../utilities/LanguageUtilities.js";
+import { Notification } from "../entities/entities.js";
 
 export class QuestService extends GameService {
     updateGame(game, deltaTime) {
@@ -12,7 +13,7 @@ export class QuestService extends GameService {
             var wascomplete = quest.iscomplete;
             if (quest.inprogress && !quest.iscomplete()) {
                 quest.timeproduced += deltaTime;
-                game = quest.definition.onupdate(game);
+                game = quest.definition.onupdate(game, quest);
                 if (quest.iscomplete() && !quest.wascomplete) {
                     game = quest.definition.completed(game);
                 }
@@ -45,6 +46,7 @@ export class QuestService extends GameService {
             if (foundDefinition.crewrequired <= game.crew.available) {
                 var quest = Quest.getFromDefintion(foundDefinition);
                 quest.inprogress = true;
+                quest.crew = foundDefinition.crewrequired;
                 game = quest.definition.onstart(game);
                 game.quests.push(quest);
             }
@@ -61,12 +63,21 @@ export class QuestService extends GameService {
             investigateJungle.unlockcondition = function (game) { return game.texts.some(t => t.id == 7); };
             investigateJungle.completed = (game) => { game.crew.available++; game.crew.quest--; return game; };
             investigateJungle.onstart = (game) => { game.crew.available--; game.crew.quest++; return game; };
-            investigateJungle.unlockelements = ".deeperJungleQuest";
-            investigateJungle.name = "Scout Nearby Jungle";
-            investigateJungle.onupdate = (game) => {
-                if (Math.random() * 100 < 2) {
-                    game.crew.available--;
+            investigateJungle.name = Language.getText("quest.nearbyjungle.name");
+            investigateJungle.onupdate = (game, quest) => {
+                var baseWoundedOdds = 2;
+                if (game.research.some(r => r.definition.id == "medicinalplants" && r.iscomplete())) {
+                    baseWoundedOdds/=2;
+                }
+
+                if (Math.random() * 100 < baseWoundedOdds) {
+                    game.crew.quest--;
                     game.crew.sick++;
+                    quest.crew--;
+                    if (quest.crew <= 0) {
+                        game = quest.definition.cancel(game, quest);
+                        game.notifications.push(new Notification("quest.cancelled"));
+                    }
                 }
                 if (Math.random() * 100 < 5) {
                     Services.DiscoveryService.addPoints(game, parseInt(Math.random() * 3));
@@ -76,8 +87,36 @@ export class QuestService extends GameService {
 
                 return game;
             }
-
             QuestService.definitions.push(investigateJungle);
+
+
+            var deeperJungle = new QuestDefinition("", 2, 120);
+            deeperJungle.crewrequired = 3;
+            deeperJungle.unlockcondition = function (game) {
+                return game.discoveries.some(t => (t.definition.id == "shipintro" || t.definition.id == "sourceofnoises") && t.iscomplete())
+            };
+            deeperJungle.name = Language.getText("quest.deeperjungle.name");
+            deeperJungle.onupdate = (game) => {
+                var baseWoundedOdds = 3;
+                if (game.research.some(r => r.definition.id == "medicinalplants" && r.iscomplete())) {
+                    baseWoundedOdds/=2;
+                }
+                if (Math.random() * 100 < baseWoundedOdds) {
+                    game.crew.quest--;
+                    game.crew.sick++;
+                }
+                if (Math.random() * 100 < 5) {
+                    Services.DiscoveryService.addPoints(game, parseInt(Math.random() * 5));
+
+                }
+
+
+                return game;
+            }
+            QuestService.definitions.push(deeperJungle);
+
+
+
         }
 
         return QuestService.definitions;

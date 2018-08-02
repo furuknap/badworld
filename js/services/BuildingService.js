@@ -64,6 +64,11 @@ export class BuildingService extends GameService {
             medicalStation.postrender = function (game) { return game };
             medicalStation.onupdate = function (game) {
                 if (game.crew.sick > 0) {
+                    var baseOdds = 0.5;
+                    if (game.research.some(r => r.id == "medicinalplantsbase" && r.iscomplete())) {
+                        baseOdds *= 3;
+                    }
+
                     if (Math.random() * 100 < 0.5) {
                         game.crew.sick--;
                         game.crew.available++;

@@ -59,6 +59,18 @@ export class StoryService extends GameService {
         directionofalienship.prerequisitediscoveries = Services.DiscoveryService.allDefinitions().filter(b => b.id == "shipintro");
         this.entities.push(directionofalienship);
 
+        var roadtoalienship = new StoryElement("", 12, "roadtoalienship");
+        roadtoalienship.prerequisitediscoveries = Services.DiscoveryService.allDefinitions().filter(b => b.id == "shiplocation");
+        this.entities.push(roadtoalienship);
+
+        var medicinalplants = new StoryElement("", 13, "medicinalplants");
+        medicinalplants.prerequisiteresearch = Services.ResearchService.allDefinitions().filter(b => b.id == "medicinalplants");
+        this.entities.push(medicinalplants);
+
+        var medicinalplants = new StoryElement("", 14, "medicinalplantsbase");
+        medicinalplants.prerequisiteresearch = Services.ResearchService.allDefinitions().filter(b => b.id == "medicinalplantsbase");
+        this.entities.push(medicinalplants);
+
     }
 
     updateGame(game, deltaTime) {

@@ -9,22 +9,31 @@
   "firstwounded": "We got our first casualty after the crash, and most likely it will not be the last. We need to build medical facility to treat the wounded",
   "medicalstation": "Searching through the wreckage, we found some medical kits that survived the crash. It won't last long but it's the best we have for now. Perhaps we can look for medical plants in the jungle",
   "sourceofnoises": "During an expedition, a crew member noticed a creature hiding in some bushes. When they approached, the creature ran away. The crew member said it looked like a humanoid creature.",
-  "directionofalienship": "We believe we have found where the alien ship is located. We need to send out expeditions to learn more.",
-  "medicinalplants": "It took a long time but we've managed to find some plants that seem to speed up wound recover and dull pain.",
+  "directionofalienship": "We believe we have found where the alien ship is located. It's far away and it will take time to find it. We need to send out expeditions to learn more.",
+  "medicinalplants": "Analyzing the nearby flora, we've managed to find some plants that seem to speed up wound recover and dull pain. This will help reduce casualties during expeditions. We can also start researching how to utilize those plants at the base.",
+  "medicinalplantsbase": "\"Eureka!\" One of your crew members comes running up to you. \"We can synthesize basic medicines from local plants to help us heal the wounded! We can probably even build a rudimentary sickbay now!\" The mood of everyone rises at the prospect of less risk of long-term sickness.",
+  "roadtoalienship": "We found it! It took a long time but one of our expeditions came back with the exact location of the alien ship. There's an amazing amount of knowledge we can learn now.",
 
   "building.hut.name": "Small Hut",
   "building.largerhut.name": "Larger Hut",
   "building.medicalstation.name": "Medical Station",
 
 
+
   "research.surroundings.name": "Surroundings",
   "research.secureshelter.name": "Secure Shelter",
   "research.searchjungle.name": "Search Nearby Jungle",
+  "research.medicinalplants.name": "Medicinal Plant Usage",
+  "research.medicinalplantsbase.name": "Basic Medicines",
 
+  "quest.nearbyjungle.name": "Scout Nearby Jungle",
+  "quest.deeperjungle.name": "Deep Jungle Expedition",
+  "quest.cancelled": "An expedition had to be cancelled because the last crew member got wounded.",
 
   "discovery.medicalplants.name": "Medicinal Plants",
   "discovery.pointsearned": "You found something interesting. This will help us discover new things about this planet. We should focus on discovering more.",
   "discovery.shipintro.name": "Direction of Alien Ship",
+  "discovery.shiplocation.name": "Road to Alien Ship",
   "discovery.noises.name": "Source of Noises",
 
 

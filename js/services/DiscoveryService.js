@@ -74,6 +74,12 @@ export class DiscoveryService extends GameService {
             shipintro.unlockcondition = function (game) { return game.discoverypoints > 0 || game.discoveries.length>0; };
             DiscoveryService.definitions.push(shipintro);
 
+            var shiplocation = new DiscoveryDefinition(Language.getText("discovery.shiplocation.name"));
+            shiplocation.id = "shiplocation";
+            shiplocation.pointsrequired = 500;
+            shiplocation.unlockcondition = function (game) { return game.discoveries.some(d=>d.definition.id=="shipintro" && d.iscomplete()); };
+            DiscoveryService.definitions.push(shiplocation);
+
             var sourceofnoises = new DiscoveryDefinition(Language.getText("discovery.noises.name"));
             sourceofnoises.id = "noisesintro";
             sourceofnoises.pointsrequired = 5;
