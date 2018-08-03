@@ -11,6 +11,8 @@
   "sourceofnoises": "Durante la expedición, un miembro de la tripulación advirtió una creatura escondida en los arbustos. Cuando se acercaron, la creatura escapó. El miembro de la tripulación dice que parecía ser humanoide.",
   "directionofalienship": "Creemos haber encontrado comida donde la nave alienígena está situada. Debemos enviar expediciones para saber más.",
   "medicinalplants": "Tomó un largo tiempo, pero hemos logrado encontrar algunas plantas que parecen ayudar a la recuperación de las heridas y ser analgésicas.",
+  "medicinalplantsbase": "—¡Eureka! —Un miembro de tu tripulación corre hacia ti.— ¡Podemos sintetizar medicamentos básicos de plantas locales para ayudarnos a curar a los heridos! ¡Probablemente podamos construir una enfermería rudimentaria! —El ánimo de todos se eleva con el prospecto de menos enfermedades a largo plazo.",
+  "roadtoalienship": "¡La encontramos! Tomo un largo tiempo, pero una de nuestras expediciones regresó con la ubicación exacta de la nave alienígena. Hay una cantidad impresionante de conocimiento que podemos obtener ahora.",
 
   "building.hut.name": "Choza pequeña",
   "building.largerhut.name": "Choza grande",
@@ -20,11 +22,17 @@
   "research.surroundings.name": "Alrededores",
   "research.secureshelter.name": "Refugio seguro",
   "research.searchjungle.name": "Buscar en la jungla cercana",
+  "research.medicinalplants.name": "Uso de plantas medicinales",
+  "research.medicinalplantsbase.name": "Medicamentos básicos",
 
+  "quest.nearbyjungle.name": "Explorar la selva cercana",
+  "quest.deeperjungle.name": "Exploración de la selva profunda",
+  "quest.cancelled": "Una expedición debió ser cancelada debido a que el último miembro de la tripulación resultó herido.",
 
   "discovery.medicalplants.name": "Plantas medicinales",
-  "discovery.pointsearned": "Descubriste algo interesante",
+  "discovery.pointsearned": "Descubriste algo interesante. This will help us discover new things about this planet. We should focus on discovering more.",
   "discovery.shipintro.name": "Dirección de la nave alienígena",
+  "discovery.shiplocation.name": "Camino a la nave alienígena",
   "discovery.noises.name": "Fuente de los ruidos",
 
 
