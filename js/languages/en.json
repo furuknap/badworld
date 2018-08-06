@@ -6,17 +6,23 @@
   "surroundings": "The crash cleared a large area of woods and jungle where we can build what we need. There's debris everywhere. We should probably make sure we're safe in our huts first and then start exploring.",
   "junglenoises": "Late one night, two of your crew hear ruffling sounds from the nearby jungle. Something other than wind is out there. Maybe we should investigate. Or maybe they were just hearing things.",
   "junglenoises2": "This time, you were there yourself to hear the noises. There's definitely something out in the jungle. Maybe it's animals we can hunt for food, or maybe we'll be the hunted. We need to send out expeditions to discover the source of the noises and perhaps learn more about where we are.",
-  "firstwounded": "We got our first casualty after the crash, and most likely it will not be the last. We need to build medical facility to treat the wounded",
+  "firstwounded": "During an expedition, we got our first casualty after the crash, and most likely it will not be the last. The crew member returned to camp but couldn't complete the expedition. We need to build a medical facility to treat the wounded",
   "medicalstation": "Searching through the wreckage, we found some medical kits that survived the crash. It won't last long but it's the best we have for now. Perhaps we can look for medical plants in the jungle",
   "sourceofnoises": "During an expedition, a crew member noticed a creature hiding in some bushes. When they approached, the creature ran away. The crew member said it looked like a humanoid creature.",
-  "directionofalienship": "We believe we have found where the alien ship is located. It's far away and it will take time to find it. We need to send out expeditions to learn more.",
+  "directionofalienship": "Using what we remember from telemetry before the crash as well as clues discovered during our expeditions, we believe we have found where the alien ship is located. It's far away and it will take time to find it. We need to send out larger and longer expeditions to learn more.",
   "medicinalplants": "Analyzing the nearby flora, we've managed to find some plants that seem to speed up wound recover and dull pain. This will help reduce casualties during expeditions. We can also start researching how to utilize those plants at the base.",
   "medicinalplantsbase": "\"Eureka!\" One of your crew members comes running up to you. \"We can synthesize basic medicines from local plants to help us heal the wounded! We can probably even build a rudimentary sickbay now!\" The mood of everyone rises at the prospect of less risk of long-term sickness.",
   "roadtoalienship": "We found it! It took a long time but one of our expeditions came back with the exact location of the alien ship. There's an amazing amount of knowledge we can learn now.",
+  "kruattackfirst": "One day while we were having lunch, a group of humanoid creatures came running out of the jungle, attacking us. We had little time to prepare for the onslaught and having no weapons, we had to find rocks and debris to defend ourselves. Luckily, there were no fatalities and the creatures retreated into the jungle without causing permanent damage.",
+  "kruattacksecond": "The creatures attacked again. This time, one of them got hurt and we managed to capture it before the others fled. We brought it back to camp and it made rudimentary noises before it succumbed to its wounds and died. Perhaps the noises were a language of some kind. Maybe we can capture one of them to learn how to communicate. ",
+  "krucapture": "We found a way to capture a creature and keep it alive. We need to build a cage to keep it confined so we can learn more about this species. ",
+
 
   "building.hut.name": "Small Hut",
   "building.largerhut.name": "Larger Hut",
   "building.medicalstation.name": "Medical Station",
+  "building.sickbay.name": "Sickbay",
+  "building.krucage.name": "Creature Cage",
 
 
 
@@ -25,18 +31,27 @@
   "research.searchjungle.name": "Search Nearby Jungle",
   "research.medicinalplants.name": "Medicinal Plant Usage",
   "research.medicinalplantsbase.name": "Basic Medicines",
+  "research.krucapture.name": "Creature Capture",
+  "research.medkit.name": "Medkits",
 
   "quest.nearbyjungle.name": "Scout Nearby Jungle",
   "quest.deeperjungle.name": "Deep Jungle Expedition",
   "quest.cancelled": "An expedition had to be cancelled because the last crew member got wounded.",
 
-  "discovery.medicalplants.name": "Medicinal Plants",
+  "discovery.medicinalplants.name": "Medicinal Plants",
   "discovery.pointsearned": "You found something interesting. This will help us discover new things about this planet. We should focus on discovering more.",
   "discovery.shipintro.name": "Direction of Alien Ship",
   "discovery.shiplocation.name": "Road to Alien Ship",
   "discovery.noises.name": "Source of Noises",
+  "discovery.kruname.name": "Name of Creatures",
 
-
+  "event.kruattack.first": "Some creatures attacked us out of nowhere! ",
+  "event.kruattack.regular": "The creatures attacked us again! ",
+  "event.kruattack.namediscovered": "The K'ru attacked us again. ",
+  "event.kruattack.wounded": "Some of our crew was wounded in the attack. They are already receiving medical care.",
+  "event.kruattack.nowounded": "Luckily, nobody got seriously hurt in the attack.",
+  "event.kruattack.damaged": "Our buildings took some damage in the attack. The crew is already working on repairs.",
+  "event.kruattack.nodamaged": "Our buildings survived with nothing but superficial damage.",
 
   "ui.gametitle": "BadWorld",
   "ui.ok": "OK",
@@ -49,6 +64,7 @@
   "ui.activate": "Focus",
   "ui.reset": "Reset",
 
+  "ui.notifications.buildingrepaired": "The crew repaired a building.",
 
   "ui.heading.crew": "Crew",
   "ui.heading.crew.available": "Available",
@@ -59,6 +75,8 @@
   "ui.heading.expeditions": "Expeditions",
   "ui.heading.research": "Research",
   "ui.heading.build": "Build",
+  "ui.heading.inventory": "Inventory",
+  "ui.heading.inventory.medkits": "Medkits",
   "ui.heading.discoveries": "Discoveries",
   "ui.heading.discoveries.points": "Items",
 

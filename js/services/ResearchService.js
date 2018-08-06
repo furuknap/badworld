@@ -37,7 +37,7 @@ export class ResearchService extends GameService {
                 game = research.definition.onstart(game);
             }
             else {
-                game.notifications.push(new Notification(Language.getText("notenoughcrewavailable")));
+                game.notifications.push(new Notification("notenoughcrewavailable"));
             }
         }
     }
@@ -57,19 +57,26 @@ export class ResearchService extends GameService {
             ResearchService.definitions.push(safeShelter);
 
             var medicinalplants = new ResearchDefinition(Language.getText("research.medicinalplants.name"), "medicinalplants");
-            medicinalplants.prerequisitediscoveries = Services.DiscoveryService.allDefinitions().filter(d => d.id == "medicalplants");
+            medicinalplants.prerequisitediscoveries.push({ id: "medicinalplants" });
             medicinalplants.timerequired = 120;
             ResearchService.definitions.push(medicinalplants);
 
             var medicinalplantsbase = new ResearchDefinition(Language.getText("research.medicinalplantsbase.name"), "medicinalplantsbase");
-            medicinalplantsbase.prerequisiteresearch = Services.ResearchService.allDefinitions().filter(b => b.id == "medicinalplants");
+            medicinalplantsbase.prerequisiteresearch.push(medicinalplants);
             medicinalplantsbase.timerequired = 120;
             ResearchService.definitions.push(medicinalplantsbase);
 
-            //var searchjungle = new ResearchDefinition(Language.getText("research.searchjungle.name"), "searchjungle");
-            //searchjungle.prerequisitebuildings = Services.BuildingService.allBuildingDefinitions().filter(b => b.id == "largerhut");
-            //searchjungle.prerequisiteresearch.push(safeShelter);
-            //searchjungle.timerequired = 5;
+            var medkit = new ResearchDefinition(Language.getText("research.medkit.name"), "medkit");
+            medkit.prerequisiteresearch.push(medicinalplantsbase);
+            medkit.timerequired = 120;
+            medkit.crewrequired = 1;
+            ResearchService.definitions.push(medkit);
+
+            var krucapture = new ResearchDefinition(Language.getText("research.krucapture.name"), "krucapture");
+            krucapture.unlockcondition = (game) => { return game.attacks.count > 2; };
+            krucapture.timerequired = 240;
+            ResearchService.definitions.push(krucapture);
+
         }
 
         return ResearchService.definitions;

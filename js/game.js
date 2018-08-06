@@ -18,6 +18,7 @@ var discoveriesAvailableListSelector = ".discoveriesAvailableList";
 var discoveriesPointsSelector = ".discoveriesList";
 
 var detailsSelector = ".details";
+var inventorySelector = ".inventoryControls";
 
 import * as Services from "./services/services.js"
 import * as Entities from "./entities/entities.js"
@@ -58,6 +59,7 @@ function registerServices() {
     services.push(new Services.StoryService());
     services.push(new Services.QuestService());
     services.push(new Services.DiscoveryService());
+    services.push(new Services.EventService());
 }
 function setupButtons() {
     $(document).on("click", ".btnWakeUp", function () {
@@ -165,6 +167,7 @@ function refreshView() {
         updateDiscoveries();
 
         updateDetails();
+        updateInventory();
         showNotifications();
     }
 
@@ -216,6 +219,19 @@ function updateDetails() {
 
     $(detailsSelector).html(crewHTML);
 }
+
+function updateInventory() {
+    $(inventorySelector).html();
+    var inventoryHTML = "<div>" +
+        "<strong>" + Utilities.Language.getText("ui.heading.inventory") + "</strong><br/>" +
+        Utilities.Language.getText("ui.heading.inventory.medkits") + ": " + game.inventory.medkits + "<br/>" +
+        "<br/>" +
+        "</div>"
+        ;
+
+    $(inventorySelector).html(inventoryHTML);
+}
+
 
 function updateDiscoveries() {
     var available = Services.DiscoveryService.availableDefinitions(game);
@@ -339,7 +355,7 @@ function updateResearch() {
 }
 
 function updateBuildings() {
-    var available = Services.BuildingService.availableBuildingDefinitions(game);
+    var available = Services.BuildingService.availableDefinitions(game);
     var availableHTML = ""
     for (var i = 0; i < available.length; i++) {
         var building = available[i];
@@ -408,6 +424,10 @@ function loadGame() {
             e.definition = Entities.DiscoveryDefinition.toClass(Services.DiscoveryService.allDefinitions().find(d => d.id == e.definition.id), Entities.DiscoveryDefinition.prototype);
             game.discoveries[i] = e;
         }
+        for (var i = 0; i < game.notifications.length; i++) {
+            var e = Entities.Notification.toClass(game.notifications[i], Entities.Notification.prototype);
+            game.notifications[i] = e;
+        }
 
         game.lastupdate = new Date(game.lastupdate);
     }
@@ -425,7 +445,9 @@ function deleteGame() {
 
 function getDefaultGame() {
     return {
+        attacks: { count: 0, wounded: 0 },
         crew: { available: 25, sick: 0, quest: 0, building: 0, research: 0 },
+        inventory: { medkits: 0 },
         startGame: true,
         night: true,
         discoverypoints: 0,
@@ -436,6 +458,7 @@ function getDefaultGame() {
         shipresearch: [],
         quests: [],
         texts: [],
+        events: [],
         discoveries: [],
         notifications: []
     };

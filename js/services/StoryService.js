@@ -64,12 +64,24 @@ export class StoryService extends GameService {
         this.entities.push(roadtoalienship);
 
         var medicinalplants = new StoryElement("", 13, "medicinalplants");
-        medicinalplants.prerequisiteresearch = Services.ResearchService.allDefinitions().filter(b => b.id == "medicinalplants");
+        medicinalplants.prerequisitediscoveries.push({  id: "medicinalplants" });
         this.entities.push(medicinalplants);
 
         var medicinalplants = new StoryElement("", 14, "medicinalplantsbase");
-        medicinalplants.prerequisiteresearch = Services.ResearchService.allDefinitions().filter(b => b.id == "medicinalplantsbase");
+        medicinalplants.prerequisiteresearch.push({ id: "medicinalplantsbase" });
         this.entities.push(medicinalplants);
+
+        var kruattackfirst = new StoryElement("", 15, "kruattackfirst");
+        kruattackfirst.unlockcondition = (game) => { return game.attacks.count >0 && !game.texts.some(t => t.id == 15) }
+        this.entities.push(kruattackfirst);
+
+        var kruattacksecond = new StoryElement("", 16, "kruattacksecond");
+        kruattacksecond.unlockcondition = (game) => { return game.attacks.count >1 && !game.texts.some(t => t.id == 16) }
+        this.entities.push(kruattacksecond);
+
+        var krucapture = new StoryElement("", 17, "krucapture");
+        krucapture.prerequisiteresearch = Services.ResearchService.allDefinitions().filter(b => b.id == "krucapture");
+        this.entities.push(krucapture);
 
     }
 

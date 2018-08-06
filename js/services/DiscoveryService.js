@@ -86,12 +86,11 @@ export class DiscoveryService extends GameService {
             sourceofnoises.unlockcondition = function (game) { return game.texts.some(t => t.id == 7) > 0; };
             DiscoveryService.definitions.push(sourceofnoises);
 
-
-            var medicalplants = new DiscoveryDefinition(Language.getText("discovery.medicalplants.name"));
-            medicalplants.id = "medicalplants";
-            medicalplants.pointsrequired = 20;
-            medicalplants.prerequisitebuildings = Services.BuildingService.allDefinitions().filter(b => b.id == "medicalstation");
-            DiscoveryService.definitions.push(medicalplants);
+            var medicinalplants = new DiscoveryDefinition(Language.getText("discovery.medicinalplants.name"));
+            medicinalplants.id = "medicinalplants";
+            medicinalplants.pointsrequired = 20;
+            medicinalplants.prerequisitebuildings = Services.BuildingService.allDefinitions().filter(b => b.id == "medicalstation");
+            DiscoveryService.definitions.push(medicinalplants);
 
         }
 

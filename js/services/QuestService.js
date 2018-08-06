@@ -15,7 +15,7 @@ export class QuestService extends GameService {
                 quest.timeproduced += deltaTime;
                 game = quest.definition.onupdate(game, quest);
                 if (quest.iscomplete() && !quest.wascomplete) {
-                    game = quest.definition.completed(game);
+                    game = quest.definition.completed(game, quest);
                 }
             }
         }
@@ -51,7 +51,7 @@ export class QuestService extends GameService {
                 game.quests.push(quest);
             }
             else {
-                game.notifications.push(new Notification(Language.getText("notenoughcrewavailable")));
+                game.notifications.push(new Notification("notenoughcrewavailable"));
             }
         }
     }
@@ -66,6 +66,7 @@ export class QuestService extends GameService {
             investigateJungle.name = Language.getText("quest.nearbyjungle.name");
             investigateJungle.onupdate = (game, quest) => {
                 var baseWoundedOdds = 2;
+                var medkitsOdds = 3;
                 if (game.research.some(r => r.definition.id == "medicinalplants" && r.iscomplete())) {
                     baseWoundedOdds/=2;
                 }
@@ -76,14 +77,18 @@ export class QuestService extends GameService {
                     quest.crew--;
                     if (quest.crew <= 0) {
                         game = quest.definition.cancel(game, quest);
-                        game.notifications.push(new Notification("quest.cancelled"));
+                        game.notifications.push(new Notification("quest.cancelled", null, 5));
                     }
                 }
                 if (Math.random() * 100 < 5) {
                     Services.DiscoveryService.addPoints(game, parseInt(Math.random() * 3));
                     
                 }
-
+                if (game.buildings.some(b => b.id == "sickbay" && b.iscomplete())) {
+                    if (Math.random() * 100 < medkitsOdds) {
+                        game.inventory.medkits++;
+                    }
+                }
 
                 return game;
             }
@@ -96,7 +101,7 @@ export class QuestService extends GameService {
                 return game.discoveries.some(t => (t.definition.id == "shipintro" || t.definition.id == "sourceofnoises") && t.iscomplete())
             };
             deeperJungle.name = Language.getText("quest.deeperjungle.name");
-            deeperJungle.onupdate = (game) => {
+            deeperJungle.onupdate = (game, quest) => {
                 var baseWoundedOdds = 3;
                 if (game.research.some(r => r.definition.id == "medicinalplants" && r.iscomplete())) {
                     baseWoundedOdds/=2;
@@ -104,8 +109,13 @@ export class QuestService extends GameService {
                 if (Math.random() * 100 < baseWoundedOdds) {
                     game.crew.quest--;
                     game.crew.sick++;
+                    quest.crew--;
+                    if (quest.crew <= 0) {
+                        game = quest.definition.cancel(game, quest);
+                        game.notifications.push(new Notification("quest.cancelled", null, 5));
+                    }
                 }
-                if (Math.random() * 100 < 5) {
+                if (Math.random() * 100 < 7) {
                     Services.DiscoveryService.addPoints(game, parseInt(Math.random() * 5));
 
                 }
