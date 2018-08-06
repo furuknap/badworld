@@ -1,4 +1,6 @@
 ﻿import { Entity } from "./Entity.js"
+import * as Services from "../services/services.js"
+
 export class BuildingDefinition extends Entity {
     constructor(name, id, timerequired) {
         super();
@@ -8,8 +10,12 @@ export class BuildingDefinition extends Entity {
         this.name = name;
         this.timerequired = timerequired;
         this.unlockelements = "";
-        this.onstart = function (game) { game.crew.available -= this.crewrequired; game.crew.building += this.crewrequired; return game; }
-        this.completed = function (game) { game.crew.available += this.crewrequired; game.crew.building -= this.crewrequired; return game; }
+        this.onstart = function (game) {
+            return Services.CrewService.changeBuilding(game, this.crewrequired);
+        }
+        this.completed = function (game) {
+            return Services.CrewService.changeBuilding(game, 0 - this.crewrequired);
+        }
     }
 }
 

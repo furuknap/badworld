@@ -34,7 +34,7 @@ export class StoryService extends GameService {
 
         var junglenoises = new StoryElement("", 6, "junglenoises");
         junglenoises.prerequisitebuildings = Services.BuildingService.allDefinitions().filter(b => b.id == "firsthut");
-        junglenoises.unlockcondition = function () { return Math.random() * 100 < 2 };
+        junglenoises.unlockcondition = function (game) { return Math.random() * 100 < 2 || game.research.some(r => r.definition.id =="safeShelter") };
         this.entities.push(junglenoises);
 
         var junglenoises2 = new StoryElement("", 7, "junglenoises2");
@@ -82,6 +82,22 @@ export class StoryService extends GameService {
         var krucapture = new StoryElement("", 17, "krucapture");
         krucapture.prerequisiteresearch = Services.ResearchService.allDefinitions().filter(b => b.id == "krucapture");
         this.entities.push(krucapture);
+
+        var medkitsout = new StoryElement("", 18, "medkitsout");
+        medkitsout.unlockcondition = (game) => { return game.inventory.medkits == 0;}
+        this.entities.push(medkitsout);
+
+        var medkitsout = new StoryElement("", 19, "medkitsoutneedresearch");
+        medkitsout.unlockcondition = (game) => {
+            return
+            !game.research.some(r => r.definition.id =="medkit") &&
+            game.inventory.medkits == 0;
+        }
+        this.entities.push(medkitsout);
+
+        var medkitsout = new StoryElement("", 20, "medkits");
+        medkitsout.prerequisiteresearch = Services.ResearchService.allDefinitions().filter(b => b.id == "medkits");
+        this.entities.push(medkitsout);
 
     }
 

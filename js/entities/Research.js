@@ -1,4 +1,6 @@
 ﻿import { Entity } from "./Entity.js"
+import * as Services from "../services/services.js"
+
 export class ResearchDefinition extends Entity {
     constructor(name, id, timerequired) {
         super();
@@ -6,8 +8,12 @@ export class ResearchDefinition extends Entity {
         this.name = name;
         this.timerequired = timerequired;
         this.unlockelements = "";
-        this.onstart = function (game) { game.crew.available -= this.crewrequired; game.crew.research += this.crewrequired; return game; }
-        this.completed = function (game) { game.crew.available += this.crewrequired; game.crew.research -= this.crewrequired; return game; }
+        this.onstart = function (game) {
+            return Services.CrewService.changeResearch(game, this.crewrequired);
+        }
+        this.completed = function (game) {
+            return Services.CrewService.changeResearch(game, 0 - this.crewrequired);
+        }
 
     }
 }
@@ -29,7 +35,7 @@ export class Research extends Entity {
         research.name = researchDefinition.name;
         return research;
     }
-    static toClass (obj, proto) {
+    static toClass(obj, proto) {
         obj.__proto__ = proto;
         return obj;
     }

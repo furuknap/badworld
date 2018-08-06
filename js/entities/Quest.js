@@ -6,8 +6,8 @@ export class QuestDefinition extends Entity {
         this.name = name;
         this.timerequired = timerequired;
         this.unlockelements = "";
-        this.onstart = function (game) { game.crew.available -= this.crewrequired; game.crew.quest += this.crewrequired; return game; }
-        this.completed = function (game, quest) { game.crew.available += quest.crew; game.crew.quest -= quest.crew; return game; }
+        this.onstart = function (game) {  return game; }
+        this.completed = function (game, quest) {  return game; }
         this.cancel = function (game, quest) { game = quest.definition.completed(game, quest); game.quests = game.quests.filter(q=>q.id!==quest.id); return game; }
 
     }

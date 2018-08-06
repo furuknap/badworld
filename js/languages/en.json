@@ -1,7 +1,7 @@
 ﻿{
   "intro": "You are in a cold, dark place",
   "wakeup": "Opening your eyes, you see the wreck of your ship and most of your crew dead around you. You have no idea how long you were out but some of your surviving crew have already woken up. Your ship is a total loss but you can salvage some parts and use them to build some shelter.",
-  "firsthut": "You tell your crew to gather materials and set up some temporary shelter. \"These huts will provide some basic shelter,\" you say to your crew. \"but we are going to need better shelter before we can start looking for a way home.\"",
+  "firsthut": "You tell your remaining crew to gather materials and set up some temporary shelter. \"These huts will provide some basic shelter,\" you say to your crew. \"but we are going to need better shelter before we can start looking for a way home.\"",
   "largerhut": "More space means we can start learning more about where we are. This larger hut will be very useful.",
   "surroundings": "The crash cleared a large area of woods and jungle where we can build what we need. There's debris everywhere. We should probably make sure we're safe in our huts first and then start exploring.",
   "junglenoises": "Late one night, two of your crew hear ruffling sounds from the nearby jungle. Something other than wind is out there. Maybe we should investigate. Or maybe they were just hearing things.",
@@ -13,9 +13,12 @@
   "medicinalplants": "Analyzing the nearby flora, we've managed to find some plants that seem to speed up wound recover and dull pain. This will help reduce casualties during expeditions. We can also start researching how to utilize those plants at the base.",
   "medicinalplantsbase": "\"Eureka!\" One of your crew members comes running up to you. \"We can synthesize basic medicines from local plants to help us heal the wounded! We can probably even build a rudimentary sickbay now!\" The mood of everyone rises at the prospect of less risk of long-term sickness.",
   "roadtoalienship": "We found it! It took a long time but one of our expeditions came back with the exact location of the alien ship. There's an amazing amount of knowledge we can learn now.",
-  "kruattackfirst": "One day while we were having lunch, a group of humanoid creatures came running out of the jungle, attacking us. We had little time to prepare for the onslaught and having no weapons, we had to find rocks and debris to defend ourselves. Luckily, there were no fatalities and the creatures retreated into the jungle without causing permanent damage.",
+  "kruattackfirst": "One day while we were having lunch, some of humanoid creatures came running out of the jungle, attacking us. We had little time to prepare for the onslaught and having no weapons, we had to find rocks and debris to defend ourselves. Luckily, there were no fatalities and the creatures retreated into the jungle without causing permanent damage.",
   "kruattacksecond": "The creatures attacked again. This time, one of them got hurt and we managed to capture it before the others fled. We brought it back to camp and it made rudimentary noises before it succumbed to its wounds and died. Perhaps the noises were a language of some kind. Maybe we can capture one of them to learn how to communicate. ",
   "krucapture": "We found a way to capture a creature and keep it alive. We need to build a cage to keep it confined so we can learn more about this species. ",
+  "medkits": "Thanks to the hard work of the crew, we found out how to make medkits out of the native medicinal plants. We need to send out expeditions to find the raw materials, but we can now produce new medkits in sickbay. ",
+  "medkitsout": "We ran out of medkits. ",
+  "medkitsoutneedresearch": "We should research how to make more. ",
 
 
   "building.hut.name": "Small Hut",

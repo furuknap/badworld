@@ -52,10 +52,9 @@ export class AttackEventDefinition extends EventDefinition {
 
             var wounded = 0;
             var buildingsDamaged = 0;
-            for (var i = 0; i < game.crew.available; i++) {
+            for (var i = 0; i < Services.CrewService.getAvailable(game); i++) {
                 if (Math.random() * 100 < oddsOfWound) {
-                    game.crew.available--;
-                    game.crew.sick++;
+                    Services.CrewService.changeWounded(game, 1);
                     wounded++;
                 }
             }

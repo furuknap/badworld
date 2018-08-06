@@ -60,6 +60,7 @@ function registerServices() {
     services.push(new Services.QuestService());
     services.push(new Services.DiscoveryService());
     services.push(new Services.EventService());
+    services.push(new Services.CrewService());
 }
 function setupButtons() {
     $(document).on("click", ".btnWakeUp", function () {
@@ -208,9 +209,9 @@ function updateDetails() {
     $(detailsSelector).html();
     var crewHTML = "<div>" +
         "<strong>" + Utilities.Language.getText("ui.heading.crew") + "</strong><br/>" +
-        Utilities.Language.getText("ui.heading.crew.available") + ": " + game.crew.available + "<br/>" +
+        Utilities.Language.getText("ui.heading.crew.available") + ": " + Services.CrewService.getAvailable(game) + "<br/>" +
         (game.crew.sick > 0 ? Utilities.Language.getText("ui.heading.crew.wounded") + ": " + game.crew.sick + "<br/>" : "") +
-        (game.crew.quest > 0 ? Utilities.Language.getText("ui.heading.crew.quests") + ": " + game.crew.quest + "<br/>" : "") +
+        (Services.QuestService.getCrewAllocated(game) > 0 ? Utilities.Language.getText("ui.heading.crew.quests") + ": " + Services.QuestService.getCrewAllocated(game) + "<br/>" : "") +
         (game.crew.building > 0 ? Utilities.Language.getText("ui.heading.crew.building") + ": " + game.crew.building + "<br/>" : "") +
         (game.crew.research > 0 ? Utilities.Language.getText("ui.heading.crew.research") + ": " + game.crew.research + "<br/>" : "") +
         "<br/>" +
@@ -430,6 +431,7 @@ function loadGame() {
         }
 
         game.lastupdate = new Date(game.lastupdate);
+
     }
     else {
         game = getDefaultGame();
@@ -446,7 +448,13 @@ function deleteGame() {
 function getDefaultGame() {
     return {
         attacks: { count: 0, wounded: 0 },
-        crew: { available: 25, sick: 0, quest: 0, building: 0, research: 0 },
+        crew: {
+            available: 25,
+            sick: 0,
+            quest: 0,
+            building: 0,
+            research: 0
+        },
         inventory: { medkits: 0 },
         startGame: true,
         night: true,

@@ -30,7 +30,7 @@ export class ResearchService extends GameService {
             }
         }
         if (typeof foundDefinition != typeof undefined) {
-            if (foundDefinition.crewrequired <= game.crew.available) {
+            if (foundDefinition.crewrequired <= Services.CrewService.getAvailable(game)) {
                 var research = Research.getFromResearchDefintion(foundDefinition);
                 research.inprogress = true;
                 game.research.push(research);
@@ -41,6 +41,7 @@ export class ResearchService extends GameService {
             }
         }
     }
+
 
     static allDefinitions() {
         if (ResearchService.definitions == null || ResearchService.definitions.length == 0) {

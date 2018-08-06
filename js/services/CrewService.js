@@ -1,0 +1,28 @@
+﻿import { GameService } from "./gameService.js"
+import { Quest } from "../entities/Quest.js"
+import * as Services from "./services.js"
+import { QuestDefinition } from "../entities/Quest.js"
+import { Language } from "../utilities/LanguageUtilities.js";
+import { Notification } from "../entities/entities.js";
+
+export class CrewService extends GameService {
+    updateGame(game, deltaTime) {
+        return game;
+    }
+
+    static getAvailable(game) {
+        return 25 - (Services.QuestService.getCrewAllocated(game) + game.crew.sick + game.crew.research + game.crew.building);
+    }
+    static changeResearch(game, count) {
+        game.crew.research += count;
+        return game;
+    }
+    static  changeWounded(game, count) {
+        game.crew.sick += count;
+        return game;
+    }
+    static changeBuilding(game, count) {
+        game.crew.building += count;
+        return game;
+    }
+}

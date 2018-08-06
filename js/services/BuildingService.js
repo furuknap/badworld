@@ -24,7 +24,7 @@ export class BuildingService extends GameService {
                 }
             }
             else {
-                building.damage -= Math.max(1, parseInt(game.crew.available * 0.1));
+                building.damage -= Math.max(1, parseInt(Services.CrewService.getAvailable(game) * 0.1));
                 if (building.damage == 0) {
                     game.notifications.push(new Notification("ui.notifications.buildingrepaired", null, 5));
                 }
@@ -148,7 +148,7 @@ export class BuildingService extends GameService {
             }
         }
         if (typeof foundDefinition != typeof undefined) {
-            if (foundDefinition.crewrequired <= game.crew.available) {
+            if (foundDefinition.crewrequired <= Services.CrewService.getAvailable(game)) {
                 var building = Building.getFromDefintion(foundDefinition);
                 building.inprogress = true;
                 game = building.definition.onstart(game);

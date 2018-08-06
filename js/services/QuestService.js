@@ -43,7 +43,7 @@ export class QuestService extends GameService {
             }
         }
         if (typeof foundDefinition != typeof undefined) {
-            if (foundDefinition.crewrequired <= game.crew.available) {
+            if (foundDefinition.crewrequired <= Services.CrewService.getAvailable(game)) {
                 var quest = Quest.getFromDefintion(foundDefinition);
                 quest.inprogress = true;
                 quest.crew = foundDefinition.crewrequired;
@@ -56,13 +56,19 @@ export class QuestService extends GameService {
         }
     }
 
+    static getCrewAllocated(game) {
+        var allocated = 0;
+        for (var i = 0; i < game.quests.length; i++) {
+            allocated += game.quests[i].crew;
+        }
+        return allocated;
+    }
+
     static allDefinitions() {
         if (QuestService.definitions == undefined || QuestService.definitions.length == 0) {
             QuestService.definitions = [];
             var investigateJungle = new QuestDefinition("", 1, 30);
             investigateJungle.unlockcondition = function (game) { return game.texts.some(t => t.id == 7); };
-            investigateJungle.completed = (game) => { game.crew.available++; game.crew.quest--; return game; };
-            investigateJungle.onstart = (game) => { game.crew.available--; game.crew.quest++; return game; };
             investigateJungle.name = Language.getText("quest.nearbyjungle.name");
             investigateJungle.onupdate = (game, quest) => {
                 var baseWoundedOdds = 2;
@@ -72,7 +78,6 @@ export class QuestService extends GameService {
                 }
 
                 if (Math.random() * 100 < baseWoundedOdds) {
-                    game.crew.quest--;
                     game.crew.sick++;
                     quest.crew--;
                     if (quest.crew <= 0) {
@@ -107,7 +112,6 @@ export class QuestService extends GameService {
                     baseWoundedOdds/=2;
                 }
                 if (Math.random() * 100 < baseWoundedOdds) {
-                    game.crew.quest--;
                     game.crew.sick++;
                     quest.crew--;
                     if (quest.crew <= 0) {

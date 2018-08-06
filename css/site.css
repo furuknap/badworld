@@ -9,9 +9,9 @@ body {
 }
 
 
-body.night {
-    background-color: black;
-}
+    body.night {
+        background-color: black;
+    }
 
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
@@ -75,14 +75,33 @@ body.night {
 .messageEntry {
     margin: 3px;
 }
-.messageEntry:last-child {
-    font-weight: bolder;
+
+    .messageEntry:last-child {
+        font-weight: bolder;
+        /*animation-name: highlightmessage;
+        animation-duration: 1s;
+        animation-iteration-count: 1;
+        animation-timing-function: linear;*/
+    }
+
+@keyframes highlightmessage {
+    from {
+        background-color: white;
+    }
+
+    to {
+        background-color: white;
+    }
+    50% {
+        background-color: #cccccc;
+    }
 }
 
-.discoveryAvailableCard.active  {
+.discoveryAvailableCard.active {
     font-weight: bold;
     font-style: italic;
 }
+
 .discoveryPoints {
     color: red;
 }
