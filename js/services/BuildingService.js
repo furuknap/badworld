@@ -82,12 +82,17 @@ export class BuildingService extends GameService {
                     if (game.research.some(r => r.id == "medicinalplantsbase" && r.iscomplete())) {
                         baseOdds *= 3;
                     }
-
-                    if (Math.random() * 100 < baseOdds && game.inventory.medkits>0) {
-                        game.crew.sick--;
-                        game.crew.available++;
-                        game.inventory.medkits--;
+                    if (game.inventory.medkits > 0) {
+                        baseOdds *= 2;
                     }
+
+                    if (Math.random() * 100 < baseOdds) {
+                        Services.CrewService.changeWounded(game, -1);
+                        if (game.inventory.medkits > 0) {
+                            game.inventory.medkits--;
+                        }
+                    }
+
                 }
                 return game;
             };
@@ -110,12 +115,11 @@ export class BuildingService extends GameService {
                     var baseOdds = 4;
 
                     if (game.inventory.medkits > 0) {
-                        baseOdds * 2;
+                        baseOdds *= 2;
                     }
 
                     if (Math.random() * 100 < baseOdds) {
-                        game.crew.sick--;
-                        game.crew.available++;
+                        Services.CrewService.changeWounded(game, -1);
                         if (game.inventory.medkits > 0) {
                             game.inventory.medkits--;
                         }

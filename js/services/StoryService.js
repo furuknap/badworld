@@ -84,19 +84,17 @@ export class StoryService extends GameService {
         this.entities.push(krucapture);
 
         var medkitsout = new StoryElement("", 18, "medkitsout");
-        medkitsout.unlockcondition = (game) => { return game.inventory.medkits == 0;}
+        medkitsout.unlockcondition = (game) => { return game.buildings.some(b=>b.definition.id=="medicalstation" && b.iscomplete()) && game.inventory.medkits == 0;}
         this.entities.push(medkitsout);
 
         var medkitsout = new StoryElement("", 19, "medkitsoutneedresearch");
         medkitsout.unlockcondition = (game) => {
-            return
-            !game.research.some(r => r.definition.id =="medkit") &&
-            game.inventory.medkits == 0;
+            return (!game.research.some(r => r.definition.id =="medkit") && game.inventory.medkits == 0);
         }
         this.entities.push(medkitsout);
 
         var medkitsout = new StoryElement("", 20, "medkits");
-        medkitsout.prerequisiteresearch = Services.ResearchService.allDefinitions().filter(b => b.id == "medkits");
+        medkitsout.prerequisiteresearch = Services.ResearchService.allDefinitions().filter(r => r.id == "medkit");
         this.entities.push(medkitsout);
 
     }
