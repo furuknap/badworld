@@ -95,7 +95,7 @@ export class AttackEventDefinition extends EventDefinition {
             }
 
             game.attacks.count++;
-            game.notifications.push(new Notification(null, 30, null, text));
+            //game.notifications.push(new Notification(null, 30, null, text));
 
             return game;
         }
