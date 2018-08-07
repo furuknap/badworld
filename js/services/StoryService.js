@@ -116,6 +116,14 @@ export class StoryService extends GameService {
         var krulanguagebasics = new StoryElement("", 25, "krulanguagebasics");
         krulanguagebasics.prerequisiteresearch = Services.ResearchService.allDefinitions().filter(r => r.id == "krulanguagebasics");
         this.entities.push(krulanguagebasics);
+
+        var antennafound = new StoryElement("", 26, "antennafound");
+        antennafound.unlockcondition = (game) => { return game.state.antennafound; }
+        this.entities.push(antennafound);
+
+        var antennarecovered = new StoryElement("", 27, "antennarecovered");
+        antennarecovered.prerequisitediscoveries = Services.DiscoveryService.allDefinitions().filter(b => b.id == "antennafound");
+        this.entities.push(antennarecovered);
     }
 
     updateGame(game, deltaTime) {

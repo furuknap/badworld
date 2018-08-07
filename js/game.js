@@ -341,13 +341,16 @@ function updateResearch() {
     var researchHTML = "";
     for (var i = 0; i < game.research.length; i++) {
         var research = game.research[i];
-        researchHTML += "<div class=\"researchCard card\">" +
+        var html = "<div class=\"researchCard card\">" +
             "<div data-researchdefinitionid=\"" + research.id + "\" class=\"researchHeader\">" + research.name + "</div>" +
             (research.iscomplete() ? "" : "<div class=\"progress\"><div class=\"bar\" style=\"width: " + (research.timeproduced / research.definition.timerequired) * 100 + "%\"></div>") +
 
             "<div class=\"\"></div>" +
 
             "</div>";
+
+
+        researchHTML += html;
 
     }
 

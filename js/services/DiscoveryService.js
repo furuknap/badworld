@@ -92,6 +92,12 @@ export class DiscoveryService extends GameService {
             medicinalplants.prerequisitebuildings = Services.BuildingService.allDefinitions().filter(b => b.id == "medicalstation");
             DiscoveryService.definitions.push(medicinalplants);
 
+            var antenna = new DiscoveryDefinition(Language.getText("discovery.antenna.name"));
+            antenna.id = "antenna";
+            antenna.pointsrequired = 200;
+            antenna.unlockcondition = (game) => { return game.state.antennafound;}
+            DiscoveryService.definitions.push(antenna);
+
         }
 
         return DiscoveryService.definitions;
