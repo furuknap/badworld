@@ -20,7 +20,10 @@
   "medkitsout": "We ran out of medkits. Without medkits, recorvery from wounds will be much slower. ",
   "medkitsoutneedresearch": "We should research how to make more medkits. ",
   "medkitsoutcanbuild": "Luckily, we can build more in sickbay if we just get the raw materials from the nearby jungle. ",
-
+  "krucaptured": "During a particularly viscious attack this morning, we managed to incapacitate one of the creatures with a cargo net. We can start examining it to understand better what they are and possibly how to defend ourselves. ",
+  "kruintro": "\"Fascinating!\" said one of the crew members responsible for examining the create we captured. \"These creatures are far more primitive than us. They seem to have a crude language. I believe I can begin to understand the basics if I can get some more time.\" ",
+  "krunonaggressive": "The creatures keep attacking us but somehow they always retreat without doing serious damage. In fact, they seem very careful not to kill anyone, never attacking wounded crew members and always retreating when they have knocked someone out.",
+  "krulanguagebasics": "\"I have started to understand the basics of their language.\" The crew member investigating the creature reported in. \"I have learned how it asks for food and that it has pain in its legs. From what I have been able to deduce, they call themselves K'ru.\"",
 
   "building.hut.name": "Small Hut",
   "building.largerhut.name": "Larger Hut",
@@ -38,6 +41,7 @@
   "research.krucapture.name": "Creature Capture",
   "research.medkit.name": "Medkits",
   "research.kruintro.name": "Creature Examination",
+  "research.krulanguagebasics.name": "Basic Language",
 
   "quest.nearbyjungle.name": "Scout Nearby Jungle",
   "quest.deeperjungle.name": "Deep Jungle Expedition",

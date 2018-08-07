@@ -375,7 +375,7 @@ function updateBuildings() {
     for (var i = 0; i < game.buildings.length; i++) {
         var building = game.buildings[i];
         buildingsHTML += "<div class=\"buildingAvailableCard card\">" +
-            "<div data-buildingdefinitionid=\"" + building.id + "\" class=\"buildingHeader\">" + building.name + "</div>" +
+            "<div data-buildingdefinitionid=\"" + building.id + "\" class=\"buildingHeader\">" + building.name + (building.damage >0 ? " [" + (100- parseInt(building.damage)) + "%]":"") +"</div>" +
             (building.iscomplete() ? "" : "<div class=\"progress\"><div class=\"bar\" style=\"width: " + (building.timeproduced / building.definition.timerequired) * 100 + "%\"></div>") +
 
 

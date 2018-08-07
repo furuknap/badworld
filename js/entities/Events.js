@@ -45,13 +45,16 @@ export class AttackEventDefinition extends EventDefinition {
             if (game.attacks.count == 0) {
                 odds = 10;
             }
+            if (Services.CrewService.getAvailable(game) < 3) {
+                odds = 0; // Creatures do not attack if only a few people are available.
+            }
             return Math.random() * 100 < odds;
         }
         
         this.completed = (game, event) => {
             var oddsOfWound = 10;
             var buildingDamageOdds = 10;
-            var buildingDamageAmount = 10;
+            var buildingDamageAmount = 25;
 
             var wounded = 0;
             var buildingsDamaged = 0;
@@ -94,7 +97,7 @@ export class AttackEventDefinition extends EventDefinition {
             game.attacks.count++;
 
             var text = "event.kruattack.regular";
-            if (game.research.some(r => r.id == "kruintro")) {
+            if (game.research.some(r => r.definition.id == "krulanguagebasics" && r.iscomplete())) {
                 text = "event.kruattack.namediscovered";
             }
             if (game.attacks.count >= 2) {

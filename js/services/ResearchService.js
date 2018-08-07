@@ -83,6 +83,11 @@ export class ResearchService extends GameService {
             kruintro.timerequired = 60;
             ResearchService.definitions.push(kruintro);
 
+            var krulanguagebasics = new ResearchDefinition(Language.getText("research.krulanguagebasics.name"), "krulanguagebasics");
+            krulanguagebasics.prerequisiteresearch.push(kruintro);
+            krulanguagebasics.timerequired = 240;
+            ResearchService.definitions.push(krulanguagebasics);
+
         }
 
         return ResearchService.definitions;

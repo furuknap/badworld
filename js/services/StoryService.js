@@ -102,8 +102,20 @@ export class StoryService extends GameService {
         this.entities.push(medkitsoutcanbuild);
 
         var krucaptured = new StoryElement("", 22, "krucaptured");
-        krucaptured.unlockcondition = (game) => { return false; };
+        krucaptured.unlockcondition = (game) => { return game.state.krucaptive; };
         this.entities.push(krucaptured);
+
+        var krucaptured = new StoryElement("", 23, "kruintro");
+        medkits.prerequisiteresearch = Services.ResearchService.allDefinitions().filter(r => r.id == "kruintro");
+        this.entities.push(krucaptured);
+
+        var krunonaggressive = new StoryElement("", 24, "krunonaggressive");
+        krunonaggressive.unlockcondition = (game) => { return game.attacks.count > 5; };
+        this.entities.push(krunonaggressive);
+
+        var krulanguagebasics = new StoryElement("", 25, "krulanguagebasics");
+        krulanguagebasics.prerequisiteresearch = Services.ResearchService.allDefinitions().filter(r => r.id == "krulanguagebasics");
+        this.entities.push(krulanguagebasics);
     }
 
     updateGame(game, deltaTime) {
