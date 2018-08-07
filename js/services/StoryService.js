@@ -105,9 +105,9 @@ export class StoryService extends GameService {
         krucaptured.unlockcondition = (game) => { return game.state.krucaptive; };
         this.entities.push(krucaptured);
 
-        var krucaptured = new StoryElement("", 23, "kruintro");
-        medkits.prerequisiteresearch = Services.ResearchService.allDefinitions().filter(r => r.id == "kruintro");
-        this.entities.push(krucaptured);
+        var kruintro = new StoryElement("", 23, "kruintro");
+        kruintro.prerequisiteresearch.push({ id: "kruintro" });
+        this.entities.push(kruintro);
 
         var krunonaggressive = new StoryElement("", 24, "krunonaggressive");
         krunonaggressive.unlockcondition = (game) => { return game.attacks.count > 5; };
@@ -122,7 +122,7 @@ export class StoryService extends GameService {
         this.entities.push(antennafound);
 
         var antennarecovered = new StoryElement("", 27, "antennarecovered");
-        antennarecovered.prerequisitediscoveries = Services.DiscoveryService.allDefinitions().filter(b => b.id == "antennafound");
+        antennarecovered.prerequisitediscoveries = Services.DiscoveryService.allDefinitions().filter(b => b.id == "antenna");
         this.entities.push(antennarecovered);
     }
 

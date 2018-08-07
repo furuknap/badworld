@@ -104,7 +104,7 @@ export class AttackEventDefinition extends EventDefinition {
                 game.notifications.push(new Notification(text, null, 5));
             }
 
-            if (game.buildings.some(b => b.definition.id == "krucage") && !game.state.krucaptive) {
+            if (game.buildings.some(b => b.definition.id == "krucage" && b.iscomplete()) && !game.state.krucaptive) {
                 if (Math.random() * 100 > 50) {
                     game.state.krucaptive = true;
                 }

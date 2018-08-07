@@ -14,7 +14,7 @@
         this.completed = function (game) { return game; };
         this.onupdate = function (game) { return game; };
         this.onstart = function (game) { return game; };
-        this.postrender = function (game) { return game; };
+        this.postrender = function (game, html) { return html; };
     }
 
     static toClass(obj, proto) {

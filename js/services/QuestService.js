@@ -125,7 +125,7 @@ export class QuestService extends GameService {
                 }
 
                 if (!game.state.antennafound) {
-                    if (Math.random() * 100 < 0.25) {
+                    if (Math.random() * 100 < 0.1) {
                         game.state.antennafound = true;
                     }
                 }

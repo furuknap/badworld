@@ -9,6 +9,7 @@ var autoScroll = true;
 //region Selector
 var researchAvailableListSelector = ".researchAvailableList";
 var researchListSelector = ".researchList";
+var researchListMoreSelector = ".researchListMore";
 var buildingsAvailableListSelector = ".buildingsAvailableList";
 var buildingsListSelector = ".buildingsList";
 var questsAvailableListSelector = ".questsAvailableList";
@@ -194,6 +195,7 @@ function showNotifications() {
                 vex.dialog.open({
                     message: Utilities.Language.getText(notification.textid),
                     buttons: buttons,
+                    overlayClosesOnClick: false
                 });
             }
         }
@@ -226,7 +228,7 @@ function updateInventory() {
     var inventoryHTML = "<div>" +
         "<strong>" + Utilities.Language.getText("ui.heading.inventory") + "</strong><br/>" +
         Utilities.Language.getText("ui.heading.inventory.medkits") + ": " + game.inventory.medkits + "<br/>" +
-        Utilities.Language.getText("ui.heading.inventory.medicinalplants") + ": " + game.inventory.medicinalplants + "<br/>" +
+        (game.discoveries.some(d=>d.definition.id=="medicinalplants" && d.iscomplete()) ?  Utilities.Language.getText("ui.heading.inventory.medicinalplants") + ": " + game.inventory.medicinalplants + "<br/>" :"") +
         "<br/>" +
         "</div>"
         ;
@@ -339,22 +341,32 @@ function updateResearch() {
     $(researchAvailableListSelector).html(researchAvailableHTML)
 
     var researchHTML = "";
-    for (var i = 0; i < game.research.length; i++) {
+    var listCount = 0;
+    var list = "";
+    for (var i = game.research.length-1; i >=0 ; i--) {
         var research = game.research[i];
-        var html = "<div class=\"researchCard card\">" +
-            "<div data-researchdefinitionid=\"" + research.id + "\" class=\"researchHeader\">" + research.name + "</div>" +
-            (research.iscomplete() ? "" : "<div class=\"progress\"><div class=\"bar\" style=\"width: " + (research.timeproduced / research.definition.timerequired) * 100 + "%\"></div>") +
+        if (listCount < 4) {
+            var html = "<div class=\"researchCard card\">" +
+                "<div data-researchdefinitionid=\"" + research.id + "\" class=\"researchHeader\">" + research.name + "</div>" +
+                (research.iscomplete() ? "" : "<div class=\"progress\"><div class=\"bar\" style=\"width: " + (research.timeproduced / research.definition.timerequired) * 100 + "%\"></div>") +
 
-            "<div class=\"\"></div>" +
+                "<div class=\"\"></div>" +
 
-            "</div>";
+                "</div>";
+            html = research.definition.postrender(game, html);
+            listCount++;
+            researchHTML += html;
+        }
+        else {
+            list += research.name + "\n";
+            $(researchListMoreSelector).show();
+        }
 
-
-        researchHTML += html;
 
     }
 
     $(researchListSelector).html(researchHTML);
+    $(researchListMoreSelector).attr("title", list);
 
 
 }
@@ -378,7 +390,7 @@ function updateBuildings() {
     for (var i = 0; i < game.buildings.length; i++) {
         var building = game.buildings[i];
         buildingsHTML += "<div class=\"buildingAvailableCard card\">" +
-            "<div data-buildingdefinitionid=\"" + building.id + "\" class=\"buildingHeader\">" + building.name + (building.damage >0 ? " [" + (100- parseInt(building.damage)) + "%]":"") +"</div>" +
+            "<div data-buildingdefinitionid=\"" + building.id + "\" class=\"buildingHeader\">" + building.name + (building.damage > 0 ? " [" + (100 - parseInt(building.damage)) + "%]" : "") + "</div>" +
             (building.iscomplete() ? "" : "<div class=\"progress\"><div class=\"bar\" style=\"width: " + (building.timeproduced / building.definition.timerequired) * 100 + "%\"></div>") +
 
 

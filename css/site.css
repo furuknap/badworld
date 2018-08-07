@@ -13,6 +13,8 @@ body {
         background-color: black;
     }
 
+
+
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
@@ -27,18 +29,14 @@ body {
 
 
 
-/* Make .svg files in the carousel display properly in older browsers */
-.carousel-inner .item img[src$=".svg"] {
-    width: 100%;
-}
-
-
 /* Hide/rearrange for smaller screens */
 @media screen and (max-width: 767px) {
-    /* Hide captions */
-    .carousel-caption {
-        display: none;
-    }
+
+}
+
+.researchListMore {
+    display: none;
+    font-weight: bold;
 }
 
 .btn {
