@@ -76,7 +76,7 @@ export class DiscoveryService extends GameService {
 
             var shiplocation = new DiscoveryDefinition(Language.getText("discovery.shiplocation.name"));
             shiplocation.id = "shiplocation";
-            shiplocation.pointsrequired = 500;
+            shiplocation.pointsrequired = 250;
             shiplocation.unlockcondition = function (game) { return game.discoveries.some(d=>d.definition.id=="shipintro" && d.iscomplete()); };
             DiscoveryService.definitions.push(shiplocation);
 

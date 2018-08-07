@@ -89,7 +89,7 @@ export class StoryService extends GameService {
 
         var medkitsout = new StoryElement("", 19, "medkitsoutneedresearch");
         medkitsout.unlockcondition = (game) => {
-            return (!game.research.some(r => r.definition.id =="medkit") && game.inventory.medkits == 0);
+            return (!game.research.some(r => r.definition.id =="medkit") && game.texts.some(t=>t.id==18) && game.inventory.medkits == 0);
         }
         this.entities.push(medkitsout);
 
@@ -100,6 +100,10 @@ export class StoryService extends GameService {
         var medkitsoutcanbuild = new StoryElement("", 21, "medkitsoutcanbuild");
         medkitsoutcanbuild.unlockcondition = (game) => { return game.buildings.some(b => b.definition.id == "sickbay" && b.iscomplete()) && game.inventory.medkits == 0; }
         this.entities.push(medkitsoutcanbuild);
+
+        var krucaptured = new StoryElement("", 22, "krucaptured");
+        krucaptured.unlockcondition = (game) => { return false; };
+        this.entities.push(krucaptured);
     }
 
     updateGame(game, deltaTime) {

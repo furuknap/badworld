@@ -14,10 +14,9 @@ export class BuildingService extends GameService {
 
             if (building.damage <= 0) {
                 var wascomplete = building.iscomplete;
-                game = building.definition.onupdate(game);
+                game = building.definition.onupdate(game, building);
                 if (building.inprogress && !building.iscomplete()) {
                     building.timeproduced += deltaTime;
-                    game = building.definition.onupdate(game);
                     if (building.iscomplete() && !building.wascomplete) {
                         game = building.definition.completed(game);
                     }
@@ -110,7 +109,7 @@ export class BuildingService extends GameService {
             sickbay.timerequired = 240;
             sickbay.crewrequired = 2;
             sickbay.prerequisiteresearch.push({ id: "medicinalplantsbase" });
-            sickbay.onupdate = function (game) {
+            sickbay.onupdate = function (game, building) {
                 if (game.crew.sick > 0) {
                     var baseOdds = 4;
 
@@ -125,9 +124,10 @@ export class BuildingService extends GameService {
                         }
                     }
                 }
-                var medkitOdds = 5;
-                if (Math.random() * 100 < medkitOdds) {
+                var medkitOdds = 10;
+                if (Math.random() * 100 < medkitOdds && game.inventory.medicinalplants>0 && building.iscomplete()) {
                     game.inventory.medkits++;
+                    game.inventory.medicinalplants--;
                 }
 
 

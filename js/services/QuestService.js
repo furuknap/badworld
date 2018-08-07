@@ -72,7 +72,7 @@ export class QuestService extends GameService {
             investigateJungle.name = Language.getText("quest.nearbyjungle.name");
             investigateJungle.onupdate = (game, quest) => {
                 var baseWoundedOdds = 2;
-                var medkitsOdds = 3;
+                var medicinalPlantsOdds = 3;
                 if (game.research.some(r => r.definition.id == "medicinalplants" && r.iscomplete())) {
                     baseWoundedOdds/=2;
                 }
@@ -89,9 +89,9 @@ export class QuestService extends GameService {
                     Services.DiscoveryService.addPoints(game, parseInt(Math.random() * 3));
                     
                 }
-                if (game.buildings.some(b => b.id == "sickbay" && b.iscomplete())) {
-                    if (Math.random() * 100 < medkitsOdds) {
-                        game.inventory.medkits++;
+                if (game.buildings.some(b => b.definition.id == "sickbay" && b.iscomplete())) {
+                    if (Math.random() * 100 < medicinalPlantsOdds) {
+                        game.inventory.medicinalplants++;
                     }
                 }
 

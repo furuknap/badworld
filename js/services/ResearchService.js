@@ -78,6 +78,11 @@ export class ResearchService extends GameService {
             krucapture.timerequired = 240;
             ResearchService.definitions.push(krucapture);
 
+            var kruintro = new ResearchDefinition(Language.getText("research.kruintro.name"), "kruintro");
+            kruintro.unlockcondition = (game) => { return game.state.krucaptive; };
+            kruintro.timerequired = 60;
+            ResearchService.definitions.push(kruintro);
+
         }
 
         return ResearchService.definitions;

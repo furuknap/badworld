@@ -226,6 +226,7 @@ function updateInventory() {
     var inventoryHTML = "<div>" +
         "<strong>" + Utilities.Language.getText("ui.heading.inventory") + "</strong><br/>" +
         Utilities.Language.getText("ui.heading.inventory.medkits") + ": " + game.inventory.medkits + "<br/>" +
+        Utilities.Language.getText("ui.heading.inventory.medicinalplants") + ": " + game.inventory.medicinalplants + "<br/>" +
         "<br/>" +
         "</div>"
         ;
@@ -429,6 +430,14 @@ function loadGame() {
             var e = Entities.Notification.toClass(game.notifications[i], Entities.Notification.prototype);
             game.notifications[i] = e;
         }
+        for (var i = 0; i < game.events.length; i++) {
+            var e = {};
+            if (e.type == "attack") {
+                e = Entities.Event.toClass(game.events[i], Entities.Discovery.prototype);
+                e.definition = Entities.AttackEventDefinition.toClass(Services.EventService.allDefinitions().find(d => d.id == e.definition.id), Entities.AttackEventDefinition.prototype);
+            }
+            game.events[i] = e;
+        }
 
         game.lastupdate = new Date(game.lastupdate);
 
@@ -455,7 +464,8 @@ function getDefaultGame() {
             building: 0,
             research: 0
         },
-        inventory: { medkits: 0 },
+        inventory: { medkits: 0, medicinalplants: 0 },
+        state: { krucaptive: false },
         startGame: true,
         night: true,
         discoverypoints: 0,

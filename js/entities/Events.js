@@ -8,11 +8,7 @@ class EventDefinition extends Entity {
         super();
         this.unlockcondition = (game) => { return true; }
         this.eventtriggered = (game) => { return false; }
-    }
-    createEvent(game) {
-        var event = new AttackEvent();
-        event.definition = this;
-        return event;
+        this.onupdate = (game, event) => { return game; }
     }
 }
 
@@ -23,6 +19,7 @@ class EventBase extends Entity {
         this.onupdate = (game, event) => { return game; }
         this.timeprogress = 0;
         this.definition = {};
+        this.type = "";
     }
     iscomplete() {
         return this.timeprogress >= this.definition.timerequired;
@@ -30,6 +27,12 @@ class EventBase extends Entity {
 }
 
 export class AttackEventDefinition extends EventDefinition {
+    createEvent(game) {
+        var event = new AttackEvent();
+        event.definition = this;
+        return event;
+    }
+
     constructor(id) {
         super();
         if (id !== undefined) {
@@ -67,35 +70,43 @@ export class AttackEventDefinition extends EventDefinition {
                 }
             }
 
-            var text = "";
+            //var text = "";
 
-            if (game.attacks.count == 0) {
-                text = Language.getText("event.kruattack.first");
-            }
-            else {
-                if (game.research.some(r => r.id == "")) {
-                    text = Language.getText("event.kruattack.namediscovered");
-                }
-                else {
-                    text = Language.getText("event.kruattack.regular");
-                }
-            }
+            //if (game.attacks.count == 0) {
+            //    text = Language.getText("event.kruattack.first");
+            //}
+            //else {
+            //}
 
-            if (wounded > 0) {
-                text += Language.getText("event.kruattack.wounded");
-            }
-            else {
-                text += Language.getText("event.kruattack.nowounded");
-            }
-            if (buildingsDamaged > 0) {
-                text += Language.getText("event.kruattack.damaged");
-            }
-            else {
-                text += Language.getText("event.kruattack.nodamaged");
-            }
+            //if (wounded > 0) {
+            //    text += Language.getText("event.kruattack.wounded");
+            //}
+            //else {
+            //    text += Language.getText("event.kruattack.nowounded");
+            //}
+            //if (buildingsDamaged > 0) {
+            //    text += Language.getText("event.kruattack.damaged");
+            //}
+            //else {
+            //    text += Language.getText("event.kruattack.nodamaged");
+            //}
 
             game.attacks.count++;
-            //game.notifications.push(new Notification(null, 30, null, text));
+
+            var text = "event.kruattack.regular";
+            if (game.research.some(r => r.id == "kruintro")) {
+                text = "event.kruattack.namediscovered";
+            }
+            if (game.attacks.count >= 2) {
+                game.notifications.push(new Notification(text, null, 5));
+            }
+
+            if (game.buildings.some(b => b.definition.id == "krucage") && !game.state.krucaptive) {
+                if (Math.random() * 100 > 50) {
+                    game.state.krucaptive = true;
+                }
+            }
+
 
             return game;
         }
@@ -107,5 +118,6 @@ export class AttackEvent extends EventBase {
     constructor() {
         super();
         this.textid = "event.kruattack.name";
+        this.type = "attack";
     }
 }
