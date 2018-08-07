@@ -19,6 +19,7 @@
   "medkits": "Thanks to the hard work of the crew, we found out how to make medkits out of the native medicinal plants. We need to send out expeditions to find the raw materials, but we can now produce new medkits in sickbay. ",
   "medkitsout": "We ran out of medkits. ",
   "medkitsoutneedresearch": "We should research how to make more. ",
+  "medkitsoutcanbuild": "Luckily, we can build more in sickbay if we just get the raw materials from the jungle. ",
 
 
   "building.hut.name": "Small Hut",

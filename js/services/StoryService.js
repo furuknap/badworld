@@ -93,10 +93,13 @@ export class StoryService extends GameService {
         }
         this.entities.push(medkitsout);
 
-        var medkitsout = new StoryElement("", 20, "medkits");
-        medkitsout.prerequisiteresearch = Services.ResearchService.allDefinitions().filter(r => r.id == "medkit");
-        this.entities.push(medkitsout);
+        var medkits = new StoryElement("", 20, "medkits");
+        medkits.prerequisiteresearch = Services.ResearchService.allDefinitions().filter(r => r.id == "medkit");
+        this.entities.push(medkits);
 
+        var medkitsoutcanbuild = new StoryElement("", 21, "medkitsoutcanbuild");
+        medkitsoutcanbuild.unlockcondition = (game) => { return game.buildings.some(b => b.definition.id == "sickbay" && b.iscomplete()) && game.inventory.medkits == 0; }
+        this.entities.push(medkitsoutcanbuild);
     }
 
     updateGame(game, deltaTime) {
