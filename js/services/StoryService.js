@@ -144,6 +144,30 @@ export class StoryService extends GameService {
         var communicationsarrayboosterintro = new StoryElement("", 32, "communicationsarrayboosterintro");
         communicationsarrayboosterintro.prerequisiteresearch.push({ id: "communicationsarrayboost" });
         this.entities.push(communicationsarrayboosterintro);
+
+        var messagesentpart1 = new StoryElement("", 33, "messagesentpart1");
+        messagesentpart1.unlockcondition = (game) => { return game.state.earthmessagesent; }
+        this.entities.push(messagesentpart1);
+
+        var messagesentpart2 = new StoryElement("", 34, "messagesentpart2");
+        messagesentpart2.unlockcondition = (game) => { return game.texts.some(t=>t.id==33); }
+        this.entities.push(messagesentpart2);
+
+        var messagesentpart3 = new StoryElement("", 35, "messagesentpart3");
+        messagesentpart3.unlockcondition = (game) => { return game.texts.some(t => t.id == 34); }
+        this.entities.push(messagesentpart3);
+
+        var messagesentpart4 = new StoryElement("", 36, "messagesentpart4");
+        messagesentpart4.unlockcondition = (game) => { return game.texts.some(t => t.id == 35); }
+        this.entities.push(messagesentpart4);
+
+        var communicationsalmostdone = new StoryElement("", 37, "communicationsalmostdone");
+        communicationsalmostdone.unlockcondition = (game) => { return game.buildings.find(b => b.definition.id == "communicationsarray").charge > 8000; }
+        this.entities.push(communicationsalmostdone);
+
+        var communicationshalfway = new StoryElement("", 38, "communicationshalfway");
+        communicationshalfway.unlockcondition = (game) => { return game.buildings.find(b => b.definition.id == "communicationsarray").charge > 5000; }
+        this.entities.push(communicationshalfway);
     }
 
     updateGame(game, deltaTime) {
