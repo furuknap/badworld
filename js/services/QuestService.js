@@ -146,9 +146,9 @@ export class QuestService extends GameService {
             crystalMine.unlockcondition = (game) => { return game.discoveries.some(d => d.definition.id == "powercrystals" && d.iscomplete()) };
 
             crystalMine.completed = (game, quest) => {
-                var basecount = 5;
+                var basecount = 20;
                 var random = Math.random() * basecount;
-                var count = parseInt( random);
+                var count = parseInt( random+1);
 
                 game.inventory.powercrystals += count;
                 return game;

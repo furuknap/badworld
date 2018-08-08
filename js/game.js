@@ -397,12 +397,12 @@ function updateBuildings() {
         if (listCount < 4 || building.damage>0) {
             var html = "<div class=\"buildingAvailableCard card\">" +
                 "<div data-buildingdefinitionid=\"" + building.id + "\" class=\"buildingHeader\">" + building.name + (building.damage > 0 ? " [" + (100 - parseInt(building.damage)) + "%]" : "") + "</div>" +
-                (building.iscomplete() ? "" : "<div class=\"progress\"><div class=\"bar\" style=\"width: " + (building.timeproduced / building.definition.timerequired) * 100 + "%\"></div>") +
+                (building.iscomplete() ? "" : "<div class=\"progress\"><div class=\"bar\" style=\"width: " + (((building.timeproduced / building.definition.timerequired) * 100)-building.damage) + "%\"></div>") +
 
 
                 "</div>";
 
-            html = building.definition.postrender(game, html);
+            html = building.definition.postrender(game, html, building);
             listCount++;
             buildingsHTML += html;
         }

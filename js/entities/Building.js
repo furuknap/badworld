@@ -27,7 +27,7 @@ export class Building extends Entity {
         this.inprogress = false;
     };
     iscomplete() {
-        return this.timeproduced >= this.definition.timerequired;
+        return (this.timeproduced >= this.definition.timerequired) && this.damage==0;
     }
     static getFromDefintion(definition) {
         var building = new Building();

@@ -38,6 +38,7 @@
   "building.krucage.name": "Creature Cage",
   "building.communicationsarray.name": "Communications Array",
   "building.powerstation.name": "Power Station",
+  "building.communicationsarraybooster.name": "Communications Booster",
 
 
 
@@ -51,6 +52,8 @@
   "research.kruintro.name": "Creature Examination",
   "research.krulanguagebasics.name": "Basic Language",
   "research.powercrystals.name": "Power Crystal Usage",
+  "research.weatherpatterns.name": "Weather Patterns",
+  "research.communicationsarrayboost.name": "Boost Communications Array",
 
   "quest.nearbyjungle.name": "Scout Nearby Jungle",
   "quest.deeperjungle.name": "Deep Jungle Expedition",
@@ -103,6 +106,8 @@
   "ui.heading.inventory.powercrystals": "Power Crystals",
   "ui.heading.discoveries": "Discoveries",
   "ui.heading.discoveries.points": "Items",
+  "ui.heading.communicationsbooster.powered": "Powered",
+  "ui.heading.communicationsbooster.unpowered": "No Crystals",
 
   "notenoughcrewavailable": "Not enough crew available",
 

@@ -52,8 +52,8 @@ export class AttackEventDefinition extends EventDefinition {
         }
         
         this.completed = (game, event) => {
-            var oddsOfWound = 10;
-            var buildingDamageOdds = 10;
+            var oddsOfWound = 15;
+            var buildingDamageOdds = 20;
             var buildingDamageAmount = 25;
 
             var wounded = 0;

@@ -24,7 +24,8 @@ export class BuildingService extends GameService {
             }
             else {
                 building.damage -= Math.max(1, parseInt(Services.CrewService.getAvailable(game) * 0.1));
-                if (building.damage == 0) {
+                if (building.damage <= 0) {
+                    building.damage = 0;
                     game.notifications.push(new Notification("ui.notifications.buildingrepaired", null, 5));
                 }
             }
@@ -125,7 +126,7 @@ export class BuildingService extends GameService {
                     }
                 }
                 var medkitOdds = 10;
-                if (Math.random() * 100 < medkitOdds && game.inventory.medicinalplants>0 && building.iscomplete()) {
+                if (Math.random() * 100 < medkitOdds && game.inventory.medicinalplants > 0 && building.iscomplete()) {
                     game.inventory.medkits++;
                     game.inventory.medicinalplants--;
                 }
@@ -140,7 +141,69 @@ export class BuildingService extends GameService {
             communicationsarray.crewrequired = 8;
             communicationsarray.timerequired = 360;
             communicationsarray.prerequisitediscoveries.push({ id: "antenna" });
+
+            communicationsarray.onupdate = (game, building) => {
+                if (game.research.some(r => r.definition.id == "weatherpatterns" && r.iscomplete())) {
+                    if (building.charging == undefined) {
+                        building.charging = true;
+                    }
+
+                    if (building.charging) {
+                        if (building.charge == undefined) {
+                            building.charge = 0;
+                        }
+                        building.charge++;
+                        if (game.buildings.some(b => b.definition.id == "communicationsarraybooster" && b.iscomplete()) && game.inventory.powercrystals > 0) {
+                            game.inventory.powercrystals--;
+                            building.charge += 5;
+                        }
+
+                        var completed = (building.charge / 10000) * 100;
+                        if (completed >= 100) {
+                            building.charge = 0;
+                            building.charging = false;
+                            game.state.earthmessagesent = true;
+                        }
+                    }
+                }
+                return game;
+            }
+            communicationsarray.postrender = (game, html, building) => {
+                if (building.charging) {
+                    var completed = (building.charge / 10000) * 100;
+                    var progresshtml = " <span class=\"\">" + completed.toFixed(2) + "%</span>";
+                    var title = $(html).find(".buildingHeader");
+                    var orgTitle = $(title).html();
+                    var titleHTML = title.append(progresshtml).html();
+                    $(title).html(titleHTML);
+                    var replaced = $(html).html().replace(orgTitle, titleHTML);
+                    html = replaced;
+                }
+                return html;
+            }
             BuildingService.buildingdefinitions.push(communicationsarray);
+
+            var communicationsarraybooster = new BuildingDefinition(Language.getText("building.communicationsarraybooster.name"));
+            communicationsarraybooster.id = "communicationsarraybooster";
+            communicationsarraybooster.crewrequired = 8;
+            communicationsarraybooster.timerequired = 360;
+            communicationsarraybooster.prerequisiteresearch.push({ id: "communicationsarrayboost" });
+            communicationsarraybooster.postrender = (game, html, building) => {
+                var array = game.buildings.find(b => b.definition.id == "communicationsarray");
+                if (array.charging) {
+                    var poweredText = (game.inventory.powercrystals > 0 ? Language.getText("ui.heading.communicationsbooster.powered") : Language.getText("ui.heading.communicationsbooster.unpowered"));
+                    var powered = " <span>(" + poweredText + ")</span>";
+                    var title = $(html).find(".buildingHeader");
+                    var orgTitle = $(title).html();
+                    var titleHTML = title.append(powered).html();
+                    $(title).html(titleHTML);
+                    var replaced = $(html).html().replace(orgTitle, titleHTML);
+                    html = replaced;
+                }
+                return html;
+            }
+            BuildingService.buildingdefinitions.push(communicationsarraybooster);
+
         }
 
         return BuildingService.buildingdefinitions;

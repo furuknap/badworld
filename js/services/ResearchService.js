@@ -94,6 +94,18 @@ export class ResearchService extends GameService {
             powercrystals.timerequired = 300;
             ResearchService.definitions.push(powercrystals);
 
+            var weatherpatterns = new ResearchDefinition(Language.getText("research.weatherpatterns.name"), "weatherpatterns");
+            weatherpatterns.prerequisitebuildings.push({ id: "communicationsarray" });
+            weatherpatterns.crewrequired = 10;
+            weatherpatterns.timerequired = 120;
+            ResearchService.definitions.push(weatherpatterns);
+
+            var communicationsarrayboost = new ResearchDefinition(Language.getText("research.communicationsarrayboost.name"), "communicationsarrayboost");
+            communicationsarrayboost.prerequisitebuildings.push({ id: "communicationsarray" });
+            communicationsarrayboost.crewrequired = 5;
+            communicationsarrayboost.timerequired = 200;
+            ResearchService.definitions.push(communicationsarrayboost);
+
         }
 
         return ResearchService.definitions;
