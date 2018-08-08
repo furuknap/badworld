@@ -135,7 +135,12 @@ export class BuildingService extends GameService {
             };
             BuildingService.buildingdefinitions.push(sickbay);
 
-
+            var communicationsarray = new BuildingDefinition(Language.getText("building.communicationsarray.name"));
+            communicationsarray.id = "communicationsarray";
+            communicationsarray.crewrequired = 8;
+            communicationsarray.timerequired = 360;
+            communicationsarray.prerequisitediscoveries.push({ id: "antenna" });
+            BuildingService.buildingdefinitions.push(communicationsarray);
         }
 
         return BuildingService.buildingdefinitions;

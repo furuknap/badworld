@@ -124,6 +124,12 @@ export class StoryService extends GameService {
         var antennarecovered = new StoryElement("", 27, "antennarecovered");
         antennarecovered.prerequisitediscoveries = Services.DiscoveryService.allDefinitions().filter(b => b.id == "antenna");
         this.entities.push(antennarecovered);
+
+        var medicalstation = new StoryElement("", 28, "communicationsarray");
+        medicalstation.prerequisitebuildings.push({ id: "communicationsarray" });
+        this.entities.push(medicalstation);
+
+
     }
 
     updateGame(game, deltaTime) {
