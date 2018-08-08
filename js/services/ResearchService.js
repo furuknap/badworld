@@ -88,6 +88,12 @@ export class ResearchService extends GameService {
             krulanguagebasics.timerequired = 240;
             ResearchService.definitions.push(krulanguagebasics);
 
+            var powercrystals = new ResearchDefinition(Language.getText("research.powercrystals.name"), "powercrystals");
+            powercrystals.prerequisitediscoveries.push({ id: "powercrystals" });
+            powercrystals.crewrequired = 5;
+            powercrystals.timerequired = 300;
+            ResearchService.definitions.push(powercrystals);
+
         }
 
         return ResearchService.definitions;

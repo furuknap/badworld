@@ -98,6 +98,12 @@ export class DiscoveryService extends GameService {
             antenna.unlockcondition = (game) => { return game.state.antennafound;}
             DiscoveryService.definitions.push(antenna);
 
+            var powercrystals = new DiscoveryDefinition(Language.getText("discovery.powercrystals.name"));
+            powercrystals.id = "powercrystals";
+            powercrystals.pointsrequired = 200;
+            powercrystals.unlockcondition = (game) => { return game.state.powercrystalsfound; }
+            DiscoveryService.definitions.push(powercrystals);
+
         }
 
         return DiscoveryService.definitions;

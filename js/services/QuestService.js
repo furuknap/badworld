@@ -130,12 +130,30 @@ export class QuestService extends GameService {
                     }
                 }
 
+                if (!game.state.powercrystalsfound) {
+                    if (Math.random() * 100 < 1) {
+                        game.state.powercrystalsfound = true;
+                    }
+                }
+
                 return game;
             }
             QuestService.definitions.push(deeperJungle);
 
+            var crystalMine = new QuestDefinition("", 3, 60);
+            crystalMine.crewrequired = 5;
+            crystalMine.name = Language.getText("quest.crystalmine.name");
+            crystalMine.unlockcondition = (game) => { return game.discoveries.some(d => d.definition.id == "powercrystals" && d.iscomplete()) };
 
+            crystalMine.completed = (game, quest) => {
+                var basecount = 5;
+                var random = Math.random() * basecount;
+                var count = parseInt( random);
 
+                game.inventory.powercrystals += count;
+                return game;
+            } 
+            QuestService.definitions.push(crystalMine);
         }
 
         return QuestService.definitions;
