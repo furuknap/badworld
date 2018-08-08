@@ -73,7 +73,7 @@ export class BuildingService extends GameService {
             medicalStation.unlockcondition = function (game) { return game.crew.sick > 0; }
             medicalStation.timerequired = 30;
             medicalStation.unlockelements = ".inventoryControls";
-            medicalStation.postrender = function (game) { return game };
+            medicalStation.postrender = function (game, html) { return html; };
             medicalStation.completed = (game) => { game.inventory.medkits = 5; return game; }
             medicalStation.onupdate = function (game) {
                 if (game.crew.sick > 0) {

@@ -12,6 +12,7 @@ var researchListSelector = ".researchList";
 var researchListMoreSelector = ".researchListMore";
 var buildingsAvailableListSelector = ".buildingsAvailableList";
 var buildingsListSelector = ".buildingsList";
+var buildingsListMoreSelector = ".buildingsListMore";
 var questsAvailableListSelector = ".questsAvailableList";
 var questsListSelector = ".questsList";
 
@@ -373,7 +374,10 @@ function updateResearch() {
 
 function updateBuildings() {
     var available = Services.BuildingService.availableDefinitions(game);
-    var availableHTML = ""
+    var availableHTML = "";
+    var listCount = 0;
+    var list = "";
+
     for (var i = 0; i < available.length; i++) {
         var building = available[i];
         availableHTML += "<div class=\"buildingAvailableCard card\">" +
@@ -387,19 +391,29 @@ function updateBuildings() {
     $(buildingsAvailableListSelector).html(availableHTML)
 
     var buildingsHTML = "";
-    for (var i = 0; i < game.buildings.length; i++) {
+    for (var i = game.buildings.length - 1; i >= 0; i--) {
         var building = game.buildings[i];
-        buildingsHTML += "<div class=\"buildingAvailableCard card\">" +
-            "<div data-buildingdefinitionid=\"" + building.id + "\" class=\"buildingHeader\">" + building.name + (building.damage > 0 ? " [" + (100 - parseInt(building.damage)) + "%]" : "") + "</div>" +
-            (building.iscomplete() ? "" : "<div class=\"progress\"><div class=\"bar\" style=\"width: " + (building.timeproduced / building.definition.timerequired) * 100 + "%\"></div>") +
+        if (listCount < 4 || building.damage>0) {
+            var html = "<div class=\"buildingAvailableCard card\">" +
+                "<div data-buildingdefinitionid=\"" + building.id + "\" class=\"buildingHeader\">" + building.name + (building.damage > 0 ? " [" + (100 - parseInt(building.damage)) + "%]" : "") + "</div>" +
+                (building.iscomplete() ? "" : "<div class=\"progress\"><div class=\"bar\" style=\"width: " + (building.timeproduced / building.definition.timerequired) * 100 + "%\"></div>") +
 
 
-            "</div>";
+                "</div>";
+
+            html = building.definition.postrender(game, html);
+            listCount++;
+            buildingsHTML += html;
+        }
+        else {
+            list += building.name + "\n";
+            $(buildingsListMoreSelector).show();
+        }
 
     }
 
     $(buildingsListSelector).html(buildingsHTML);
-
+    $(buildingsListMoreSelector).attr("title", list);
 
 }
 

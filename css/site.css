@@ -34,7 +34,7 @@ body {
 
 }
 
-.researchListMore {
+.researchListMore, .buildingsListMore {
     display: none;
     font-weight: bold;
 }
