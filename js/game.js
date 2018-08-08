@@ -394,10 +394,12 @@ function updateBuildings() {
     var buildingsHTML = "";
     for (var i = game.buildings.length - 1; i >= 0; i--) {
         var building = game.buildings[i];
-        if (listCount < 4 || building.damage>0) {
+        if (listCount < 4 || building.damage > 0) {
+            var completePercentage = (((building.timeproduced / building.definition.timerequired) * 100));
+            completePercentage -= building.damage ? building.damage : 0;
             var html = "<div class=\"buildingAvailableCard card\">" +
                 "<div data-buildingdefinitionid=\"" + building.id + "\" class=\"buildingHeader\">" + building.name + (building.damage > 0 ? " [" + (100 - parseInt(building.damage)) + "%]" : "") + "</div>" +
-                (building.iscomplete() ? "" : "<div class=\"progress\"><div class=\"bar\" style=\"width: " + (((building.timeproduced / building.definition.timerequired) * 100)-building.damage) + "%\"></div>") +
+                (building.iscomplete() ? "" : "<div class=\"progress\"><div class=\"bar\" style=\"width: " + completePercentage + "%\"></div>") +
 
 
                 "</div>";

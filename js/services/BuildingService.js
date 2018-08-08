@@ -41,11 +41,11 @@ export class BuildingService extends GameService {
             var completed = game.buildings.some(gb => gb.definition.id == definition.id && (gb.iscomplete() || gb.inprogress));
             var researchReqsMet = definition.prerequisiteresearch.every(r => game.research.some(gr => gr.definition.id == r.id && gr.iscomplete()));
             var buildingsReqsMet = definition.prerequisitebuildings.every(b => game.buildings.some(gb => gb.definition.id == b.id && gb.iscomplete()));
-
+            var discoveriesReqsMet = definition.prerequisitediscoveries.every(d => game.discoveries.some(gd => gd.definition.id == d.id && gd.iscomplete()));
             var shipReqsMet = definition.prerequisiteshipresearch.every(s => game.shipresearch.some(gs => gs.definition.id == s.id && gs.iscomplete()));
             var unlocked = definition.unlockcondition(game);
 
-            if (!completed && researchReqsMet && buildingsReqsMet && unlocked) {
+            if (!completed && researchReqsMet && buildingsReqsMet && discoveriesReqsMet && unlocked) {
                 availableDefinitions.push(definition);
             }
         }

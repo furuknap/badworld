@@ -130,7 +130,7 @@ export class StoryService extends GameService {
         this.entities.push(medicalstation);
 
         var powercrystalsintro = new StoryElement("", 29, "powercrystalsintro");
-        powercrystalsintro.unlockcondition = (game) => { return game.state.powercrystalsfound = true; }
+        powercrystalsintro.unlockcondition = (game) => { return game.state.powercrystalsfound; }
         this.entities.push(powercrystalsintro);
 
         var powercrystalscompleted = new StoryElement("", 30, "powercrystalscompleted");
