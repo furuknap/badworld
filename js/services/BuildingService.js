@@ -65,7 +65,7 @@ export class BuildingService extends GameService {
             largerHut.prerequisitebuildings.push(hut)
             largerHut.timerequired = 15;
             largerHut.crewrequired = 3;
-            largerHut.unlockelements = ".researchControls"
+            largerHut.unlockelements = ".researchControls, .storyToggle"
             BuildingService.buildingdefinitions.push(largerHut);
 
             var medicalStation = new BuildingDefinition(Language.getText("building.medicalstation.name"));
@@ -227,7 +227,7 @@ export class BuildingService extends GameService {
                 game.buildings.push(building);
             }
             else {
-                game.notifications.push(new Notification("notenoughcrewavailable"));
+                game.notifications.push(new Notification("notenoughcrewavailable", null, 3));
             }
         }
     }

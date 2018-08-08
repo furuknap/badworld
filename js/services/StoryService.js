@@ -137,6 +137,13 @@ export class StoryService extends GameService {
         powercrystalscompleted.prerequisitediscoveries.push({ id: "powercrystals" });
         this.entities.push(powercrystalscompleted);
 
+        var weatherpatterns = new StoryElement("", 31, "weatherpatterns");
+        weatherpatterns.prerequisiteresearch.push({ id: "weatherpatterns" });
+        this.entities.push(weatherpatterns);
+
+        var communicationsarrayboosterintro = new StoryElement("", 32, "communicationsarrayboosterintro");
+        communicationsarrayboosterintro.prerequisiteresearch.push({ id: "communicationsarrayboost" });
+        this.entities.push(communicationsarrayboosterintro);
     }
 
     updateGame(game, deltaTime) {

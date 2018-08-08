@@ -101,7 +101,7 @@ export class AttackEventDefinition extends EventDefinition {
                 text = "event.kruattack.namediscovered";
             }
             if (game.attacks.count >= 2) {
-                game.notifications.push(new Notification(text, null, 5));
+                game.notifications.push(new Notification(text, null, 3));
             }
 
             if (game.buildings.some(b => b.definition.id == "krucage" && b.iscomplete()) && !game.state.krucaptive) {

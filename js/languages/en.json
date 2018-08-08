@@ -29,6 +29,9 @@
   "communicationsarray": "\"We're ready, Captain!\" The crew had worked day and night to complete the new communications array. \"However, there is a major problem. During testing, we realized that the atmosphere is causing major issues with our signal. We can send a message but it is unlikely that we will receive a response. We need to learn more about the weather patterns and boost our output to have any chance of hearing back from Earth.\"",
   "powercrystalsintro": "\"Captain, we found something. You know those shiny crystal-like rocks we found lying around? Well, we think they're usable as an energy source. They seem to be everywhere but we'll need to collect a large number to understand how to utilize their energy. If we send out expeditions, we can start researching once we find enough.\"",
   "powercrystalscompleted": "The expedition returns with the crystals we need and the location of a large deposit in a nearby valley. The crystals are really stunning. If you hold them up to the light, they make the world look blue. Throw a rock at them and they spark, producing bright flashes of light. If the crew is correct, and we can unlock their secrets, we'll have access to lots of energy. And I suspect we will need lots of energy.",
+  "weatherpatterns": "The weather pattern here is greatly affected by the upper atmosphere, so by studying the weather, we've learned how we can determine the atmospheric conditions that would allow us to signal Earth. There are certain times of the year where we have a chance of sending and receiving a signal, but it will still take a long time to know if we have a chance of getting help. The communications array has started transmitting and hopefully we'll hear back and get help soon.",
+  "communicationsarrayboosterintro": "There's a way we can increase the power of the communications array. By building a booster, we can make reduce the time it takes to get a message through to Earth. However, this will require a lot of power so we are going to need a lot of power crystals.",
+
 
 
   "building.hut.name": "Small Hut",
@@ -40,6 +43,7 @@
   "building.powerstation.name": "Power Station",
   "building.communicationsarraybooster.name": "Communications Booster",
 
+  "story.background": "<p>Humanity has taken its first steps into the universe, to go boldly where no man has gone before. We’ve colonized the inner planets and sent probes towards other star systems. We’ve learned that there are a multitude of planets that can support human life.</p><p>One probe sends back evidence of a metal construction on a distant planet. This is likely the first real clue of extra-terrestrial life. However, the planet’s violent upper atmosphere makes an automated investigation impossible. </p><p>After a lengthy public debate, it is decided that we should send a manned expedition to investigate. </p><p>On arrival on the planet, the ship enters orbit and the crew confirms that this is indeed the remains of a massive starship that has crashed on the planet. After sending the initial findings back to earth, the captain, you, decide to commence your investigation by landing your ship.</p><p>Upon entering the atmosphere, your chief engineer miscalculates the angle of entry, and you lose control. The ship crashes, killing a portion of your crew. Only a few components of the ship survive, including some tools, but you have no way of getting off the planet.</p><p>Luckily, the planet provides plenty of resources to help. There’s edible fruits and plants, and using debris from the wreckage we can start searching for a way home and learn more about the alien ship.</p>",
 
 
   "research.surroundings.name": "Surroundings",
@@ -58,6 +62,7 @@
   "quest.nearbyjungle.name": "Scout Nearby Jungle",
   "quest.deeperjungle.name": "Deep Jungle Expedition",
   "quest.crystalmine.name": "Crystal Mine",
+  "quest.alienship.name": "Alien Ship Investigation",
   "quest.cancelled": "An expedition had to be cancelled because the last crew member got wounded.",
 
   "discovery.medicinalplants.name": "Medicinal Plants",
@@ -88,6 +93,7 @@
   "ui.start": "Start",
   "ui.activate": "Focus",
   "ui.reset": "Reset",
+  "ui.story": "The Story",
 
   "ui.notifications.buildingrepaired": "The crew repaired a building.",
 

@@ -77,6 +77,10 @@ function setupButtons() {
         }
     })
 
+    $(document).on("click", ".storyToggle", function () {
+        $("#storyDialog").modal('show'); 
+    })
+
     $(document).on("click", ".toggleUpdates", function () {
         runViewUpdates = !runViewUpdates;
     })
@@ -288,7 +292,7 @@ function updateUnlockedElements() {
             }
         });
     unlocksHTML = unlocks.join(", ");
-    $(unlocksHTML).show();
+    $(unlocksHTML).removeClass("unlockable").show();
 
 }
 

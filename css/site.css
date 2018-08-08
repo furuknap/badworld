@@ -2,6 +2,10 @@
     display: none;
 }
 
+.unlockable.storyToggle {
+    display: none;
+}
+
 body {
     padding-top: 75px;
     padding-bottom: 20px;
@@ -32,6 +36,12 @@ body {
 /* Hide/rearrange for smaller screens */
 @media screen and (max-width: 767px) {
 
+}
+.menuheader {
+    margin-top: 5px;
+}
+.dialogtext {
+    max-width: 70vw;
 }
 
 .researchListMore, .buildingsListMore {

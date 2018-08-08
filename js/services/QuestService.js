@@ -51,7 +51,7 @@ export class QuestService extends GameService {
                 game.quests.push(quest);
             }
             else {
-                game.notifications.push(new Notification("notenoughcrewavailable"));
+                game.notifications.push(new Notification("notenoughcrewavailable", null, 3));
             }
         }
     }
@@ -89,7 +89,10 @@ export class QuestService extends GameService {
                     Services.DiscoveryService.addPoints(game, parseInt(Math.random() * 3));
                     
                 }
-                if (game.buildings.some(b => b.definition.id == "sickbay" && b.iscomplete())) {
+                if (game.buildings.some(b => b.definition.id == "sickbay" && b.iscomplete())
+                    ||
+                    game.research.some(r => r.definition.id == "medicinalplants" && r.iscomplete())
+                ) {
                     if (Math.random() * 100 < medicinalPlantsOdds) {
                         game.inventory.medicinalplants++;
                     }
@@ -125,13 +128,13 @@ export class QuestService extends GameService {
                 }
 
                 if (!game.state.antennafound) {
-                    if (Math.random() * 100 < 0.1) {
+                    if (Math.random() * 100 < 0.01) {
                         game.state.antennafound = true;
                     }
                 }
 
                 if (!game.state.powercrystalsfound) {
-                    if (Math.random() * 100 < 1) {
+                    if (Math.random() * 100 < 0.25) {
                         game.state.powercrystalsfound = true;
                     }
                 }

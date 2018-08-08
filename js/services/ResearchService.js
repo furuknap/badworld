@@ -37,7 +37,7 @@ export class ResearchService extends GameService {
                 game = research.definition.onstart(game);
             }
             else {
-                game.notifications.push(new Notification("notenoughcrewavailable"));
+                game.notifications.push(new Notification("notenoughcrewavailable", null, 3));
             }
         }
     }
@@ -69,13 +69,13 @@ export class ResearchService extends GameService {
 
             var medkit = new ResearchDefinition(Language.getText("research.medkit.name"), "medkit");
             medkit.prerequisiteresearch.push(medicinalplantsbase);
-            medkit.timerequired = 120;
+            medkit.timerequired = 70;
             medkit.crewrequired = 1;
             ResearchService.definitions.push(medkit);
 
             var krucapture = new ResearchDefinition(Language.getText("research.krucapture.name"), "krucapture");
             krucapture.unlockcondition = (game) => { return game.attacks.count > 2; };
-            krucapture.timerequired = 240;
+            krucapture.timerequired = 100;
             ResearchService.definitions.push(krucapture);
 
             var kruintro = new ResearchDefinition(Language.getText("research.kruintro.name"), "kruintro");
@@ -96,7 +96,7 @@ export class ResearchService extends GameService {
 
             var weatherpatterns = new ResearchDefinition(Language.getText("research.weatherpatterns.name"), "weatherpatterns");
             weatherpatterns.prerequisitebuildings.push({ id: "communicationsarray" });
-            weatherpatterns.crewrequired = 10;
+            weatherpatterns.crewrequired = 2;
             weatherpatterns.timerequired = 120;
             ResearchService.definitions.push(weatherpatterns);
 
