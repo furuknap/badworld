@@ -45,6 +45,11 @@ export class AttackEventDefinition extends EventDefinition {
             if (game.attacks.count == 0) {
                 odds = 10;
             }
+
+            if (game.buildings.find(b => b.definition.id == "krudefenses").powered) {
+                odds /= 2;
+            }
+
             if (Services.CrewService.getAvailable(game) < 3) {
                 odds = 0; // Creatures do not attack if only a few people are available.
             }

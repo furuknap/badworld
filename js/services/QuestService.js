@@ -157,6 +157,23 @@ export class QuestService extends GameService {
                 return game;
             } 
             QuestService.definitions.push(crystalMine);
+
+
+            var alienShip = new QuestDefinition("", 4, 300);
+            alienShip.crewrequired = 5;
+            alienShip.name = Language.getText("quest.alienship.name");
+            alienShip.unlockcondition = (game) => { return game.discoveries.some(d => d.definition.id == "shiplocation" && d.iscomplete()) };
+
+            alienShip.completed = (game, quest) => {
+                var basecount = 10;
+                var random = Math.random() * basecount;
+                var count = parseInt(random + 15);
+
+                game.inventory.datadevices += count;
+                return game;
+            }
+            QuestService.definitions.push(alienShip);
+
         }
 
         return QuestService.definitions;

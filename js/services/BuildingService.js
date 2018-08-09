@@ -191,7 +191,7 @@ export class BuildingService extends GameService {
             communicationsarraybooster.postrender = (game, html, building) => {
                 var array = game.buildings.find(b => b.definition.id == "communicationsarray");
                 if (array.charging) {
-                    var poweredText = (game.inventory.powercrystals > 0 ? Language.getText("ui.heading.communicationsbooster.powered") : Language.getText("ui.heading.communicationsbooster.unpowered"));
+                    var poweredText = (game.inventory.powercrystals > 0 ? Language.getText("ui.heading.powered") : Language.getText("ui.heading.unpowered"));
                     var powered = " <span>(" + poweredText + ")</span>";
                     var title = $(html).find(".buildingHeader");
                     var orgTitle = $(title).html();
@@ -204,6 +204,86 @@ export class BuildingService extends GameService {
             }
             BuildingService.buildingdefinitions.push(communicationsarraybooster);
 
+            var dronecontrol = new BuildingDefinition(Language.getText("building.dronecontrol.name"));
+            dronecontrol.id = "dronecontrol";
+            dronecontrol.crewrequired = 2;
+            dronecontrol.timerequired = 60;
+            dronecontrol.prerequisiteresearch.push({ id: "aliencargo" });
+            dronecontrol.onupdate = (game, building) => {
+                if (game.inventory.powercrystals > 0) {
+                    var medicinalplantsodds = 30;
+                    var powercrystalodds = 20;
+                    var powerusagerate = 3;
+
+                    if (building.iscomplete()) { //only collect stuff if building undamaged
+
+                        if (game.research.some(r => r.definition.id == "medicinalplants")) {
+                            if (Math.random() * 100 < medicinalplantsodds) {
+                                game.inventory.medicinalplants++;
+                            }
+                        }
+                        if (game.research.some(r => r.definition.id == "powercrystals")) {
+                            if (Math.random() * 100 < powercrystalodds) {
+                                game.inventory.powercrystals++;
+                            }
+                        }
+                    }
+
+                    if (Math.random() * 100 < 100 / powerusagerate) { // use energy even if damaged
+                        game.inventory.powercrystals--;
+                    }
+                }
+                return game;
+            };
+
+            dronecontrol.postrender = (game, html, building) => {
+                var poweredText = (game.inventory.powercrystals > 0 ? Language.getText("ui.heading.powered") : Language.getText("ui.heading.unpowered"));
+                var powered = " <span>(" + poweredText + ")</span>";
+                var title = $(html).find(".buildingHeader");
+                var orgTitle = $(title).html();
+                var titleHTML = title.append(powered).html();
+                $(title).html(titleHTML);
+                var replaced = $(html).html().replace(orgTitle, titleHTML);
+                html = replaced;
+                return html;
+            }
+
+            BuildingService.buildingdefinitions.push(dronecontrol);
+
+            var krudefenses = new BuildingDefinition(Language.getText("building.krudefenses.name"), "krudefenses");
+            krudefenses.prerequisiteresearch = [{ id: "krulanguagebasics" }, { id: "alienshipdatadevice" }];
+            krudefenses.timerequired = 300;
+            krudefenses.onupdate = (game, building) => {
+                if (game.inventory.powercrystals > 0) {
+                    building.powered = true;
+                    var powerusagerate = 5;
+
+                    if (building.powerusage == undefined) {
+                        building.powerusage = 0;
+                    }
+                    building.powerusage++;
+                    if (building.powerusage >= powerusagerate) { // use energy even if damaged
+                        game.inventory.powercrystals--;
+                        building.powerusage = 0;
+                    }
+                }
+                else {
+                    building.powered = false;
+                }
+                return game;
+            };
+            krudefenses.postrender = (game, html, building) => {
+                var poweredText = (game.inventory.powercrystals > 0 ? Language.getText("ui.heading.powered") : Language.getText("ui.heading.unpowered"));
+                var powered = " <span>(" + poweredText + ")</span>";
+                var title = $(html).find(".buildingHeader");
+                var orgTitle = $(title).html();
+                var titleHTML = title.append(powered).html();
+                $(title).html(titleHTML);
+                var replaced = $(html).html().replace(orgTitle, titleHTML);
+                html = replaced;
+                return html;
+            }
+            BuildingService.buildingdefinitions.push(krudefenses);
         }
 
         return BuildingService.buildingdefinitions;

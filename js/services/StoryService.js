@@ -168,6 +168,38 @@ export class StoryService extends GameService {
         var communicationshalfway = new StoryElement("", 38, "communicationshalfway");
         communicationshalfway.unlockcondition = (game) => { return game.buildings.find(b => b.definition.id == "communicationsarray").charge > 5000; }
         this.entities.push(communicationshalfway);
+
+        var alienshipdatadevice = new StoryElement("", 39, "alienshipdatadevice");
+        alienshipdatadevice.prerequisiteresearch.push({ id: "alienshipdatadevice" });
+        this.entities.push(alienshipdatadevice);
+
+        var aliencrash1 = new StoryElement("", 40, "aliencrash1");
+        aliencrash1.prerequisiteresearch.push({ id: "aliencrash" });
+        this.entities.push(aliencrash1);
+
+        var aliencrash2 = new StoryElement("", 41, "aliencrash2");
+        aliencrash2.prerequisiteresearch.unlockcondition = (game) => { return game.texts.some(t => t.id == 40); }
+        this.entities.push(aliencrash2);
+
+        var aliencargo1 = new StoryElement("", 42, "aliencargo1");
+        aliencargo1.prerequisiteresearch.push({ id: "aliencargo" });
+        this.entities.push(aliencargo1);
+
+        var aliencargo2 = new StoryElement("", 43, "aliencargo2");
+        aliencargo2.prerequisiteresearch.unlockcondition = (game) => { return game.texts.some(t => t.id == 42); }
+        this.entities.push(aliencargo2);
+
+        var krulanguagebasics2 = new StoryElement("", 44, "krulanguagebasics2");
+        krulanguagebasics2.unlockcondition = (game) => { return game.texts.some(t => t.id == 25); }
+        this.entities.push(krulanguagebasics2);
+
+        var kruattitude = new StoryElement("", 45, "kruattitude");
+        kruattitude.prerequisiteresearch = Services.ResearchService.allDefinitions().filter(r => r.id == "kruattitude");
+        this.entities.push(kruattitude);
+
+        var krudefenses = new StoryElement("", 46, "krudefenses");
+        krudefenses.prerequisiteresearch = [{ id: "krulanguagebasics" }, { id: "alienshipdatadevice" }];
+        this.entities.push(krudefenses);
     }
 
     updateGame(game, deltaTime) {

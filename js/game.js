@@ -235,6 +235,7 @@ function updateInventory() {
         Utilities.Language.getText("ui.heading.inventory.medkits") + ": " + game.inventory.medkits + "<br/>" +
         (game.discoveries.some(d=>d.definition.id=="medicinalplants" && d.iscomplete()) ?  Utilities.Language.getText("ui.heading.inventory.medicinalplants") + ": " + game.inventory.medicinalplants + "<br/>" :"") +
         (game.discoveries.some(d=>d.definition.id=="powercrystals" && d.iscomplete()) ?  Utilities.Language.getText("ui.heading.inventory.powercrystals") + ": " + game.inventory.powercrystals + "<br/>" :"") +
+        (game.research.some(r => r.definition.id == "alienshipdatadevice" && r.iscomplete()) ? Utilities.Language.getText("ui.heading.inventory.datadevices") + ": " + game.inventory.datadevices + "<br/>" :"") +
         "<br/>" +
         "</div>"
         ;
@@ -500,7 +501,7 @@ function getDefaultGame() {
             building: 0,
             research: 0
         },
-        inventory: { medkits: 0, medicinalplants: 0, powercrystals: 0 },
+        inventory: { medkits: 0, medicinalplants: 0, powercrystals: 0, datadevices: 0, cargodrones: 0 },
         state: { krucaptive: false },
         startGame: true,
         night: true,

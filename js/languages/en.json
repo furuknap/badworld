@@ -12,7 +12,7 @@
   "directionofalienship": "Using what we remember from telemetry before the crash as well as clues discovered during our expeditions, we believe we have found where the alien ship is located. It's far away and it will take time to find it. We need to send out larger and longer expeditions to learn more.",
   "medicinalplants": "Analyzing the nearby flora in the nearby jungle, we've managed to find some plants that seem to speed up wound recover and dull pain. The crew can use this to reduce casualties during expeditions. We can also start researching how to utilize those plants at the base.",
   "medicinalplantsbase": "\"Eureka!\" One of your crew members comes running up to you. \"We can synthesize basic medicines from local plants to help us heal the wounded! We can probably even build a rudimentary sickbay now!\" The mood of everyone rises at the prospect of less risk of long-term sickness.",
-  "roadtoalienship": "We found it! It took a long time but one of our expeditions came back with the exact location of the alien ship. There's an amazing amount of knowledge we can learn now.",
+  "roadtoalienship": "We found it! It took a long time but one of our expeditions came back with the exact location of the alien ship as well as what they believe is a data storage device. We can finally start learning about the first alien species discovered by humans! \"There's more devices like these\" says one of the triumphant crew members. \"There's also an amazing amount of technology we might be able to use but we couldn't carry it back. However, now that we know how to get there, we can send expeditions to recover alien artifacts.\"",
   "kruattackfirst": "One day while we were having lunch, some of the humanoid creatures came running out of the jungle, attacking us. We had little time to prepare for the onslaught and having no weapons, we had to find rocks and debris to defend ourselves. Luckily, there were no fatalities and the creatures retreated into the jungle without causing permanent damage.",
   "kruattacksecond": "The creatures attacked again. This time, one of them got hurt and we managed to capture it before the others fled. We brought it back to camp and it made rudimentary noises before it succumbed to its wounds and died. Perhaps the noises were a language of some kind. Maybe we can capture one of them to learn how to communicate. ",
   "krucapture": "We found a way to capture a creature and keep it alive. We need to build a cage to keep it confined so we can learn more about this species. ",
@@ -24,6 +24,9 @@
   "kruintro": "\"Fascinating!\" said one of the crew members responsible for examining the creature we captured. \"These creatures are far more primitive than us. Their physiology is very strange but actaully resembles ours. I cannot understand why. They seem to have a crude language. I believe I can begin to understand the basics if I can get some more time.\" ",
   "krunonaggressive": "The creatures keep attacking us but somehow they always retreat without doing serious damage. In fact, they seem very careful not to kill anyone, never attacking wounded crew members and always retreating when they have knocked someone out.",
   "krulanguagebasics": "\"I have started to understand the basics of their language.\" The crew member investigating the creature reported in. \"I have learned how it asks for food and that it has pain in its legs. From what I have been able to deduce, they call themselves K'ru.\"",
+  "krulanguagebasics2": "\"It's a strange form of communication\" continued the linguist. \"It's a combination of very basic gestures and sounds. However, as I learn more, it seems that what I learned at first isn't correct anymore. I'm guessing the creature is trying to learn how we speak.\"",
+  "kruattitude": "\"I have been trying to understand why they are attacking us, Captain\" said the linguist responsible for learning about the K'ru creature. \"I doesn't seem like they hate us but they are terrified of our equipment and technology. They live in harmony with nature and we're not part of that nature. They just want us gone.\" You smirked as you realized the irony. \"So do I...\"",
+  "krudefenses": "You walked over to two of the crew members who had an aptitude for engineering. \"I have an idea\" you said. \"It seems the K'ru are scared of technology. Maybe we can build some scary looking tech barricades to keep them away.\" The two engineers nodded in agreement. \"That may work,\" one of them said, \"We could build a fence at least around parts of the base. However, they haven't seemed scared of all the debris laying around. I'm thinkning we're going to have to utilize some of the Hefn technology and power it up to emit noises and light once something approaches.\" ",
   "antennafound": "\"CAPTAIN! CAPTAIN!\" One of the crew members you sent out on a deep jungle expeditions comes running back. \"We saw wreckage from the crash on the other side of a large valley! We think the antenna for the communications array is there!\" The crew member collapses after delivering the good news. We can send out expeditions to try to find it and possibly use it to repair our communications capabilities and call Earth for help!",
   "antennarecovered": "After weeks of expeditions searching, we finally found and recovered the antenna from out communications array. This is the first real chance we have of getting out of here. With the antenna, we can build a new communcations array and send a message back to Earth! In the meantime, however, we must continue our main mission, which is to discover the purpose of the alien ship.",
   "communicationsarray": "\"We're ready, Captain!\" The crew had worked day and night to complete the new communications array. \"However, there is a major problem. During testing, we realized that the atmosphere is causing major issues with our signal. We can send a message but it is unlikely that we will receive a response. We need to learn more about the weather patterns and boost our output to have any chance of hearing back from Earth.\"",
@@ -34,9 +37,15 @@
   "messagesentpart1": "The moment finally arrived! The communications officer tells us that we've received a message back from Earth! Everyone gathers in the base, eager to get some good news finally!",
   "messagesentpart2": "Although the message came through, the atmospheric disturbance still scrambled parts of the message so it takes a few minutes to put the pieces in the right order. The communications officer's face turns white, reading the partially completed message. You walk over and grab the printout. “…attack… military on high alert… new space ships… rescue impossible… Godspeed” ",
   "messagesentpart3": "Everyone sees the reaction on your face. As you tell the crew the bad news, several crew members start to cry. Others seem to refuse to believe it. \"It can't be!\" yells one. \"What does it mean? Is Earth under attack?\"",
-  "messagesentpart4": "\"It means we won't be rescued,\" you say. \"so if we are going to get home, we need to do it ourselves. We have made it so far and we will get through this and find a way home\".",
+  "messagesentpart4": "\"It means we won't be rescued any time soon,\" you say. \"so if we are going to get home, we need to do it ourselves. We have made it so far and we will get through this and find a way home\".",
   "communicationsalmostdone": "We're almost there! I can almost taste the victory. We're certain that Earth has received our message and we should be getting good news shortly. Then it will only be a matter of time before help arrives. The crew is in a good mood, despite being tired from all the hard work. They really deserve all the medals they can get once we get back home.",
   "communicationshalfway": "\"I know this is taking long, Captain\" says the communication's officer. \"However, I'm certain that I found an opening in the atmospheric disturbance. I've transmitted the call for help to Earth but it will still be a while until we hear back. \" The crew is visibly happier when you relay the good news.",
+  "alienshipdatadevice": "\"You won't believe this, Captain.\" The lead researcher working on the alien data device is giddy with anticipation. \"The aliens... Or, as they call themselves, the 'Hefn', were on their way to Earth!\" You put on your best 'tell me more' face as you knew the researcher was bursting to do just that. \"We have just a rudimentary understanding of their language but their navigation logs contains entries indicating they were on their way to see us when they crashed. We'll need more data devices to decrypt before I can tell you more but this is an amazing coincidence, don't you think?\" You kept your excitement to yourself, for now. ",
+  "aliencrash1": "\"What did you find out about the Hefn crash?\" you ask the lead researcher. \"Well, Captain, they were stopping here to adjust their trajectory,\" the researcher says. \"but sadly they came too close to the planet and got caught in the gravitational pull. From what I've been able to gather, their ship was never designed to endure the harsh atmosphere here so they eventually lost altitude and crashed.\"",
+  "aliencrash2": "\"If they couldn't make it, no wonder we crashed\" you said. \"They're obviously far more advanced than us and yet all their technological achievements couldn't save them. I wonder what hope there is for us or anyone coming to rescue us.\" You realized how depressing that sounded as you saw the researcher's face turn sad. \"Good job so far! Keep working. Maybe we'll find out how to use some of their technology.\" ",
+  "aliencargo1": "Our research into the alien data devices yields more of their story. What's strange is that it seems they left from their home planet with empty cargo holds. What's even more strange is that in a later log entry, it seems their cargo hold was almost half full. This probably means that there are other space-faring species with whom they were trading. It seems our discovery of the universe is just beginning! ",
+  "aliencargo2": "More importantly right now, we've learned that they had drones to manage the cargo holds, and we've found plans for building more drones and a control center to control them. If we build it and populate it with drones, it will make it a lot easier to gather resources from the planet. ",
+
 
 
   "building.hut.name": "Small Hut",
@@ -47,6 +56,8 @@
   "building.communicationsarray.name": "Communications Array",
   "building.powerstation.name": "Power Station",
   "building.communicationsarraybooster.name": "Communications Booster",
+  "building.dronecontrol.name": "Drone Control Center",
+  "building.krudefenses.name": "Defensive Barrier",
 
   "story.background": "<p>Humanity has taken its first steps into the universe, to go boldly where no man has gone before. We’ve colonized the inner planets and sent probes towards other star systems. We’ve learned that there are a multitude of planets that can support human life.</p><p>One probe sends back evidence of a metal construction on a distant planet. This is likely the first real clue of extra-terrestrial life. However, the planet’s violent upper atmosphere makes an automated investigation impossible. </p><p>After a lengthy public debate, it is decided that we should send a manned expedition to investigate. </p><p>On arrival on the planet, the ship enters orbit and the crew confirms that this is indeed the remains of a massive starship that has crashed on the planet. After sending the initial findings back to earth, the captain, you, decide to commence your investigation by landing your ship.</p><p>Upon entering the atmosphere, your chief engineer miscalculates the angle of entry, and you lose control. The ship crashes, killing a portion of your crew. Only a few components of the ship survive, including some tools, but you have no way of getting off the planet.</p><p>Luckily, the planet provides plenty of resources to help. There’s edible fruits and plants, and using debris from the wreckage we can start searching for a way home and learn more about the alien ship.</p>",
 
@@ -60,14 +71,19 @@
   "research.medkit.name": "Medkits",
   "research.kruintro.name": "Creature Examination",
   "research.krulanguagebasics.name": "Basic Language",
+  "research.kruattitude.name": "Kru Attitude",
   "research.powercrystals.name": "Power Crystal Usage",
   "research.weatherpatterns.name": "Weather Patterns",
   "research.communicationsarrayboost.name": "Boost Communications Array",
+  "research.alienshipdatadevice.name": "Alien Data Device",
+  "research.aliencrash.name": "Hefn Crash",
+  "research.aliencargo.name": "Hefn Cargo",
+
 
   "quest.nearbyjungle.name": "Scout Nearby Jungle",
   "quest.deeperjungle.name": "Deep Jungle Expedition",
   "quest.crystalmine.name": "Crystal Mine",
-  "quest.alienship.name": "Alien Ship Investigation",
+  "quest.alienship.name": "Alien Ship",
   "quest.cancelled": "An expedition had to be cancelled because the last crew member got wounded.",
 
   "discovery.medicinalplants.name": "Medicinal Plants",
@@ -102,6 +118,8 @@
 
   "ui.notifications.buildingrepaired": "The crew repaired a building.",
 
+  "ui.heading.powered": "Powered",
+  "ui.heading.unpowered": "No Crystals",
   "ui.heading.crew": "Crew",
   "ui.heading.crew.available": "Available",
   "ui.heading.crew.wounded": "Wounded",
@@ -115,10 +133,9 @@
   "ui.heading.inventory.medkits": "Medkits",
   "ui.heading.inventory.medicinalplants": "Medicinal Plants",
   "ui.heading.inventory.powercrystals": "Power Crystals",
+  "ui.heading.inventory.datadevices": "Alien Data Devices",
   "ui.heading.discoveries": "Discoveries",
   "ui.heading.discoveries.points": "Items",
-  "ui.heading.communicationsbooster.powered": "Powered",
-  "ui.heading.communicationsbooster.unpowered": "No Crystals",
 
   "notenoughcrewavailable": "Not enough crew available",
 

@@ -11,9 +11,9 @@ export class ResearchService extends GameService {
             var wascomplete = research.iscomplete;
             if (research.inprogress && !research.iscomplete()) {
                 research.timeproduced += deltaTime;
-                game = research.definition.onupdate(game);
+                game = research.definition.onupdate(game, research);
                 if (research.iscomplete() && !research.wascomplete) {
-                    game = research.definition.completed(game);
+                    game = research.definition.completed(game, research);
                 }
             }
         }
@@ -34,7 +34,7 @@ export class ResearchService extends GameService {
                 var research = Research.getFromResearchDefintion(foundDefinition);
                 research.inprogress = true;
                 game.research.push(research);
-                game = research.definition.onstart(game);
+                game = research.definition.onstart(game, research);
             }
             else {
                 game.notifications.push(new Notification("notenoughcrewavailable", null, 3));
@@ -106,6 +106,51 @@ export class ResearchService extends GameService {
             communicationsarrayboost.timerequired = 200;
             ResearchService.definitions.push(communicationsarrayboost);
 
+            var alienshipdatadevice = new ResearchDefinition(Language.getText("research.alienshipdatadevice.name"), "alienshipdatadevice");
+            alienshipdatadevice.unlockcondition = (game) => { return game.discoveries.some(d => d.definition.id == "shiplocation" && d.iscomplete()) };
+            alienshipdatadevice.crewrequired = 2;
+            alienshipdatadevice.timerequired = 200;
+            ResearchService.definitions.push(alienshipdatadevice);
+
+            var aliencrash = new ResearchDefinition(Language.getText("research.aliencrash.name"), "aliencrash");
+            aliencrash.prerequisiteresearch.push(alienshipdatadevice);
+            aliencrash.crewrequired = 2;
+            aliencrash.timerequired = 200;
+            aliencrash.onupdate = (game, research) => {
+                if (game.inventory.datadevices > 0) {
+                    if (Math.random() * 100 < 20) {
+                        game.inventory.datadevices--;
+                    }
+                }
+                else {
+                    research.timeproduced--;
+                }
+                return game;
+            };
+            ResearchService.definitions.push(aliencrash);
+
+            var aliencargo = new ResearchDefinition(Language.getText("research.aliencargo.name"), "aliencargo");
+            aliencargo.prerequisiteresearch.push(aliencrash);
+            aliencargo.crewrequired = 2;
+            aliencargo.timerequired = 200;
+            aliencargo.onupdate = (game, research) => {
+                if (game.inventory.datadevices > 0) {
+                    if (Math.random() * 100 < 20) {
+                        game.inventory.datadevices--;
+                    }
+                }
+                else {
+                    research.timeproduced--;
+                }
+                return game;
+            };
+            ResearchService.definitions.push(aliencargo);
+
+            var kruattitude = new ResearchDefinition(Language.getText("research.kruattitude.name"), "kruattitude");
+            kruattitude.prerequisiteresearch.push(krulanguagebasics);
+            kruattitude.timerequired = 300;
+            ResearchService.definitions.push(kruattitude);
+
         }
 
         return ResearchService.definitions;
@@ -123,7 +168,7 @@ export class ResearchService extends GameService {
             var discoveriesReqsMet = researchDefinition.prerequisitediscoveries.every(d => game.discoveries.some(gd => gd.definition.id == d.id && gd.iscomplete()));
             var unlocked = researchDefinition.unlockcondition(game);
 
-            if (! completed && researchReqsMet && buildingsReqsMet && discoveriesReqsMet && unlocked) {
+            if (!completed && researchReqsMet && buildingsReqsMet && discoveriesReqsMet && unlocked) {
                 availableResearchDefinitions.push(researchDefinition);
             }
         }
