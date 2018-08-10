@@ -77,6 +77,14 @@ function setupButtons() {
         }
     })
 
+    $(document).on("click", ".addGuard", function () {
+        Services.CrewService.changeGuards(game, 1);
+    })
+    $(document).on("click", ".removeGuard", function () {
+        Services.CrewService.changeGuards(game, -1);
+    })
+
+
     $(document).on("click", ".storyToggle", function () {
         $("#storyDialog").modal('show'); 
     })
@@ -221,6 +229,7 @@ function updateDetails() {
         (Services.QuestService.getCrewAllocated(game) > 0 ? Utilities.Language.getText("ui.heading.crew.quests") + ": " + Services.QuestService.getCrewAllocated(game) + "<br/>" : "") +
         (game.crew.building > 0 ? Utilities.Language.getText("ui.heading.crew.building") + ": " + game.crew.building + "<br/>" : "") +
         (game.crew.research > 0 ? Utilities.Language.getText("ui.heading.crew.research") + ": " + game.crew.research + "<br/>" : "") +
+        (game.buildings.some(b => b.definition.id == "guardpost") ? Utilities.Language.getText("ui.heading.crew.guards") + ": " + game.crew.guards + " <a href=\"#\" class=\"addGuard btn btn-xs\">+</a> <a href=\"#\" class=\"removeGuard btn btn-xs\">-</a><br/>" : "") +
         "<br/>" +
         "</div>"
         ;
@@ -499,7 +508,8 @@ function getDefaultGame() {
             sick: 0,
             quest: 0,
             building: 0,
-            research: 0
+            research: 0,
+            guards: 0
         },
         inventory: { medkits: 0, medicinalplants: 0, powercrystals: 0, datadevices: 0, cargodrones: 0 },
         state: { krucaptive: false },

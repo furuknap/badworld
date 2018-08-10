@@ -46,13 +46,18 @@ export class AttackEventDefinition extends EventDefinition {
                 odds = 10;
             }
 
-            if (game.buildings.find(b => b.definition.id == "krudefenses").powered) {
+            if (game.buildings.find(b => b.definition.id == "krudefenses")!= undefined && game.buildings.find(b => b.definition.id == "krudefenses").powered) {
                 odds /= 2;
             }
 
             if (Services.CrewService.getAvailable(game) < 3) {
                 odds = 0; // Creatures do not attack if only a few people are available.
             }
+
+            if (Services.CrewService.getExpedition(game) == Services.CrewService.getTotalCrew(game)) {
+                odds = 50; // Creatures will attack more if base is left empty
+            }
+            odds /= Math.max(1, game.crew.guards);
             return Math.random() * 100 < odds;
         }
         
@@ -63,6 +68,22 @@ export class AttackEventDefinition extends EventDefinition {
 
             var wounded = 0;
             var buildingsDamaged = 0;
+
+
+
+            if (Services.CrewService.getExpedition(game) == Services.CrewService.getTotalCrew(game)) {
+                buildingDamageOdds = 50;
+                buildingDamageAmount = 50;
+                var text = "event.kruraid.regular";
+                if (game.research.some(r => r.definition.id == "krulanguagebasics" && r.iscomplete())) {
+                    text = "event.kruraid.namediscovered";
+                }
+                game.state.campwiped = true;
+                game.notifications.push(new Notification(text, null, 5))
+            }
+
+            oddsOfWound /= Math.max(1, game.crew.guards);
+
             for (var i = 0; i < Services.CrewService.getAvailable(game); i++) {
                 if (Math.random() * 100 < oddsOfWound) {
                     Services.CrewService.changeWounded(game, 1);
@@ -74,30 +95,10 @@ export class AttackEventDefinition extends EventDefinition {
                 var building = game.buildings[i];
                 if (Math.random() * 100 < buildingDamageOdds) {
                     building.damage += parseInt(Math.random() * buildingDamageAmount);
+                    building.damage = Math.min(100, building.damage);
                     buildingsDamaged++;
                 }
             }
-
-            //var text = "";
-
-            //if (game.attacks.count == 0) {
-            //    text = Language.getText("event.kruattack.first");
-            //}
-            //else {
-            //}
-
-            //if (wounded > 0) {
-            //    text += Language.getText("event.kruattack.wounded");
-            //}
-            //else {
-            //    text += Language.getText("event.kruattack.nowounded");
-            //}
-            //if (buildingsDamaged > 0) {
-            //    text += Language.getText("event.kruattack.damaged");
-            //}
-            //else {
-            //    text += Language.getText("event.kruattack.nodamaged");
-            //}
 
             game.attacks.count++;
 

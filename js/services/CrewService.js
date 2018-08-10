@@ -9,20 +9,36 @@ export class CrewService extends GameService {
     updateGame(game, deltaTime) {
         return game;
     }
+    static getTotalCrew(game) {
+        var totalcrew = 25;
+        if (game.texts.some(t => t.id == 51)) {
+            totalcrew--;
+        }
 
+        return totalcrew;
+    }
     static getAvailable(game) {
-        return 25 - (Services.QuestService.getCrewAllocated(game) + game.crew.sick + game.crew.research + game.crew.building);
+        return CrewService.getTotalCrew(game) - (Services.QuestService.getCrewAllocated(game) + game.crew.sick + game.crew.research + game.crew.building + game.crew.guards);
+    }
+    static getExpedition(game) {
+        return Services.QuestService.getCrewAllocated(game);
     }
     static changeResearch(game, count) {
         game.crew.research += count;
         return game;
     }
-    static  changeWounded(game, count) {
+    static changeWounded(game, count) {
         game.crew.sick += count;
         return game;
     }
     static changeBuilding(game, count) {
         game.crew.building += count;
+        return game;
+    }
+    static changeGuards(game, count) {
+        if (CrewService.getAvailable(game) >= count) {
+            game.crew.guards += count;
+        }
         return game;
     }
 }

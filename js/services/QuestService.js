@@ -163,11 +163,17 @@ export class QuestService extends GameService {
             alienShip.crewrequired = 5;
             alienShip.name = Language.getText("quest.alienship.name");
             alienShip.unlockcondition = (game) => { return game.discoveries.some(d => d.definition.id == "shiplocation" && d.iscomplete()) };
-
+            alienShip.onupdate = (game, quest) => {
+                if (game.texts.some(t => t.id == 51)) {
+                    if (Math.random() * 100 < 2) {
+                        game.state.rebeldead = true;
+                    }
+                }
+            }
             alienShip.completed = (game, quest) => {
-                var basecount = 10;
+                var basecount = 5;
                 var random = Math.random() * basecount;
-                var count = parseInt(random + 15);
+                var count = parseInt(random + 5);
 
                 game.inventory.datadevices += count;
                 return game;

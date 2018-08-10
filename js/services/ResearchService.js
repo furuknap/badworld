@@ -60,6 +60,7 @@ export class ResearchService extends GameService {
             var medicinalplants = new ResearchDefinition(Language.getText("research.medicinalplants.name"), "medicinalplants");
             medicinalplants.prerequisitediscoveries.push({ id: "medicinalplants" });
             medicinalplants.timerequired = 120;
+            medicinalplants.unlockelements = ".inventoryControls";
             ResearchService.definitions.push(medicinalplants);
 
             var medicinalplantsbase = new ResearchDefinition(Language.getText("research.medicinalplantsbase.name"), "medicinalplantsbase");
@@ -116,6 +117,19 @@ export class ResearchService extends GameService {
             aliencrash.prerequisiteresearch.push(alienshipdatadevice);
             aliencrash.crewrequired = 2;
             aliencrash.timerequired = 200;
+            aliencrash.postrender = (game, html, building) => {
+                if (!game.inventory.datadevices) {
+                    var poweredText = (game.inventory.datadevices > 0 ? "" : Language.getText("ui.heading.nodevices"));
+                    var powered = " <span>(" + poweredText + ")</span>";
+                    var title = $(html).find(".researchHeader");
+                    var orgTitle = $(title).html();
+                    var titleHTML = title.append(powered).html();
+                    $(title).html(titleHTML);
+                    var replaced = $(html).html().replace(orgTitle, titleHTML);
+                    html = replaced;
+                }
+                return html;
+            }
             aliencrash.onupdate = (game, research) => {
                 if (game.inventory.datadevices > 0) {
                     if (Math.random() * 100 < 20) {

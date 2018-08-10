@@ -23,7 +23,8 @@ export class BuildingService extends GameService {
                 }
             }
             else {
-                building.damage -= Math.max(1, parseInt(Services.CrewService.getAvailable(game) * 0.1));
+//                building.damage -= Math.max(1, parseInt(Services.CrewService.getAvailable(game) * (0.1 / game.buildings.filter(b => b.damage > 0).length)));
+                building.damage -= Services.CrewService.getAvailable(game) * (0.5 / game.buildings.filter(b => b.damage > 0).length);
                 if (building.damage <= 0) {
                     building.damage = 0;
                     game.notifications.push(new Notification("ui.notifications.buildingrepaired", null, 5));
@@ -251,7 +252,7 @@ export class BuildingService extends GameService {
             BuildingService.buildingdefinitions.push(dronecontrol);
 
             var krudefenses = new BuildingDefinition(Language.getText("building.krudefenses.name"), "krudefenses");
-            krudefenses.prerequisiteresearch = [{ id: "krulanguagebasics" }, { id: "alienshipdatadevice" }];
+            krudefenses.prerequisiteresearch = [{ id: "kruattitude" }, { id: "alienshipdatadevice" }];
             krudefenses.timerequired = 300;
             krudefenses.onupdate = (game, building) => {
                 if (game.inventory.powercrystals > 0) {
@@ -284,6 +285,20 @@ export class BuildingService extends GameService {
                 return html;
             }
             BuildingService.buildingdefinitions.push(krudefenses);
+
+
+            var guardpost = new BuildingDefinition(Language.getText("building.guardpost.name"));
+            guardpost.id = "guardpost";
+            guardpost.crewrequired = 6;
+            guardpost.timerequired = 60;
+            guardpost.assignedcrew = 0;
+            guardpost.prerequisitebuildings.push({ id: "krudefenses" });
+            guardpost.unlockcondition = (game) => { return game.state.campwiped && Services.CrewService.getAvailable(game) > 0; }
+
+
+
+            BuildingService.buildingdefinitions.push(guardpost);
+
         }
 
         return BuildingService.buildingdefinitions;

@@ -34,7 +34,7 @@ export class StoryService extends GameService {
 
         var junglenoises = new StoryElement("", 6, "junglenoises");
         junglenoises.prerequisitebuildings = Services.BuildingService.allDefinitions().filter(b => b.id == "firsthut");
-        junglenoises.unlockcondition = function (game) { return Math.random() * 100 < 2 || game.research.some(r => r.definition.id =="safeShelter") };
+        junglenoises.unlockcondition = function (game) { return Math.random() * 100 < 2 || game.research.some(r => r.definition.id == "safeShelter") };
         this.entities.push(junglenoises);
 
         var junglenoises2 = new StoryElement("", 7, "junglenoises2");
@@ -64,7 +64,7 @@ export class StoryService extends GameService {
         this.entities.push(roadtoalienship);
 
         var medicinalplants = new StoryElement("", 13, "medicinalplants");
-        medicinalplants.prerequisitediscoveries.push({  id: "medicinalplants" });
+        medicinalplants.prerequisitediscoveries.push({ id: "medicinalplants" });
         this.entities.push(medicinalplants);
 
         var medicinalplants = new StoryElement("", 14, "medicinalplantsbase");
@@ -72,11 +72,11 @@ export class StoryService extends GameService {
         this.entities.push(medicinalplants);
 
         var kruattackfirst = new StoryElement("", 15, "kruattackfirst");
-        kruattackfirst.unlockcondition = (game) => { return game.attacks.count >0 && !game.texts.some(t => t.id == 15) }
+        kruattackfirst.unlockcondition = (game) => { return game.attacks.count > 0 && !game.texts.some(t => t.id == 15) }
         this.entities.push(kruattackfirst);
 
         var kruattacksecond = new StoryElement("", 16, "kruattacksecond");
-        kruattacksecond.unlockcondition = (game) => { return game.attacks.count >1 && !game.texts.some(t => t.id == 16) }
+        kruattacksecond.unlockcondition = (game) => { return game.attacks.count > 1 && !game.texts.some(t => t.id == 16) }
         this.entities.push(kruattacksecond);
 
         var krucapture = new StoryElement("", 17, "krucapture");
@@ -84,12 +84,12 @@ export class StoryService extends GameService {
         this.entities.push(krucapture);
 
         var medkitsout = new StoryElement("", 18, "medkitsout");
-        medkitsout.unlockcondition = (game) => { return game.buildings.some(b=>b.definition.id=="medicalstation" && b.iscomplete()) && game.inventory.medkits == 0;}
+        medkitsout.unlockcondition = (game) => { return game.buildings.some(b => b.definition.id == "medicalstation" && b.iscomplete()) && game.inventory.medkits == 0; }
         this.entities.push(medkitsout);
 
         var medkitsout = new StoryElement("", 19, "medkitsoutneedresearch");
         medkitsout.unlockcondition = (game) => {
-            return (!game.research.some(r => r.definition.id =="medkit") && game.texts.some(t=>t.id==18) && game.inventory.medkits == 0);
+            return (!game.research.some(r => r.definition.id == "medkit") && game.texts.some(t => t.id == 18) && game.inventory.medkits == 0);
         }
         this.entities.push(medkitsout);
 
@@ -150,7 +150,7 @@ export class StoryService extends GameService {
         this.entities.push(messagesentpart1);
 
         var messagesentpart2 = new StoryElement("", 34, "messagesentpart2");
-        messagesentpart2.unlockcondition = (game) => { return game.texts.some(t=>t.id==33); }
+        messagesentpart2.unlockcondition = (game) => { return game.texts.some(t => t.id == 33); }
         this.entities.push(messagesentpart2);
 
         var messagesentpart3 = new StoryElement("", 35, "messagesentpart3");
@@ -162,11 +162,11 @@ export class StoryService extends GameService {
         this.entities.push(messagesentpart4);
 
         var communicationsalmostdone = new StoryElement("", 37, "communicationsalmostdone");
-        communicationsalmostdone.unlockcondition = (game) => { return game.buildings.find(b => b.definition.id == "communicationsarray").charge > 8000; }
+        communicationsalmostdone.unlockcondition = (game) => { return game.buildings.find(b => b.definition.id == "communicationsarray") != undefined && game.buildings.find(b => b.definition.id == "communicationsarray").charge > 8000; }
         this.entities.push(communicationsalmostdone);
 
         var communicationshalfway = new StoryElement("", 38, "communicationshalfway");
-        communicationshalfway.unlockcondition = (game) => { return game.buildings.find(b => b.definition.id == "communicationsarray").charge > 5000; }
+        communicationshalfway.unlockcondition = (game) => { return game.buildings.find(b => b.definition.id == "communicationsarray") != undefined && game.buildings.find(b => b.definition.id == "communicationsarray").charge > 5000; }
         this.entities.push(communicationshalfway);
 
         var alienshipdatadevice = new StoryElement("", 39, "alienshipdatadevice");
@@ -178,7 +178,7 @@ export class StoryService extends GameService {
         this.entities.push(aliencrash1);
 
         var aliencrash2 = new StoryElement("", 41, "aliencrash2");
-        aliencrash2.prerequisiteresearch.unlockcondition = (game) => { return game.texts.some(t => t.id == 40); }
+        aliencrash2.unlockcondition = (game) => { return game.texts.some(t => t.id == 40); }
         this.entities.push(aliencrash2);
 
         var aliencargo1 = new StoryElement("", 42, "aliencargo1");
@@ -186,7 +186,7 @@ export class StoryService extends GameService {
         this.entities.push(aliencargo1);
 
         var aliencargo2 = new StoryElement("", 43, "aliencargo2");
-        aliencargo2.prerequisiteresearch.unlockcondition = (game) => { return game.texts.some(t => t.id == 42); }
+        aliencargo2.unlockcondition = (game) => { return game.texts.some(t => t.id == 42); }
         this.entities.push(aliencargo2);
 
         var krulanguagebasics2 = new StoryElement("", 44, "krulanguagebasics2");
@@ -200,6 +200,36 @@ export class StoryService extends GameService {
         var krudefenses = new StoryElement("", 46, "krudefenses");
         krudefenses.prerequisiteresearch = [{ id: "krulanguagebasics" }, { id: "alienshipdatadevice" }];
         this.entities.push(krudefenses);
+
+        var dronecontrol = new StoryElement("", 47, "dronecontrol");
+        dronecontrol.prerequisitebuildings.push({ id: "dronecontrol" });
+        dronecontrol.unlockcondition = (game) => { return game.inventory.powercrystals > 0; }
+        this.entities.push(dronecontrol);
+
+        var campwiped = new StoryElement("", 48, "campwiped");
+        campwiped.unlockcondition = (game) => { return game.state.campwiped && Services.CrewService.getAvailable(game) > 0; }
+        this.entities.push(campwiped);
+
+        var campwipedguards = new StoryElement("", 49, "campwipedguards");
+        campwipedguards.prerequisitebuildings.push({ id: "krudefenses" });
+        campwipedguards.unlockcondition = (game) => { return game.state.campwiped && Services.CrewService.getAvailable(game) > 0; }
+        this.entities.push(campwipedguards);
+
+        var angrycrewwounded1 = new StoryElement("", 50, "angrycrewwounded1");
+        angrycrewwounded1.unlockcondition = (game) => { return game.crew.sick >= 10; }
+        this.entities.push(angrycrewwounded1);
+
+        var angrycrewwounded2 = new StoryElement("", 51, "angrycrewwounded2");
+        angrycrewwounded2.unlockcondition = (game) => { return game.crew.sick >= 20 && game.texts.some(t => t.id == 50); }
+        this.entities.push(angrycrewwounded2);
+
+        var angrycrewwounded3 = new StoryElement("", 52, "angrycrewwoundedleave");
+        angrycrewwounded3.unlockcondition = (game) => { return game.crew.sick >= 22 && game.texts.some(t => t.id == 51); }
+        this.entities.push(angrycrewwounded3);
+
+        var rebeldead = new StoryElement("", 53, "rebeldead");
+        rebeldead.unlockcondition = (game) => { return game.state.rebeldead; }
+        this.entities.push(rebeldead);
     }
 
     updateGame(game, deltaTime) {
