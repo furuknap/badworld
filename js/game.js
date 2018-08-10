@@ -6,6 +6,7 @@ var isRunningUpdates = false;
 var pauseUpdates = false;
 var runViewUpdates = true;
 var autoScroll = true;
+var bwversion = 0.9;
 //region Selector
 var researchAvailableListSelector = ".researchAvailableList";
 var researchListSelector = ".researchList";
@@ -229,7 +230,7 @@ function updateDetails() {
         (Services.QuestService.getCrewAllocated(game) > 0 ? Utilities.Language.getText("ui.heading.crew.quests") + ": " + Services.QuestService.getCrewAllocated(game) + "<br/>" : "") +
         (game.crew.building > 0 ? Utilities.Language.getText("ui.heading.crew.building") + ": " + game.crew.building + "<br/>" : "") +
         (game.crew.research > 0 ? Utilities.Language.getText("ui.heading.crew.research") + ": " + game.crew.research + "<br/>" : "") +
-        (game.buildings.some(b => b.definition.id == "guardpost") ? Utilities.Language.getText("ui.heading.crew.guards") + ": " + game.crew.guards + " <a href=\"#\" class=\"addGuard btn btn-xs\">+</a> <a href=\"#\" class=\"removeGuard btn btn-xs\">-</a><br/>" : "") +
+        (game.buildings.some(b => b.definition.id == "guardpost" && b.iscomplete()) ? Utilities.Language.getText("ui.heading.crew.guards") + ": " + game.crew.guards + " <a href=\"#\" class=\"addGuard btn btn-xs\">+</a> <a href=\"#\" class=\"removeGuard btn btn-xs\">-</a><br/>" : "") +
         "<br/>" +
         "</div>"
         ;
@@ -452,40 +453,46 @@ function loadGame() {
     var gameString = JSON.parse(window.localStorage.getItem("game"));
     if (gameString !== null) {
         game = gameString;
-        for (var i = 0; i < game.research.length; i++) {
-            var e = Entities.Research.toClass(game.research[i], Entities.Research.prototype);
-            e.definition = Entities.ResearchDefinition.toClass(Services.ResearchService.allDefinitions().find(d => d.id == e.definition.id), Entities.ResearchDefinition.prototype);
-            game.research[i] = e;
-        }
-        for (var i = 0; i < game.buildings.length; i++) {
-            var e = Entities.Research.toClass(game.buildings[i], Entities.Building.prototype);
-            e.definition = Entities.BuildingDefinition.toClass(Services.BuildingService.allDefinitions().find(d => d.id == e.definition.id), Entities.BuildingDefinition.prototype);
-            game.buildings[i] = e;
-        }
-        for (var i = 0; i < game.quests.length; i++) {
-            var e = Entities.Quest.toClass(game.quests[i], Entities.Quest.prototype);
-            e.definition = Entities.QuestDefinition.toClass(Services.QuestService.allDefinitions().find(d => d.id == e.definition.id), Entities.QuestDefinition.prototype);
-            game.quests[i] = e;
-        }
-        for (var i = 0; i < game.discoveries.length; i++) {
-            var e = Entities.Discovery.toClass(game.discoveries[i], Entities.Discovery.prototype);
-            e.definition = Entities.DiscoveryDefinition.toClass(Services.DiscoveryService.allDefinitions().find(d => d.id == e.definition.id), Entities.DiscoveryDefinition.prototype);
-            game.discoveries[i] = e;
-        }
-        for (var i = 0; i < game.notifications.length; i++) {
-            var e = Entities.Notification.toClass(game.notifications[i], Entities.Notification.prototype);
-            game.notifications[i] = e;
-        }
-        for (var i = 0; i < game.events.length; i++) {
-            var e = {};
-            if (e.type == "attack") {
-                e = Entities.Event.toClass(game.events[i], Entities.Discovery.prototype);
-                e.definition = Entities.AttackEventDefinition.toClass(Services.EventService.allDefinitions().find(d => d.id == e.definition.id), Entities.AttackEventDefinition.prototype);
-            }
-            game.events[i] = e;
-        }
 
-        game.lastupdate = new Date(game.lastupdate);
+        if (game.meta == undefined || game.meta.version < bwversion) {
+            game = getDefaultGame();
+        }
+        else {
+            for (var i = 0; i < game.research.length; i++) {
+                var e = Entities.Research.toClass(game.research[i], Entities.Research.prototype);
+                e.definition = Entities.ResearchDefinition.toClass(Services.ResearchService.allDefinitions().find(d => d.id == e.definition.id), Entities.ResearchDefinition.prototype);
+                game.research[i] = e;
+            }
+            for (var i = 0; i < game.buildings.length; i++) {
+                var e = Entities.Research.toClass(game.buildings[i], Entities.Building.prototype);
+                e.definition = Entities.BuildingDefinition.toClass(Services.BuildingService.allDefinitions().find(d => d.id == e.definition.id), Entities.BuildingDefinition.prototype);
+                game.buildings[i] = e;
+            }
+            for (var i = 0; i < game.quests.length; i++) {
+                var e = Entities.Quest.toClass(game.quests[i], Entities.Quest.prototype);
+                e.definition = Entities.QuestDefinition.toClass(Services.QuestService.allDefinitions().find(d => d.id == e.definition.id), Entities.QuestDefinition.prototype);
+                game.quests[i] = e;
+            }
+            for (var i = 0; i < game.discoveries.length; i++) {
+                var e = Entities.Discovery.toClass(game.discoveries[i], Entities.Discovery.prototype);
+                e.definition = Entities.DiscoveryDefinition.toClass(Services.DiscoveryService.allDefinitions().find(d => d.id == e.definition.id), Entities.DiscoveryDefinition.prototype);
+                game.discoveries[i] = e;
+            }
+            for (var i = 0; i < game.notifications.length; i++) {
+                var e = Entities.Notification.toClass(game.notifications[i], Entities.Notification.prototype);
+                game.notifications[i] = e;
+            }
+            for (var i = 0; i < game.events.length; i++) {
+                var e = {};
+                if (e.type == "attack") {
+                    e = Entities.Event.toClass(game.events[i], Entities.Discovery.prototype);
+                    e.definition = Entities.AttackEventDefinition.toClass(Services.EventService.allDefinitions().find(d => d.id == e.definition.id), Entities.AttackEventDefinition.prototype);
+                }
+                game.events[i] = e;
+            }
+
+            game.lastupdate = new Date(game.lastupdate);
+        }
 
     }
     else {
@@ -502,6 +509,7 @@ function deleteGame() {
 
 function getDefaultGame() {
     return {
+        meta: { version: bwversion, language: "en"},
         attacks: { count: 0, wounded: 0 },
         crew: {
             available: 25,

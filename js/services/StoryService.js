@@ -253,6 +253,11 @@ export class StoryService extends GameService {
         part1complete.unlockelements = ".credits";
         this.entities.push(part1complete);
 
+        var movetohefnship5 = new StoryElement("", 59, "movetohefnship5");
+        movetohefnship5.unlockcondition = (game) => { return game.texts.some(t => t.id == 57); }
+        this.entities.push(movetohefnship5);
+
+
     }
 
     updateGame(game, deltaTime) {

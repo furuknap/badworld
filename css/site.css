@@ -42,6 +42,7 @@ body {
 }
 .dialogtext {
     max-width: 70vw;
+    width: 70%;
 }
 
 .researchListMore, .buildingsListMore {
