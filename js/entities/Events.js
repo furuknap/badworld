@@ -26,6 +26,27 @@ class EventBase extends Entity {
     }
 }
 
+export class SocialEventDefinition extends EventDefinition {
+    createEvent(game) {
+        var event = new SocialEvent();
+        event.definition = this;
+        return event;
+    }
+    constructor(id) {
+        super();
+        if (id !== undefined) {
+            this.id = id;
+        }
+        this.timerequired = 0;
+        this.unlockelements = "";
+        this.eventtriggered = (game) => { return false; }
+
+        this.completed = (game, event) => { return game; }
+
+    }
+
+}
+
 export class AttackEventDefinition extends EventDefinition {
     createEvent(game) {
         var event = new AttackEvent();
@@ -46,7 +67,7 @@ export class AttackEventDefinition extends EventDefinition {
                 odds = 10;
             }
 
-            if (game.buildings.find(b => b.definition.id == "krudefenses")!= undefined && game.buildings.find(b => b.definition.id == "krudefenses").powered) {
+            if (game.buildings.find(b => b.definition.id == "krudefenses") != undefined && game.buildings.find(b => b.definition.id == "krudefenses").powered) {
                 odds /= 2;
             }
 
@@ -54,13 +75,13 @@ export class AttackEventDefinition extends EventDefinition {
                 odds = 0; // Creatures do not attack if only a few people are available.
             }
 
-            if (Services.CrewService.getExpedition(game) == Services.CrewService.getTotalCrew(game)) {
+            if (Services.CrewService.getExpedition(game) == Services.CrewService.getTotalCrew(game) && !game.state.campwiped) {
                 odds = 50; // Creatures will attack more if base is left empty
             }
             odds /= Math.max(1, game.crew.guards);
             return Math.random() * 100 < odds;
         }
-        
+
         this.completed = (game, event) => {
             var oddsOfWound = 15;
             var buildingDamageOdds = 20;
@@ -128,5 +149,13 @@ export class AttackEvent extends EventBase {
         super();
         this.textid = "event.kruattack.name";
         this.type = "attack";
+    }
+}
+
+export class SocialEvent extends EventBase {
+    constructor() {
+        super();
+        this.textid = "event.socialevent.name";
+        this.type = "social";
     }
 }

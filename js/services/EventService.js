@@ -3,7 +3,7 @@ import * as Services from "./services.js"
 import * as Events from "../entities/Events.js"
 import { Language } from "../utilities/LanguageUtilities.js";
 import { Notification } from "../entities/entities.js";
-import { AttackEventDefinition } from "../entities/Events.js";
+import { AttackEventDefinition, SocialEventDefinition } from "../entities/Events.js";
 
 export class EventService extends GameService {
     updateGame(game, deltaTime) {
@@ -44,7 +44,9 @@ export class EventService extends GameService {
             
             EventService.definitions.push(attackEventDefinition);
 
-
+            var socialEventDefinition = new SocialEventDefinition();
+            socialEventDefinition.timerequired = 0; // instant event
+            EventService.definitions.push(socialEventDefinition);
    
 
 

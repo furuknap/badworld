@@ -122,8 +122,8 @@ export class QuestService extends GameService {
                         game.notifications.push(new Notification("quest.cancelled", null, 5));
                     }
                 }
-                if (Math.random() * 100 < 7) {
-                    Services.DiscoveryService.addPoints(game, parseInt(Math.random() * 5));
+                if (Math.random() * 100 < 8) {
+                    Services.DiscoveryService.addPoints(game, parseInt(Math.random() * 8));
 
                 }
 
@@ -169,6 +169,7 @@ export class QuestService extends GameService {
                         game.state.rebeldead = true;
                     }
                 }
+                return game;
             }
             alienShip.completed = (game, quest) => {
                 var basecount = 5;

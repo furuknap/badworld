@@ -198,7 +198,7 @@ export class StoryService extends GameService {
         this.entities.push(kruattitude);
 
         var krudefenses = new StoryElement("", 46, "krudefenses");
-        krudefenses.prerequisiteresearch = [{ id: "krulanguagebasics" }, { id: "alienshipdatadevice" }];
+        krudefenses.prerequisiteresearch = [{ id: "kruattitude" }, { id: "alienshipdatadevice" }];
         this.entities.push(krudefenses);
 
         var dronecontrol = new StoryElement("", 47, "dronecontrol");
@@ -230,6 +230,29 @@ export class StoryService extends GameService {
         var rebeldead = new StoryElement("", 53, "rebeldead");
         rebeldead.unlockcondition = (game) => { return game.state.rebeldead; }
         this.entities.push(rebeldead);
+
+        var movetohefnship1 = new StoryElement("", 54, "movetohefnship1");
+        movetohefnship1.unlockcondition = (game) => { return game.state.earthmessagesent; }
+        movetohefnship1.prerequisiteresearch = Services.ResearchService.allDefinitions().filter(r => r.id == "krulanguagebasics");
+        this.entities.push(movetohefnship1);
+
+        var movetohefnship2 = new StoryElement("", 55, "movetohefnship2");
+        movetohefnship2.unlockcondition = (game) => { return game.texts.some(t => t.id == 54); }
+        this.entities.push(movetohefnship2);
+
+        var movetohefnship3 = new StoryElement("", 56, "movetohefnship3");
+        movetohefnship3.unlockcondition = (game) => { return game.texts.some(t => t.id == 55); }
+        this.entities.push(movetohefnship3);
+
+        var movetohefnship4 = new StoryElement("", 57, "movetohefnship4");
+        movetohefnship4.unlockcondition = (game) => { return game.texts.some(t => t.id == 56); }
+        this.entities.push(movetohefnship4);
+
+        var part1complete = new StoryElement("", 58, "part1complete");
+        part1complete.unlockcondition = (game) => { return game.state.part1complete; }
+        part1complete.unlockelements = ".credits";
+        this.entities.push(part1complete);
+
     }
 
     updateGame(game, deltaTime) {
