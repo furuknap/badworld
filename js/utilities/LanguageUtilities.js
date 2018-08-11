@@ -44,7 +44,7 @@
         var text = Language.texts[textID];
         if (text == undefined) {
             console.warn("Text " + textID + " for language " + this.language + " is not defined");
-            text = "[NEED_TRANS(" + textID + "/" + Language.language + ")] " + Language.entexts[textID];
+            text = "<span class=\"needtrans\" title=\"[NEED_TRANS(" + textID + "/" + Language.language + ")]\">*</span> " + Language.entexts[textID];
         }
         return text;
     }
