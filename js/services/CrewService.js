@@ -36,7 +36,7 @@ export class CrewService extends GameService {
         return game;
     }
     static changeGuards(game, count) {
-        if (CrewService.getAvailable(game) >= count && game.crew.guards+count>0) {
+        if (CrewService.getAvailable(game) >= count && game.crew.guards+count>=0) {
             game.crew.guards += count;
         }
         return game;
