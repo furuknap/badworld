@@ -467,7 +467,20 @@ function formatTimeSpan(time) {
 
 function saveGame() {
     $(".saveIcon").show();
-    window.localStorage.setItem("game", JSON.stringify(game));
+    var savegamepath = "game";
+    if (window.localStorage.getItem("game")) {
+        var gameString = window.localStorage.getItem("game");
+        var savegame = {};
+        try {
+            savegame = JSON.parse(gameString);
+        } catch (e) {
+            saveGame = getDefaultGame();
+        }
+        if (savegame.meta != undefined && savegame.meta.version > bwversion) {
+            savegamepath = "game.old." + bwversion;
+        }
+    }
+    window.localStorage.setItem(savegamepath, JSON.stringify(game));
     loadGame();
     $(".saveIcon").hide();
 }
@@ -489,9 +502,9 @@ function loadGame(gameString) {
         if (okfile) {
             if (game.meta != undefined && game.meta.version < bwversion) {
                 if (bwversions.some(i => i == game.meta.version)) {
-                    if (confirm("Your save game is for an old version of Bad World. Do you want us to take you to that version so you can try playing or importing there?\n\nIf not, we'll create a new savegame for you here")) {
+                    if (confirm("Your save game is for an old version of Bad World. Do you want us to take you to that version so you can try playing or importing there? \n\nIf not, we'll create a new savegame for you here")) {
                         var url = bwurl;
-                        url += game.meta.version;
+                        url += "v/"+ game.meta.version;
                         document.location.href = url;
                     }
                     else {
@@ -514,6 +527,9 @@ function loadGame(gameString) {
                 if (window.localStorage.getItem("game.old." + bwversion)) {
                     gameString = window.localStorage.getItem("game.old." + bwversion);
                     loadGame(gameString);
+                }
+                else {
+                    game = getDefaultGame();
                 }
             }
 

@@ -104,7 +104,9 @@ export class AttackEventDefinition extends EventDefinition {
             }
 
             oddsOfWound /= Math.max(1, game.crew.guards);
-
+            if (game.state.part1complete) {
+                oddsOfWound = 0; /// TODO: temporary until part 2 gets started.
+            }
             for (var i = 0; i < Services.CrewService.getAvailable(game); i++) {
                 if (Math.random() * 100 < oddsOfWound) {
                     Services.CrewService.changeWounded(game, 1);

@@ -1,0 +1,5 @@
+﻿<publishData>
+  <publishProfile profileName="BadWorld - FTP 0.9" publishMethod="FTP" publishUrl="ftp://waws-prod-blu-097.ftp.azurewebsites.windows.net/site/wwwroot/v/0.9" ftpPassiveMode="True" userName="BadWorld\$BadWorld" userPWD="G2TJRNZ9zxj8eBA4nEJJaAMQLhQ7HZ3LldhWuJecchdKrTZrM3uG64wd1CxL" destinationAppUrl="http://badworld.azurewebsites.net" SQLServerDBConnectionString="" mySQLDBConnectionString="" hostingProviderForumLink="" controlPanelLink="http://windows.azure.com" webSystem="WebSites">
+    <databases />
+  </publishProfile>
+</publishData>
