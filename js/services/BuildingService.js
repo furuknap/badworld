@@ -307,8 +307,6 @@ export class BuildingService extends GameService {
             guardpost.prerequisitebuildings.push({ id: "krudefenses" });
             guardpost.unlockcondition = (game) => { return game.state.campwiped && Services.CrewService.getAvailable(game) > 0; }
 
-
-
             BuildingService.buildingdefinitions.push(guardpost);
 
         }

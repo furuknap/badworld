@@ -249,12 +249,14 @@ export class StoryService extends GameService {
         this.entities.push(movetohefnship4);
 
         var part1complete = new StoryElement("", 58, "part1complete");
-        part1complete.unlockcondition = (game) => { return game.state.part1complete; }
+        part1complete.unlockcondition = (game) => { return game.texts.some(t => t.id == 59) && game.state.part1complete; }
         part1complete.unlockelements = ".credits";
+        part1complete.part2 = true;
         this.entities.push(part1complete);
 
         var movetohefnship5 = new StoryElement("", 59, "movetohefnship5");
-        movetohefnship5.unlockcondition = (game) => { return game.texts.some(t => t.id == 57) && game.state.part1complete;; }
+        movetohefnship5.unlockcondition = (game) => { return game.texts.some(t => t.id == 57) && game.state.part1complete; }
+        movetohefnship5.part2 = true;
         this.entities.push(movetohefnship5);
 
 
@@ -262,6 +264,10 @@ export class StoryService extends GameService {
 
     updateGame(game, deltaTime) {
         var textsToTest = this.entities.filter(t => !game.texts.some(gt => gt.id == t.id)).sort((a, b) => { return a.id==b.id; });
+
+        if (game.state.part1complete) {
+            textsToTest = textsToTest.filter(t => t.part2);
+        }
 
         for (var i = 0; i < textsToTest.length; i++) {
             var text = textsToTest[i];

@@ -79,15 +79,14 @@
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 data-textid="ui.story" class="modal-title">The Story</h5>
+                        <h5 data-textid="ui.export" class="modal-title">Export</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <textarea class="container dialogtext" id="exportGame" rows="20">
-
-                        </textarea>
+                        <textarea class="container dialogtext" id="exportGame" rows="20"></textarea>
+                        <button type="button" class="btn btn-xs btn-primary copyexporttoclipboard">Copy to Clipboard</button>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-xs btn-secondary" data-dismiss="modal">Close</button>
@@ -100,15 +99,13 @@
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 data-textid="ui.story" class="modal-title">The Story</h5>
+                        <h5 data-textid="ui.import" class="modal-title">Import</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <textarea class="container dialogtext" id="importGame">
-
-                        </textarea>
+                        <textarea class="container dialogtext" id="importGame" rows="20"></textarea>
                         <button type="button" class="btn btn-xs btn-primary importButton" data-dismiss="modal">Import</button>
                     </div>
                     <div class="modal-footer">
@@ -173,6 +170,10 @@
                                     <ul class="dropdown-menu">
                                         <li><a href="#" class="exportSave">Export</a></li>
                                         <li><a href="#" class="importSave">Import</a></li>
+                                        <li><a href="#" class="toggleScroll">Autoscroll <span class="glyphicon glyphicon-check" id="autoscrollIndicator"></span></a></li>
+                                        <li>&nbsp;</li>
+                                        <li><a href="#" data-textid="ui.reset" class="resetGame">Reset Game</a></li>
+                                        
                                     </ul>
                                 </div>
                             </div>
@@ -182,10 +183,13 @@
                         <a href="#" data-textid="ui.wakeup" class="btnWakeUp btn btn-primary night startcontent">Wake up</a>
                         <div class="unlockable credits">
                             <p>
-                                BadWorld is a game by Bjørn Furuknap, with generous help from the team at <a target="_blank" href="http://mobsoft.mx/">MOBSoft</a>.
+                                BadWorld is a game by Bjørn Furuknap, with generous support from the team at <a target="_blank" href="http://mobsoft.mx/">MOBSoft</a>.
                             </p>
                             <p>
                                 Spanish translation and playtesting by Ruben Ruiz Marron.
+                            </p>
+                            <p>
+                                Feeling generous? There's a <a target="_blank" href="https://www.patreon.com/furuknap">Patreon over here</a> but don't worry, the game is and always will be free :-)
                             </p>
 
 

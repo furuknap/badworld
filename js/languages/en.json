@@ -55,7 +55,7 @@
   "movetohefnship1": "It's obvious now. We're not getting help. We're in constant danger on a planet that doesn't want us. We need to get ourselves out of here if we are going to survive.",
   "movetohefnship2": "\"Gather the remaining crew\" you tell one of the crew members and before long, everyone is standing in a large half-circle around you. \"There's no simple way of saying this. We cannot stay here. Not in this base, not on this planet. We can't get rescued and our own ship is not going anywhere. I don't see that we have much choice.\" ",
   "movetohefnship3": "Several of the crew had thought the same thing, and one of them spoke up. \"The Hefn ship. It's in much better shape than ours and much more advanced. We can repair that and learn how it works. If nothing else, it will offer better protection.\"",
-  "movetohefnship4": "You nodded. \"We're leaving by morning. We'll travel as one group. We need to bring as many energy crystals as possible to power up the Hefn ship but other than that, we're leaving everything behind. We'll probably come under attack and not have any means of defense so we travel as light as possible.\" ",
+  "movetohefnship4": "You nodded. \"We're leaving as soon as everyone is ready. We'll travel as one group so make sure everyone is healthy and done with their tasks. We need to bring medkits and as many energy crystals as possible to power up the Hefn ship but other than that, we're leaving everything behind. We'll probably come under attack and not have any means of defense so we travel as light as possible.\" ",
   "movetohefnship5": "Early next morning, the crew was ready. As soon as we left camp, we heard the K'ru descending on our previous home. There would be nothing left by now so if this plan doesn't work out, we're doomed.",
   "part1complete": "Part 1 of Bad World is now done. Part 2 is coming later and continues the story. What secrets does the Hefn ship hold? What will you do about the K'ru? Will your team still support you when times get even tougher? Stay tuned for the next part (you can leave your save game as is to pick up once that part is released).",
 
@@ -133,6 +133,8 @@
   "ui.start": "Start",
   "ui.activate": "Focus",
   "ui.reset": "Reset",
+  "ui.import": "Import",
+  "ui.export": "Export",
   "ui.story": "The Story",
 
   "ui.notifications.buildingrepaired": "The crew repaired a building.",

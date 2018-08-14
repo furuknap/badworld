@@ -181,13 +181,19 @@ export class QuestService extends GameService {
             }
             QuestService.definitions.push(alienShip);
 
-            var moveBase = new QuestDefinition("", 5, 120);
+            var moveBase = new QuestDefinition("", 5, 30);
 //            moveBase.crewrequired = Services.CrewService.getTotalCrew(game);
             moveBase.name = Language.getText("quest.movebase.name");
-            moveBase.unlockcondition = (game) => { return game.texts.some(t => t.id == 57) && game.crew.sick==0; }
+            moveBase.unlockcondition = (game) => { return game.texts.some(t => t.id == 57) && Services.CrewService.getAvailable(game)== Services.CrewService.getTotalCrew(game); }
             moveBase.onstart = (game, quest) => {
                 game.state.part1complete = true;
-                quest.crew = Services.CrewService.getTotalCrew(game)-game.crew.sick; // Need to account for expeditions, research, and buildings.
+                for (var i = 0; i < game.buildings.length; i++) {
+                    game.buildings[i].damage = 100;
+                }
+                game.inventory.medicinalplants = 0;
+                game.inventory.datadevices = 0;
+
+                quest.crew = Services.CrewService.getTotalCrew(game); // Need to account for expeditions, research, and buildings.
                 return game;
             }
             QuestService.definitions.push(moveBase);

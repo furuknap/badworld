@@ -7,6 +7,8 @@ var pauseUpdates = false;
 var runViewUpdates = true;
 var autoScroll = true;
 var bwversion = 0.9;
+var bwurl = "http://badworld.azurewebsites.net/";
+var bwversions = [0.9]
 //region Selector
 var researchAvailableListSelector = ".researchAvailableList";
 var researchListSelector = ".researchList";
@@ -74,7 +76,14 @@ function setupButtons() {
     });
 
     $(document).on("click", ".exportSave", function () {
+        $("#exportGame").val(JSON.stringify(game));
         $("#exportDialog").modal('show');
+    })
+    $(document).on("click", ".copyexporttoclipboard", function () {
+        var copyText = document.getElementById("exportGame");
+        copyText.select();
+        document.execCommand("copy");
+
     })
     $(document).on("click", ".importSave", function () {
         $("#importDialog").modal('show');
@@ -100,7 +109,7 @@ function setupButtons() {
 
 
     $(document).on("click", ".storyToggle", function () {
-        $("#storyDialog").modal('show'); 
+        $("#storyDialog").modal('show');
     })
 
     $(document).on("click", ".toggleUpdates", function () {
@@ -108,6 +117,7 @@ function setupButtons() {
     })
     $(document).on("click", ".toggleScroll", function () {
         autoScroll = !autoScroll;
+        (autoScroll) ? $("#autoscrollIndicator").removeClass("glyphicon-unchecked").addClass("glyphicon-check") : $("#autoscrollIndicator").removeClass("glyphicon-check").addClass("glyphicon-unchecked");
     })
     $(document).on("click", ".startResearchButton", function (sender) {
         var target = $(sender.target);
@@ -195,7 +205,6 @@ function refreshView() {
         });
         $("#messages").html(messageHTML);
 
-        $("#exportGame").val(JSON.stringify(game));
         updateScroll();
 
         updateResearch();
@@ -219,13 +228,13 @@ function showNotifications() {
         if (dif < 2000) {
             firstclass += " recent";
         }
-        var html = "<span class=\""+firstclass+"\">" + Language.getText(game.notifications[notificationsMax-1].textid).substring(0,50) + "...</span>";
+        var html = "<span class=\"" + firstclass + "\">" + Language.getText(game.notifications[notificationsMax - 1].textid).substring(0, 50) + "...</span>";
 
         $(".notifications").html(html);
         var hiddenhtml = "";
-        for (var i = notificationsToList.length-1; i >=0 ; i--) {
+        for (var i = notificationsToList.length - 1; i >= 0; i--) {
             var notification = game.notifications[i];
-            hiddenhtml += "<div class=\"notificationsentry\">" + Language.getText(notification.textid)+"</div>";
+            hiddenhtml += "<div class=\"notificationsentry\">" + Language.getText(notification.textid) + "</div>";
         }
         $(".notificationshidden").html(hiddenhtml);
         game.notifications = notificationsToList;
@@ -255,9 +264,9 @@ function updateInventory() {
     var inventoryHTML = "<div>" +
         "<strong>" + Utilities.Language.getText("ui.heading.inventory") + "</strong><br/>" +
         Utilities.Language.getText("ui.heading.inventory.medkits") + ": " + game.inventory.medkits + "<br/>" +
-        (game.discoveries.some(d=>d.definition.id=="medicinalplants" && d.iscomplete()) ?  Utilities.Language.getText("ui.heading.inventory.medicinalplants") + ": " + game.inventory.medicinalplants + "<br/>" :"") +
-        (game.discoveries.some(d=>d.definition.id=="powercrystals" && d.iscomplete()) ?  Utilities.Language.getText("ui.heading.inventory.powercrystals") + ": " + game.inventory.powercrystals + "<br/>" :"") +
-        (game.research.some(r => r.definition.id == "alienshipdatadevice" && r.iscomplete()) ? Utilities.Language.getText("ui.heading.inventory.datadevices") + ": " + game.inventory.datadevices + "<br/>" :"") +
+        (!game.state.part1complete && game.discoveries.some(d => d.definition.id == "medicinalplants" && d.iscomplete()) ? Utilities.Language.getText("ui.heading.inventory.medicinalplants") + ": " + game.inventory.medicinalplants + "<br/>" : "") +
+        (game.discoveries.some(d => d.definition.id == "powercrystals" && d.iscomplete()) ? Utilities.Language.getText("ui.heading.inventory.powercrystals") + ": " + game.inventory.powercrystals + "<br/>" : "") +
+        (!game.state.part1complete && game.research.some(r => r.definition.id == "alienshipdatadevice" && r.iscomplete()) ? Utilities.Language.getText("ui.heading.inventory.datadevices") + ": " + game.inventory.datadevices + "<br/>" : "") +
         "<br/>" +
         "</div>"
         ;
@@ -374,7 +383,7 @@ function updateResearch() {
     var researchHTML = "";
     var listCount = 0;
     var list = "";
-    for (var i = game.research.length-1; i >=0 ; i--) {
+    for (var i = game.research.length - 1; i >= 0; i--) {
         var research = game.research[i];
         if (listCount < 4) {
             var html = "<div class=\"researchCard card\">" +
@@ -469,46 +478,84 @@ function loadGame(gameString) {
     }
 
     if (gameString !== null) {
-        game = JSON.parse(gameString);
-
-        if (game.meta == undefined || game.meta.version < bwversion) {
-            game = getDefaultGame();
+        var okfile = false;
+        try {
+            game = JSON.parse(gameString);
+            okfile = true;
+        } catch (e) {
+            alert("Your save game file is not valid.");
         }
-        else {
-            for (var i = 0; i < game.research.length; i++) {
-                var e = Entities.Research.toClass(game.research[i], Entities.Research.prototype);
-                e.definition = Entities.ResearchDefinition.toClass(Services.ResearchService.allDefinitions().find(d => d.id == e.definition.id), Entities.ResearchDefinition.prototype);
-                game.research[i] = e;
-            }
-            for (var i = 0; i < game.buildings.length; i++) {
-                var e = Entities.Research.toClass(game.buildings[i], Entities.Building.prototype);
-                e.definition = Entities.BuildingDefinition.toClass(Services.BuildingService.allDefinitions().find(d => d.id == e.definition.id), Entities.BuildingDefinition.prototype);
-                game.buildings[i] = e;
-            }
-            for (var i = 0; i < game.quests.length; i++) {
-                var e = Entities.Quest.toClass(game.quests[i], Entities.Quest.prototype);
-                e.definition = Entities.QuestDefinition.toClass(Services.QuestService.allDefinitions().find(d => d.id == e.definition.id), Entities.QuestDefinition.prototype);
-                game.quests[i] = e;
-            }
-            for (var i = 0; i < game.discoveries.length; i++) {
-                var e = Entities.Discovery.toClass(game.discoveries[i], Entities.Discovery.prototype);
-                e.definition = Entities.DiscoveryDefinition.toClass(Services.DiscoveryService.allDefinitions().find(d => d.id == e.definition.id), Entities.DiscoveryDefinition.prototype);
-                game.discoveries[i] = e;
-            }
-            for (var i = 0; i < game.notifications.length; i++) {
-                var e = Entities.Notification.toClass(game.notifications[i], Entities.Notification.prototype);
-                game.notifications[i] = e;
-            }
-            for (var i = 0; i < game.events.length; i++) {
-                var e = {};
-                if (e.type == "attack") {
-                    e = Entities.Event.toClass(game.events[i], Entities.Discovery.prototype);
-                    e.definition = Entities.AttackEventDefinition.toClass(Services.EventService.allDefinitions().find(d => d.id == e.definition.id), Entities.AttackEventDefinition.prototype);
+
+        if (okfile) {
+            if (game.meta != undefined && game.meta.version < bwversion) {
+                if (bwversions.some(i => i == game.meta.version)) {
+                    if (confirm("Your save game is for an old version of Bad World. Do you want us to take you to that version so you can try playing or importing there?\n\nIf not, we'll create a new savegame for you here")) {
+                        var url = bwurl;
+                        url += game.meta.version;
+                        document.location.href = url;
+                    }
+                    else {
+                        window.localStorage.setItem("game.old." + game.meta.version, JSON.stringify(game));
+                        game = getDefaultGame();
+                        saveGame();
+                        document.location.reload();
+                    }
                 }
-                game.events[i] = e;
+                else {
+                    alert("Your save game is for an old version of Bad World. Unfortunately, your version is not supported. We've saved your game in localstorage with the key " + "game.old." + game.meta.version + " so you can start a new game on this version.");
+                    window.localStorage.setItem("game.old." + game.meta.version, JSON.stringify(game));
+                    game = getDefaultGame();
+                    saveGame();
+                    document.location.reload();
+                }
+
+            }
+            else if (game.meta != undefined && game.meta.version > bwversion) {
+                if (window.localStorage.getItem("game.old." + bwversion)) {
+                    gameString = window.localStorage.getItem("game.old." + bwversion);
+                    loadGame(gameString);
+                }
             }
 
-            game.lastupdate = new Date(game.lastupdate);
+            else if (game.meta == undefined) {
+                game = getDefaultGame();
+            }
+            else {
+                for (var i = 0; i < game.research.length; i++) {
+                    var e = Entities.Research.toClass(game.research[i], Entities.Research.prototype);
+                    e.definition = Entities.ResearchDefinition.toClass(Services.ResearchService.allDefinitions().find(d => d.id == e.definition.id), Entities.ResearchDefinition.prototype);
+                    game.research[i] = e;
+                }
+                for (var i = 0; i < game.buildings.length; i++) {
+                    var e = Entities.Research.toClass(game.buildings[i], Entities.Building.prototype);
+                    e.definition = Entities.BuildingDefinition.toClass(Services.BuildingService.allDefinitions().find(d => d.id == e.definition.id), Entities.BuildingDefinition.prototype);
+                    game.buildings[i] = e;
+                }
+                for (var i = 0; i < game.quests.length; i++) {
+                    var e = Entities.Quest.toClass(game.quests[i], Entities.Quest.prototype);
+                    e.definition = Entities.QuestDefinition.toClass(Services.QuestService.allDefinitions().find(d => d.id == e.definition.id), Entities.QuestDefinition.prototype);
+                    game.quests[i] = e;
+                }
+                for (var i = 0; i < game.discoveries.length; i++) {
+                    var e = Entities.Discovery.toClass(game.discoveries[i], Entities.Discovery.prototype);
+                    e.definition = Entities.DiscoveryDefinition.toClass(Services.DiscoveryService.allDefinitions().find(d => d.id == e.definition.id), Entities.DiscoveryDefinition.prototype);
+                    game.discoveries[i] = e;
+                }
+                for (var i = 0; i < game.notifications.length; i++) {
+                    var e = Entities.Notification.toClass(game.notifications[i], Entities.Notification.prototype);
+                    game.notifications[i] = e;
+                }
+                for (var i = 0; i < game.events.length; i++) {
+                    var e = {};
+                    if (e.type == "attack") {
+                        e = Entities.Event.toClass(game.events[i], Entities.Discovery.prototype);
+                        e.definition = Entities.AttackEventDefinition.toClass(Services.EventService.allDefinitions().find(d => d.id == e.definition.id), Entities.AttackEventDefinition.prototype);
+                    }
+                    game.events[i] = e;
+                }
+
+                game.lastupdate = new Date(game.lastupdate);
+            }
         }
 
     }
@@ -526,7 +573,7 @@ function deleteGame() {
 
 function getDefaultGame() {
     return {
-        meta: { version: bwversion, language: "en"},
+        meta: { version: bwversion, language: "en" },
         attacks: { count: 0, wounded: 0 },
         crew: {
             available: 25,
