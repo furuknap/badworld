@@ -27,6 +27,7 @@ import * as Services from "./services/services.js"
 import * as Entities from "./entities/entities.js"
 import * as Utilities from "./utilities/utilities.js"
 import * as UI from "./ui/uielements.js"
+import { Language } from "./utilities/utilities.js";
 
 
 
@@ -72,6 +73,18 @@ function setupButtons() {
         refreshView();
     });
 
+    $(document).on("click", ".exportSave", function () {
+        $("#exportDialog").modal('show');
+    })
+    $(document).on("click", ".importSave", function () {
+        $("#importDialog").modal('show');
+    })
+    $(document).on("click", ".importButton", function () {
+        var gameString = $("#importGame").val();
+        loadGame(gameString);
+    })
+    //importButton
+
     $(document).on("click", ".resetGame", function () {
         if (confirm("Are you sure you want to reset the game?")) {
             deleteGame();
@@ -116,6 +129,12 @@ function setupButtons() {
         var definitionid = target.data("discoverydefinitionid");
         game = Services.DiscoveryService.setActiveDiscovery(game, definitionid);
     })
+    $(document).on("mouseover", ".notificationsshow", function (sender) {
+        $(".notificationshidden").show()
+    });
+    $(document).on("mouseout", ".notificationsshow", function (sender) {
+        $(".notificationshidden").hide()
+    });
 
 }
 
@@ -175,6 +194,8 @@ function refreshView() {
             messageHTML += "<div class=\"messageEntry\">" + texto + "</div>";
         });
         $("#messages").html(messageHTML);
+
+        $("#exportGame").val(JSON.stringify(game));
         updateScroll();
 
         updateResearch();
@@ -191,32 +212,23 @@ function refreshView() {
 
 function showNotifications() {
     if (game.notifications.length > 0) {
-        var notification = game.notifications[0];
-        var notificationdate = new Date(notification.date);
-        var nowdate = new Date();
-        if (notificationdate.setSeconds(notificationdate.getSeconds() + notification.duration) > nowdate) {
-            if (Object.keys(vex.getAll()).length == 0) {
-                var buttons = [];
-                notification.buttons.forEach((b) => {
-                    buttons.push(
-                        $.extend({}, vex.dialog.buttons.YES, {
-                            className: 'vex-dialog-button-primary',
-                            text: b.text,
-                            click: function () { game.notifications.pop(); }
-                        }),
-                    );
-                });
-                vex.dialog.open({
-                    message: Utilities.Language.getText(notification.textid),
-                    buttons: buttons,
-                    overlayClosesOnClick: false
-                });
-            }
+        var notificationsMax = game.notifications.length > 10 ? 10 : game.notifications.length;
+        var notificationsToList = game.notifications.slice(game.notifications.length - notificationsMax, notificationsMax);
+        var firstclass = "notificationsshow";
+        var dif = new Date().getTime() - new Date(game.notifications[notificationsMax - 1].date).getTime();
+        if (dif < 2000) {
+            firstclass += " recent";
         }
-        else {
-            game.notifications.pop();
-            vex.closeAll(); // Doesn't work because the outside if blocks execution if any vexes are open.
+        var html = "<span class=\""+firstclass+"\">" + Language.getText(game.notifications[notificationsMax-1].textid).substring(0,50) + "...</span>";
+
+        $(".notifications").html(html);
+        var hiddenhtml = "";
+        for (var i = notificationsToList.length-1; i >=0 ; i--) {
+            var notification = game.notifications[i];
+            hiddenhtml += "<div class=\"notificationsentry\">" + Language.getText(notification.textid)+"</div>";
         }
+        $(".notificationshidden").html(hiddenhtml);
+        game.notifications = notificationsToList;
     }
 }
 
@@ -304,7 +316,9 @@ function updateUnlockedElements() {
         });
     unlocksHTML = unlocks.join(", ");
     $(unlocksHTML).removeClass("unlockable").show();
-
+    if (game.state.part1complete) {
+        $(".part1").hide();
+    }
 }
 
 function updateQuests() {
@@ -370,7 +384,7 @@ function updateResearch() {
                 "<div class=\"\"></div>" +
 
                 "</div>";
-            html = research.definition.postrender(game, html);
+            html = research.definition.postrender(game, html, research);
             listCount++;
             researchHTML += html;
         }
@@ -449,10 +463,13 @@ function saveGame() {
     $(".saveIcon").hide();
 }
 
-function loadGame() {
-    var gameString = JSON.parse(window.localStorage.getItem("game"));
+function loadGame(gameString) {
+    if (gameString == undefined) {
+        gameString = window.localStorage.getItem("game");
+    }
+
     if (gameString !== null) {
-        game = gameString;
+        game = JSON.parse(gameString);
 
         if (game.meta == undefined || game.meta.version < bwversion) {
             game = getDefaultGame();

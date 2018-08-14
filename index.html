@@ -1,6 +1,17 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google Tag Manager -->
+    <script>
+    (function (w, d, s, l, i) {
+        w[l] = w[l] || []; w[l].push({
+            'gtm.start':
+                new Date().getTime(), event: 'gtm.js'
+        }); var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-K6HRHXS');</script>
+    <!-- End Google Tag Manager -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BadWorld</title>
@@ -14,6 +25,12 @@
 
 </head>
 <body class="night">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K6HRHXS"
+                height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -57,6 +74,50 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal" id="exportDialog" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 data-textid="ui.story" class="modal-title">The Story</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <textarea class="container dialogtext" id="exportGame" rows="20">
+
+                        </textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-xs btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" id="importDialog" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 data-textid="ui.story" class="modal-title">The Story</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <textarea class="container dialogtext" id="importGame">
+
+                        </textarea>
+                        <button type="button" class="btn btn-xs btn-primary importButton" data-dismiss="modal">Import</button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-xs btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
 
@@ -72,25 +133,25 @@
                             <strong data-textid="ui.heading.inventory">Inventory</strong>
 
                         </div>
-                        <div class="menuheader questsControls unlockable">
+                        <div class="menuheader questsControls unlockable part1">
                             <strong data-textid="ui.heading.expeditions">Expeditions</strong>
                             <div class="questsAvailableList container card row"></div>
                             <div class="questsList container card row"></div>
                         </div>
-                        <div class="menuheader researchControls unlockable">
+                        <div class="menuheader researchControls unlockable part1">
                             <strong data-textid="ui.heading.research">Research</strong>
                             <div class="researchAvailableList container card row"></div>
                             <div class="researchList container card row"></div>
                             <div class="researchListMore container card row">...</div>
 
                         </div>
-                        <div class="menuheader buildingControls unlockable">
+                        <div class="menuheader buildingControls unlockable part1">
                             <strong data-textid="ui.heading.build">Build</strong>
                             <div class="buildingsAvailableList container card row"></div>
                             <div class="buildingsList container card row"></div>
                             <div class="buildingsListMore container card row">...</div>
                         </div>
-                        <div class="menuheader discoveryControls unlockable">
+                        <div class="menuheader discoveryControls unlockable part1">
                             <strong data-textid="ui.heading.discoveries">Discoveries</strong>
                             <div class="discoveriesAvailableList container card row"></div>
                             <div class="discoveriesList container card row"></div>
@@ -98,6 +159,25 @@
 
                     </div>
                     <div class="col-md-8">
+                        <div class="row container messagemenu unlockable">
+                            <div class="col-md-11 notifications">
+                                ...
+                            </div>
+                            <div class="col-md-11 notificationshidden">
+                            </div>
+                            <div class="col-md-1">
+                                <div class="dropdown">
+                                    <button class="btn btn-primary btn-xs dropdown-toggle" type="button" data-toggle="dropdown">
+                                        <span class="glyphicon glyphicon-cog"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#" class="exportSave">Export</a></li>
+                                        <li><a href="#" class="importSave">Import</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="card" id="messages"></div>
                         <a href="#" data-textid="ui.wakeup" class="btnWakeUp btn btn-primary night startcontent">Wake up</a>
                         <div class="unlockable credits">
@@ -105,11 +185,12 @@
                                 BadWorld is a game by Bjørn Furuknap, with generous help from the team at <a target="_blank" href="http://mobsoft.mx/">MOBSoft</a>.
                             </p>
                             <p>
-                                Spanish translation and playtesting by Ruben Ruiz Marron. 
+                                Spanish translation and playtesting by Ruben Ruiz Marron.
                             </p>
 
 
                         </div>
+
                     </div>
                 </div>
             </div>

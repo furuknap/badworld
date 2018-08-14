@@ -97,6 +97,7 @@
   "quest.deeperjungle.name": "Deep Jungle Expedition",
   "quest.crystalmine.name": "Crystal Mine",
   "quest.alienship.name": "Alien Ship",
+  "quest.movebase.name": "Abandon Base",
   "quest.cancelled": "An expedition had to be cancelled because the last crew member got wounded.",
 
   "discovery.medicinalplants.name": "Medicinal Plants",
@@ -125,6 +126,8 @@
   "ui.cancel": "Cancel",
   "ui.yes": "Yes",
   "ui.no": "No",
+  "ui.on": "On",
+  "ui.off": "Off",
   "ui.continue": "Continue",
   "ui.time": "Time",
   "ui.start": "Start",

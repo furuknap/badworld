@@ -58,6 +58,7 @@ export class EventService extends GameService {
     static availableDefinitions(game) {
         var availableDefinitions = [];
         var allDefinitions = this.allDefinitions();
+
         for (var i = 0; i < allDefinitions.length; i++) {
             var definition = allDefinitions[i];
             var completed = game.research.some(gr => gr.definition.id == definition.id && (gr.iscomplete() || gr.inprogress));

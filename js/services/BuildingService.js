@@ -8,26 +8,28 @@ import { Notification } from "../entities/entities.js";
 export class BuildingService extends GameService {
 
     updateGame(game, deltaTime) {
-        for (var i = 0; i < game.buildings.length; i++) {
-            var building = game.buildings[i];
+        if (!game.state.part1complete) {
+            for (var i = 0; i < game.buildings.length; i++) {
+                var building = game.buildings[i];
 
 
-            if (building.damage <= 0) {
-                var wascomplete = building.iscomplete;
-                game = building.definition.onupdate(game, building);
-                if (building.inprogress && !building.iscomplete()) {
-                    building.timeproduced += deltaTime;
-                    if (building.iscomplete() && !building.wascomplete) {
-                        game = building.definition.completed(game);
+                if (building.damage <= 0) {
+                    var wascomplete = building.iscomplete();
+                    game = building.definition.onupdate(game, building);
+                    if (building.inprogress && !building.iscomplete()) {
+                        building.timeproduced += deltaTime;
+                        if (building.iscomplete() && !building.wascomplete) {
+                            game = building.definition.completed(game);
+                        }
                     }
                 }
-            }
-            else {
-//                building.damage -= Math.max(1, parseInt(Services.CrewService.getAvailable(game) * (0.1 / game.buildings.filter(b => b.damage > 0).length)));
-                building.damage -= Services.CrewService.getAvailable(game) * (0.5 / game.buildings.filter(b => b.damage > 0).length);
-                if (building.damage <= 0) {
-                    building.damage = 0;
-                    game.notifications.push(new Notification("ui.notifications.buildingrepaired", null, 5));
+                else {
+                    //                building.damage -= Math.max(1, parseInt(Services.CrewService.getAvailable(game) * (0.1 / game.buildings.filter(b => b.damage > 0).length)));
+                    building.damage -= Services.CrewService.getAvailable(game) * (0.5 / game.buildings.filter(b => b.damage > 0).length);
+                    if (building.damage <= 0) {
+                        building.damage = 0;
+                        game.notifications.push(new Notification("ui.notifications.buildingrepaired", null, 5));
+                    }
                 }
             }
         }
@@ -37,6 +39,9 @@ export class BuildingService extends GameService {
     static availableDefinitions(game) {
         var availableDefinitions = [];
         var allBuildingDefinitions = this.allDefinitions();
+        if (game.state.part1complete) {
+            return [];
+        }
         for (var i = 0; i < allBuildingDefinitions.length; i++) {
             var definition = allBuildingDefinitions[i];
             var completed = game.buildings.some(gb => gb.definition.id == definition.id && (gb.iscomplete() || gb.inprogress));
@@ -238,14 +243,17 @@ export class BuildingService extends GameService {
             };
 
             dronecontrol.postrender = (game, html, building) => {
-                var poweredText = (game.inventory.powercrystals > 0 ? Language.getText("ui.heading.powered") : Language.getText("ui.heading.unpowered"));
-                var powered = " <span>(" + poweredText + ")</span>";
-                var title = $(html).find(".buildingHeader");
-                var orgTitle = $(title).html();
-                var titleHTML = title.append(powered).html();
-                $(title).html(titleHTML);
-                var replaced = $(html).html().replace(orgTitle, titleHTML);
-                html = replaced;
+                if (building.iscomplete()) {
+
+                    var poweredText = (game.inventory.powercrystals > 0 ? Language.getText("ui.heading.powered") : Language.getText("ui.heading.unpowered"));
+                    var powered = " <span>(" + poweredText + ")</span>";
+                    var title = $(html).find(".buildingHeader");
+                    var orgTitle = $(title).html();
+                    var titleHTML = title.append(powered).html();
+                    $(title).html(titleHTML);
+                    var replaced = $(html).html().replace(orgTitle, titleHTML);
+                    html = replaced;
+                }
                 return html;
             }
 
@@ -255,33 +263,37 @@ export class BuildingService extends GameService {
             krudefenses.prerequisiteresearch = [{ id: "kruattitude" }, { id: "alienshipdatadevice" }];
             krudefenses.timerequired = 300;
             krudefenses.onupdate = (game, building) => {
-                if (game.inventory.powercrystals > 0) {
-                    building.powered = true;
-                    var powerusagerate = 5;
+                if (building.iscomplete()) {
+                    if (game.inventory.powercrystals > 0) {
+                        building.powered = true;
+                        var powerusagerate = 5;
 
-                    if (building.powerusage == undefined) {
-                        building.powerusage = 0;
+                        if (building.powerusage == undefined) {
+                            building.powerusage = 0;
+                        }
+                        building.powerusage++;
+                        if (building.powerusage >= powerusagerate) { // use energy even if damaged
+                            game.inventory.powercrystals--;
+                            building.powerusage = 0;
+                        }
                     }
-                    building.powerusage++;
-                    if (building.powerusage >= powerusagerate) { // use energy even if damaged
-                        game.inventory.powercrystals--;
-                        building.powerusage = 0;
+                    else {
+                        building.powered = false;
                     }
-                }
-                else {
-                    building.powered = false;
                 }
                 return game;
             };
             krudefenses.postrender = (game, html, building) => {
-                var poweredText = (game.inventory.powercrystals > 0 ? Language.getText("ui.heading.powered") : Language.getText("ui.heading.unpowered"));
-                var powered = " <span>(" + poweredText + ")</span>";
-                var title = $(html).find(".buildingHeader");
-                var orgTitle = $(title).html();
-                var titleHTML = title.append(powered).html();
-                $(title).html(titleHTML);
-                var replaced = $(html).html().replace(orgTitle, titleHTML);
-                html = replaced;
+                if (building.iscomplete()) {
+                    var poweredText = (game.inventory.powercrystals > 0 ? Language.getText("ui.heading.powered") : Language.getText("ui.heading.unpowered"));
+                    var powered = " <span>(" + poweredText + ")</span>";
+                    var title = $(html).find(".buildingHeader");
+                    var orgTitle = $(title).html();
+                    var titleHTML = title.append(powered).html();
+                    $(title).html(titleHTML);
+                    var replaced = $(html).html().replace(orgTitle, titleHTML);
+                    html = replaced;
+                }
                 return html;
             }
             BuildingService.buildingdefinitions.push(krudefenses);

@@ -23,6 +23,9 @@ export class CrewService extends GameService {
     static getExpedition(game) {
         return Services.QuestService.getCrewAllocated(game);
     }
+    static getSick(game) {
+        return game.crew.sick;
+    }
     static changeResearch(game, count) {
         game.crew.research += count;
         return game;

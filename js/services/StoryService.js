@@ -20,7 +20,7 @@ export class StoryService extends GameService {
 
         var wakeup = new StoryElement("", 2, "wakeup");
         wakeup.unlockcondition = function (game) { return !game.startGame; }
-        wakeup.unlockelements = ".buildingControls, .details";
+        wakeup.unlockelements = ".buildingControls, .details, .messagemenu";
         this.entities.push(wakeup);
 
 
@@ -232,7 +232,7 @@ export class StoryService extends GameService {
         this.entities.push(rebeldead);
 
         var movetohefnship1 = new StoryElement("", 54, "movetohefnship1");
-        movetohefnship1.unlockcondition = (game) => { return game.state.earthmessagesent; }
+        movetohefnship1.unlockcondition = (game) => { return game.state.earthmessagesent && game.texts.some(t => t.id == 36); }
         movetohefnship1.prerequisiteresearch = Services.ResearchService.allDefinitions().filter(r => r.id == "krulanguagebasics");
         this.entities.push(movetohefnship1);
 
@@ -254,14 +254,14 @@ export class StoryService extends GameService {
         this.entities.push(part1complete);
 
         var movetohefnship5 = new StoryElement("", 59, "movetohefnship5");
-        movetohefnship5.unlockcondition = (game) => { return game.texts.some(t => t.id == 57); }
+        movetohefnship5.unlockcondition = (game) => { return game.texts.some(t => t.id == 57) && game.state.part1complete;; }
         this.entities.push(movetohefnship5);
 
 
     }
 
     updateGame(game, deltaTime) {
-        var textsToTest = this.entities.filter(t => !game.texts.some(gt => gt.id == t.id));
+        var textsToTest = this.entities.filter(t => !game.texts.some(gt => gt.id == t.id)).sort((a, b) => { return a.id==b.id; });
 
         for (var i = 0; i < textsToTest.length; i++) {
             var text = textsToTest[i];

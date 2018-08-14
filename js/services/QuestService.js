@@ -10,7 +10,7 @@ export class QuestService extends GameService {
         var completedQuestIndexes = [];
         for (var i = 0; i < game.quests.length; i++) {
             var quest = game.quests[i];
-            var wascomplete = quest.iscomplete;
+            var wascomplete = quest.iscomplete();
             if (quest.inprogress && !quest.iscomplete()) {
                 quest.timeproduced += deltaTime;
                 game = quest.definition.onupdate(game, quest);
@@ -47,7 +47,7 @@ export class QuestService extends GameService {
                 var quest = Quest.getFromDefintion(foundDefinition);
                 quest.inprogress = true;
                 quest.crew = foundDefinition.crewrequired;
-                game = quest.definition.onstart(game);
+                game = quest.definition.onstart(game, quest);
                 game.quests.push(quest);
             }
             else {
@@ -180,6 +180,18 @@ export class QuestService extends GameService {
                 return game;
             }
             QuestService.definitions.push(alienShip);
+
+            var moveBase = new QuestDefinition("", 5, 120);
+//            moveBase.crewrequired = Services.CrewService.getTotalCrew(game);
+            moveBase.name = Language.getText("quest.movebase.name");
+            moveBase.unlockcondition = (game) => { return game.texts.some(t => t.id == 57) && game.crew.sick==0; }
+            moveBase.onstart = (game, quest) => {
+                game.state.part1complete = true;
+                quest.crew = Services.CrewService.getTotalCrew(game)-game.crew.sick; // Need to account for expeditions, research, and buildings.
+                return game;
+            }
+            QuestService.definitions.push(moveBase);
+
 
         }
 
