@@ -259,6 +259,33 @@ export class StoryService extends GameService {
         movetohefnship5.part2 = true;
         this.entities.push(movetohefnship5);
 
+        var kruphysiology1 = new StoryElement("", 60, "kruphysiology1");
+        kruphysiology1.prerequisiteresearch = [{ id: "kruattitude" } ];
+        this.entities.push(kruphysiology1);
+
+        var kruphysiology2 = new StoryElement("", 61, "kruphysiology2");
+        kruphysiology2.unlockcondition = (game) => { return game.texts.some(t => t.id == 60); }
+        this.entities.push(kruphysiology2);
+
+        var kruphysiologykill = new StoryElement("", 62, "kruphysiologykill");
+        kruphysiologykill.unlockcondition = (game) => { return game.research.some(t => t.definition.id == "kruphysiologykill"); }
+        this.entities.push(kruphysiologykill);
+
+        var kruphysiologyalive = new StoryElement("", 63, "kruphysiologyalive");
+        kruphysiologyalive.unlockcondition = (game) => { return game.research.some(t => t.definition.id == "kruphysiologyalive"); }
+        this.entities.push(kruphysiologyalive);
+
+        var kruphysiologyescape = new StoryElement("",64, "kruphysiologyescape");
+        kruphysiologyescape.unlockcondition = (game) => { return game.research.some(t => t.definition.id == "kruphysiologyalive") && !game.state.krucaptive; }
+        this.entities.push(kruphysiologyescape);
+
+        var kruphysiologydone1 = new StoryElement("", 65, "kruphysiologydone1");
+        kruphysiologydone1.unlockcondition = (game) => { return game.research.some(t => (t.definition.id == "kruphysiologyalive" || t.definition.id == "kruphysiologykill") && t.iscomplete()); }
+        this.entities.push(kruphysiologydone1);
+
+        var kruphysiologydone2 = new StoryElement("", 66, "kruphysiologydone2");
+        kruphysiologydone2.unlockcondition = (game) => { return game.texts.some(t => t.id == 65); }
+        this.entities.push(kruphysiologydone2);
 
     }
 

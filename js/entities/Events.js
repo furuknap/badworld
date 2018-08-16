@@ -79,7 +79,23 @@ export class AttackEventDefinition extends EventDefinition {
                 odds = 50; // Creatures will attack more if base is left empty
             }
             odds /= Math.max(1, game.crew.guards);
-            return Math.random() * 100 < odds;
+
+            var result = Math.random() * 100 < odds;
+            if (result) {
+                var traps = game.buildings.find(b => b.definition.id == "krutraps" && b.iscomplete() && b.charges > 0);
+                if (traps != undefined) {
+                    game.notifications.push(new Notification("ui.notifications.trapsprung", null, 5))
+                    result = false;
+
+                    traps.charges--;
+                    if (traps.charges <= 0) {
+                        game.buildings = game.buildings.filter(b => b.definition.id != "krutraps");
+                        game.notifications.push(new Notification("ui.notifications.trapsdepleted", null, 5))
+                    }
+                }
+            }
+
+            return result;
         }
 
         this.completed = (game, event) => {
@@ -136,6 +152,9 @@ export class AttackEventDefinition extends EventDefinition {
             if (game.buildings.some(b => b.definition.id == "krucage" && b.iscomplete()) && !game.state.krucaptive) {
                 if (Math.random() * 100 > 50) {
                     game.state.krucaptive = true;
+                    if (game.research.some(t => t.definition.id == "kruphysiologyalive")) {
+                        game.notifications.push(new Notification("ui.notifications.recapturedkru", null, 3));
+                    }
                 }
             }
 

@@ -248,9 +248,9 @@ function updateDetails() {
         "<strong>" + Utilities.Language.getText("ui.heading.crew") + "</strong><br/>" +
         Utilities.Language.getText("ui.heading.crew.available") + ": " + Services.CrewService.getAvailable(game) + "<br/>" +
         (game.crew.sick > 0 ? Utilities.Language.getText("ui.heading.crew.wounded") + ": " + game.crew.sick + "<br/>" : "") +
-        (Services.QuestService.getCrewAllocated(game) > 0 ? Utilities.Language.getText("ui.heading.crew.quests") + ": " + Services.QuestService.getCrewAllocated(game) + "<br/>" : "") +
-        (game.crew.building > 0 ? Utilities.Language.getText("ui.heading.crew.building") + ": " + game.crew.building + "<br/>" : "") +
-        (game.crew.research > 0 ? Utilities.Language.getText("ui.heading.crew.research") + ": " + game.crew.research + "<br/>" : "") +
+        (game.texts.some(t => t.id == 7) ? Utilities.Language.getText("ui.heading.crew.quests") + ": " + Services.QuestService.getCrewAllocated(game) + "<br/>" : "") +
+        Utilities.Language.getText("ui.heading.crew.building") + ": " + game.crew.building + "<br/>" +
+        (game.buildings.some(b => b.definition.id == "largerhut" && b.iscomplete()) ? Utilities.Language.getText("ui.heading.crew.research") + ": " + game.crew.research + "<br/>" : "") +
         (game.buildings.some(b => b.definition.id == "guardpost" && b.iscomplete()) ? Utilities.Language.getText("ui.heading.crew.guards") + ": " + game.crew.guards + " <a href=\"#\" class=\"addGuard btn btn-xs\">+</a> <a href=\"#\" class=\"removeGuard btn btn-xs\">-</a><br/>" : "") +
         "<br/>" +
         "</div>"
@@ -504,7 +504,7 @@ function loadGame(gameString) {
                 if (bwversions.some(i => i == game.meta.version)) {
                     if (confirm("Your save game is for an old version of Bad World. Do you want us to take you to that version so you can try playing or importing there? \n\nIf not, we'll create a new savegame for you here")) {
                         var url = bwurl;
-                        url += "v/"+ game.meta.version;
+                        url += "v/" + game.meta.version;
                         document.location.href = url;
                     }
                     else {

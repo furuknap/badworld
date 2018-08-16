@@ -3,6 +3,7 @@ import { Research } from "../entities/Research.js"
 import * as Services from "./services.js"
 import { ResearchDefinition } from "../entities/Research.js"
 import { Language } from "../utilities/LanguageUtilities.js";
+import { Notification } from "../entities/entities.js";
 
 export class ResearchService extends GameService {
     updateGame(game, deltaTime) {
@@ -118,7 +119,7 @@ export class ResearchService extends GameService {
             aliencrash.crewrequired = 2;
             aliencrash.timerequired = 200;
             aliencrash.postrender = (game, html, research) => {
-                if (! research.iscomplete()) {
+                if (!research.iscomplete()) {
                     if (!game.inventory.datadevices) {
                         var poweredText = (game.inventory.datadevices > 0 ? "" : Language.getText("ui.heading.nodevices"));
                         var powered = " <span>(" + poweredText + ")</span>";
@@ -181,6 +182,54 @@ export class ResearchService extends GameService {
             kruattitude.prerequisiteresearch.push(krulanguagebasics);
             kruattitude.timerequired = 300;
             ResearchService.definitions.push(kruattitude);
+
+            var kruphysiologykill = new ResearchDefinition(Language.getText("research.kruphysiologykill.name"), "kruphysiologykill");
+            kruphysiologykill.prerequisiteresearch.push(kruattitude);
+            kruphysiologykill.unlockcondition = (game) => { return game.state.krucaptive && !game.research.some(r => r.definition.id == "kruphysiologyalive" && r.iscomplete()); };
+            kruphysiologykill.timerequired = 30;
+            kruphysiologykill.crewrequired = 1;
+            kruphysiologykill.onstart = (game, research) => {
+                game = Services.CrewService.changeResearch(game, research.definition.crewrequired);
+                var aliveresearch = game.research.find(r => r.definition.id == "kruphysiologyalive");
+                if (aliveresearch != undefined) {
+                    Services.CrewService.changeResearch(game, 0 - aliveresearch.definition.crewrequired);
+                }
+                game.research = game.research.filter(r => r.definition.id != "kruphysiologyalive");
+
+
+                return game;
+            }
+            ResearchService.definitions.push(kruphysiologykill);
+
+            var kruphysiologyalive = new ResearchDefinition(Language.getText("research.kruphysiologyalive.name"), "kruphysiologyalive");
+            kruphysiologyalive.prerequisiteresearch.push(kruattitude);
+            kruphysiologyalive.crewrequired = 6;
+            kruphysiologyalive.timerequired = 300;
+            kruphysiologyalive.onupdate = (game, research) => {
+                if (game.state.krucaptive) {
+                    var odds = 5;
+                    if (Math.random() * 100 < odds) {
+                        if (Services.CrewService.getAvailable(game) > 0) {
+                            Services.CrewService.changeWounded(game, 1);
+                            game.notifications.push(new Notification("ui.notifications.kruphysiologywound", null, 5))
+                        }
+                        else {
+                            game.buildings.find(b => b.definition.id == "krucage").damage = 100;
+                            game.state.krucaptive = false;
+                            game.notifications.push(new Notification("ui.notifications.kruphysiologybreakaway", null, 5))
+                        }
+
+                    }
+                }
+                else {
+                    research.timeproduced--;
+                }
+                return game;
+            }
+            kruphysiologyalive.unlockcondition = (game) => { return game.state.krucaptive && !game.research.some(r => r.definition.id == "kruphysiologykill"); };
+            ResearchService.definitions.push(kruphysiologyalive);
+
+            // .unlockcondition = (game) => { return game.state.krucaptive; };
 
         }
 

@@ -58,6 +58,14 @@
   "movetohefnship4": "You nodded. \"We're leaving as soon as everyone is ready. We'll travel as one group so make sure everyone is healthy and done with their tasks. We need to bring medkits and as many energy crystals as possible to power up the Hefn ship but other than that, we're leaving everything behind. We'll probably come under attack and not have any means of defense so we travel as light as possible.\" ",
   "movetohefnship5": "Early next morning, the crew was ready. As soon as we left camp, we heard the K'ru descending on our previous home. There would be nothing left by now so if this plan doesn't work out, we're doomed.",
   "part1complete": "Part 1 of Bad World is now done. Part 2 is coming later and continues the story. What secrets does the Hefn ship hold? What will you do about the K'ru? Will your team still support you when times get even tougher? Stay tuned for the next part (you can leave your save game as is to pick up once that part is released).",
+  "kruphysiology1": "\"The K'ru we captured is getting very aggressive,\" the researcher says one day. \"I don't know how much longer we can study it. Whenever I approach, it starts screaming and pulling and punching at its cage.\" You had noticed the noise coming from the area where the cage was. \"I need to study its physiology. I don't understand why they are humanoids. There's millennia of evolution that lead human physiology and yet, on a completely foreign planet, we find creatures that to some extent resemble us.\"",
+  "kruphysiology2": "\"Fascinating,\" you say. \"but I'm not sure what you want to do.\" The researcher fondled with an improvised stethoscope while carefully avoiding your gaze. \"Well, we could euthanize it. We have nothing that resembles tranquilizers and without that, we'll need plenty of people to hold it down while examining it further.\" You rose up. \"Are you suggesting we kill this creature to poke at its innards?\" The researcher looked back at you. \"I'm not suggesting it. I'm just giving you the option. Trying to hold it down could hurt our people and it would still take a long time. Of course, we can leave this mystery alone but we may lose any chance we have at learning more about them. Let me know what you decide.\" The researcher turned around and walked out. ",
+  "kruphysiologykill": "There was a blood-curdling scream as the researcher slit what we believe was a main artery of the captured K'ru. The entire crew stopped working and went silent. We could hear ruffling from the nearby jungle but there was no way to know if it came from K'ru or other creatures. After about a minute the screaming stopped, but the crew remained silent, glancing at you with disgust as you walked by.",
+  "kruphysiologyalive": "\"We can't.\" you say to the lead researcher. \"We're the invaders here. The K'ru are only defending their land. As much as it may hurt and as long as it may take, we must retain our humanity.\" The researcher nodded and walked out, calling five other crew over. As they walked towards the creature cage, they looked at you with anger in their eyes, knowing they would likely be gravely hurt by your decision.",
+  "kruphysiologyescape": "The K'ru struggled hard against the crew members holding it down and eventually, the last available crew member was knocked unconscious. The beast tore through the cage before escaping into the jungle. We'll have to wait to rebuild the cage and capture another K'ru before we can continue this research. Of course, we always have the option of killing one of them to make it easier for us.",
+  "kruphysiologydone1": "\"I don't know how this is possible,\" says the lead researcher after examining the K'ru physiology. \"The creatures are remarkably similar to us even down to having many of the same type of organs.\" The researcher was clearly puzzled. \"Maybe it's how nature evolves. Maybe we somehow evolved from the same roots. However, they also have very complex DNA, way more than us, and the have several organs that are nothing like anything I've ever seen before.\" ",
+  "kruphysiologydone2": "\"OK, beyond the mind-blowing implications this may have, right now, how does this help us defeat them or protect ourselves?\" you asked. \"Well, there's one more thing you need to know\" said the researcher. \"The latest K'ru we studied seems different than the earlier creatures we encountered. It's natural that multiple species evolve so it may just be that the earlier creatures were a different subspecies, but at least for this advanced version, we can synthesize a drug to knock them out. We can make traps around the base with spikes dipped in this drug, which will boost our defensive capabilities.\" ",
+
 
 
   "building.hut.name": "Small Hut",
@@ -71,6 +79,7 @@
   "building.dronecontrol.name": "Drone Control Center",
   "building.krudefenses.name": "Defensive Barrier",
   "building.guardpost.name": "Guard Posts",
+  "building.krutraps.name": "K'ru Traps",
 
   "story.background": "<p>Humanity has taken its first steps into the universe, to go boldly where no man has gone before. We’ve colonized the inner planets and sent probes towards other star systems. We’ve learned that there are a multitude of planets that can support human life.</p><p>One probe sends back evidence of a metal construction on a distant planet. This is likely the first real clue of extra-terrestrial life. However, the planet’s violent upper atmosphere makes an automated investigation impossible. </p><p>After a lengthy public debate, it is decided that we should send a manned expedition to investigate. </p><p>On arrival on the planet, the ship enters orbit and the crew confirms that this is indeed the remains of a massive starship that has crashed on the planet. After sending the initial findings back to earth, the captain, you, decide to commence your investigation by landing your ship.</p><p>Upon entering the atmosphere, your chief engineer miscalculates the angle of entry, and you lose control. The ship crashes, killing a portion of your crew. Only a few components of the ship survive, including some tools, but you have no way of getting off the planet.</p><p>Luckily, the planet provides plenty of resources to help. There’s edible fruits and plants, and using debris from the wreckage we can start searching for a way home and learn more about the alien ship.</p>",
 
@@ -84,7 +93,9 @@
   "research.medkit.name": "Medkits",
   "research.kruintro.name": "Creature Examination",
   "research.krulanguagebasics.name": "Creature Communication",
-  "research.kruattitude.name": "Kru Attitude",
+  "research.kruattitude.name": "K'ru Attitude",
+  "research.kruphysiologykill.name": "K'ru Physiology (Dead)",
+  "research.kruphysiologyalive.name": "K'ru Physiology (Alive)",
   "research.powercrystals.name": "Power Crystal Usage",
   "research.weatherpatterns.name": "Weather Patterns",
   "research.communicationsarrayboost.name": "Boost Communications",
@@ -138,6 +149,11 @@
   "ui.story": "The Story",
 
   "ui.notifications.buildingrepaired": "The crew repaired a building.",
+  "ui.notifications.kruphysiologywound": "The captured K'ru wounded a crew member trying to hold it down.",
+  "ui.notifications.kruphysiologybreakaway": "The captured K'ru managed to break lose when there were no more crew members to detain it.",
+  "ui.notifications.recapturedkru": "We captured another K'ru",
+  "ui.notifications.trapsprung": "One of our K'ru traps was triggered, knocking the creatures out and preventing an attack.",
+  "ui.notifications.trapsdepleted": "Our K'ru traps are depleted.",
 
   "ui.heading.powered": "Powered",
   "ui.heading.unpowered": "No Crystals",

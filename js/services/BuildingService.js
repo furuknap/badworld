@@ -19,7 +19,7 @@ export class BuildingService extends GameService {
                     if (building.inprogress && !building.iscomplete()) {
                         building.timeproduced += deltaTime;
                         if (building.iscomplete() && !building.wascomplete) {
-                            game = building.definition.completed(game);
+                            game = building.definition.completed(game, building);
                         }
                     }
                 }
@@ -306,9 +306,33 @@ export class BuildingService extends GameService {
             guardpost.assignedcrew = 0;
             guardpost.prerequisitebuildings.push({ id: "krudefenses" });
             guardpost.unlockcondition = (game) => { return game.state.campwiped && Services.CrewService.getAvailable(game) > 0; }
-
             BuildingService.buildingdefinitions.push(guardpost);
 
+
+            var krutraps = new BuildingDefinition(Language.getText("building.krutraps.name"));
+            krutraps.id = "krutraps";
+            krutraps.crewrequired = 4;
+            krutraps.timerequired = 60;
+            krutraps.completed = (game, building) => {
+                game = Services.CrewService.changeBuilding(game, 0 - building.definition.crewrequired);
+                building.charges = 10;
+                return game;
+            }
+            krutraps.postrender = (game, html, building) => {
+                if (building.iscomplete()) {
+                    var poweredText = building.charges;
+                    var powered = " <span>(" + poweredText + ")</span>";
+                    var title = $(html).find(".buildingHeader");
+                    var orgTitle = $(title).html();
+                    var titleHTML = title.append(powered).html();
+                    $(title).html(titleHTML);
+                    var replaced = $(html).html().replace(orgTitle, titleHTML);
+                    html = replaced;
+                }
+                return html;
+            }
+            krutraps.unlockcondition = (game) => { return game.research.some(t => (t.definition.id == "kruphysiologyalive" || t.definition.id == "kruphysiologykill") && t.iscomplete()); }
+            BuildingService.buildingdefinitions.push(krutraps);
         }
 
         return BuildingService.buildingdefinitions;
