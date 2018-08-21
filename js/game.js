@@ -247,7 +247,7 @@ function updateDetails() {
     var crewHTML = "<div>" +
         "<strong>" + Utilities.Language.getText("ui.heading.crew") + "</strong><br/>" +
         Utilities.Language.getText("ui.heading.crew.available") + ": " + Services.CrewService.getAvailable(game) + "<br/>" +
-        (game.crew.sick > 0 ? Utilities.Language.getText("ui.heading.crew.wounded") + ": " + game.crew.sick + "<br/>" : "") +
+        (game.texts.some(t => t.id == 8) ? Utilities.Language.getText("ui.heading.crew.wounded") + ": " + game.crew.sick + "<br/>" : "") +
         (game.texts.some(t => t.id == 7) ? Utilities.Language.getText("ui.heading.crew.quests") + ": " + Services.QuestService.getCrewAllocated(game) + "<br/>" : "") +
         Utilities.Language.getText("ui.heading.crew.building") + ": " + game.crew.building + "<br/>" +
         (game.buildings.some(b => b.definition.id == "largerhut" && b.iscomplete()) ? Utilities.Language.getText("ui.heading.crew.research") + ": " + game.crew.research + "<br/>" : "") +
@@ -289,7 +289,7 @@ function updateDiscoveries() {
                     (discovery != undefined ? "<div class=\"progress\"><div class=\"bar\" style=\"width: " + (discovery.pointsproduced / definition.pointsrequired) * 100 + "%\"></div>" : "")
                 ) +
                 "</div>" +
-                (discovery == undefined || !discovery.active ? "<div class=\"\"><a href=\"#\" data-discoverydefinitionid=\"" + definition.id + "\" class=\"btn btn-xs setActiveDiscoveryButton\">" + Utilities.Language.getText("ui.activate") + "</a></div>" : "") +
+                (discovery == undefined || !discovery.active ? "<div><a href=\"#\" data-discoverydefinitionid=\"" + definition.id + "\" class=\"btn btn-xs setActiveDiscoveryButton\">" + Utilities.Language.getText("ui.activate") + "</a></div>" : "") +
 
                 "</div>";
 

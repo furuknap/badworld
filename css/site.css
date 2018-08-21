@@ -78,6 +78,12 @@ body {
     margin-bottom: 20px;
 }
 
+.setActiveDiscoveryButton {
+    margin-bottom: 10px;
+    margin-top: 0px;
+}
+
+
 /* Hide/rearrange for smaller screens */
 @media screen and (max-width: 767px) {
 }
@@ -158,6 +164,7 @@ body {
     height: 14px;
     border: 2px solid black;
     border-radius: 0px;
+    margin-bottom: 3px;
 }
 
     .progress .bar {

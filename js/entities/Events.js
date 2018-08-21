@@ -80,6 +80,8 @@ export class AttackEventDefinition extends EventDefinition {
             }
             odds /= Math.max(1, game.crew.guards);
 
+
+
             var result = Math.random() * 100 < odds;
             if (result) {
                 var traps = game.buildings.find(b => b.definition.id == "krutraps" && b.iscomplete() && b.charges > 0);
@@ -93,6 +95,19 @@ export class AttackEventDefinition extends EventDefinition {
                         game.notifications.push(new Notification("ui.notifications.trapsdepleted", null, 5))
                     }
                 }
+
+                if (result) {
+                    for (var i = 0; i < game.quests.length; i++) {
+                        var quest = game.quests[i];
+                        if (quest.definition.id == "1") {
+                            if (Math.random() * 100 < 10) { // Nearby jungle expedition scared them away
+                                result = false;
+                                game.notifications.push(new Notification("ui.notifications.scaredawayattack", null, 5))
+                            }
+                        }
+                    }
+                }
+
             }
 
             return result;

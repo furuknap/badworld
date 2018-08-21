@@ -154,6 +154,7 @@
   "ui.notifications.recapturedkru": "We captured another K'ru",
   "ui.notifications.trapsprung": "One of our K'ru traps was triggered, knocking the creatures out and preventing an attack.",
   "ui.notifications.trapsdepleted": "Our K'ru traps are depleted.",
+  "ui.notifications.scaredawayattack": "An expedition to the nearby jungle scared away an attack party.",
 
   "ui.heading.powered": "Powered",
   "ui.heading.unpowered": "No Crystals",
