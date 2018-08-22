@@ -20,7 +20,7 @@
   "medkitsout": "We ran out of medkits. Without medkits, recorvery from wounds will be much slower. ",
   "medkitsoutneedresearch": "We should research how to make more medkits. ",
   "medkitsoutcanbuild": "Luckily, we can build more medkits in sickbay now if we just get the raw materials from the nearby jungle. We'll convert medicinal plants to medkits when they are available.",
-  "krucaptured": "During a particularly viscious attack this morning, we managed to incapacitate one of the creatures with a cargo net. We can start examining it to understand better what they are and possibly how to defend ourselves. ",
+  "krucaptured": "During a particularly vicious attack this morning, we managed to incapacitate one of the creatures with a cargo net. We can start examining it to understand better what they are and possibly how to defend ourselves. ",
   "kruintro": "\"Fascinating!\" said one of the crew members responsible for examining the creature we captured. \"These creatures are far more primitive than us. Their physiology is very strange but actaully resembles ours. I cannot understand why. They seem to have a crude language. I believe I can begin to understand the basics if I can get some more time.\" ",
   "krunonaggressive": "The creatures keep attacking us but somehow they always retreat without doing serious damage. In fact, they seem very careful not to kill anyone, never attacking wounded crew members and always retreating when they have knocked someone out.",
   "krulanguagebasics": "\"I have started to understand the basics of their language.\" The crew member investigating the creature reported in. \"I have learned how it asks for food and that it has pain in its legs. From what I have been able to deduce, they call themselves K'ru.\"",
@@ -66,6 +66,14 @@
   "kruphysiologydone1": "\"I don't know how this is possible,\" says the lead researcher after examining the K'ru physiology. \"The creatures are remarkably similar to us even down to having many of the same type of organs.\" The researcher was clearly puzzled. \"Maybe it's how nature evolves. Maybe we somehow evolved from the same roots. However, they also have very complex DNA, way more than us, and the have several organs that are nothing like anything I've ever seen before.\" ",
   "kruphysiologydone2": "\"OK, beyond the mind-blowing implications this may have, right now, how does this help us defeat them or protect ourselves?\" you asked. \"Well, there's one more thing you need to know\" said the researcher. \"The latest K'ru we studied seems different than the earlier creatures we encountered. It's natural that multiple species evolve so it may just be that the earlier creatures were a different subspecies, but at least for this advanced version, we can synthesize a drug to knock them out. We can make traps around the base with spikes dipped in this drug, which will boost our defensive capabilities.\" ",
 
+  "hefnshipexterior1": "Arriving at the Hefn ship for the first time, you got to finally see what all the expeditions reports was saying. The ship was truly impressive, far beyond anything we could construct. It was heavily damaged from the impact but far more likely to be salvagable. Worst case, it would make a better base than our old crash site.",
+  "hefnshipexterior2": "\"Start by checking out the area around us and do a visual inspection of the ship\" you ordered. \"We need to know how much damage there is and what we can fix.\" ",
+  "shipexterior": "The ship looks mostly intact. It must be an extremely durable construction to survive entry and the subsequent crash. There's plants growing all over so it must have been here several years if not decades. There's clearly damage, including some strange burn marks, but maybe we'll be able to uncover enough of this ship's mysteries to learn how to fix it. There's an entrance port leading to the inside of the ship.",
+  "shipinterior": "Inside the ship was nothing like we expected. There were clearly different systems on board but it seemed mostly to be an empty cargo hold. \"Frankly, we don't know what any of this does\" said a crew member who'd been active in during the alien ship expeditions. We need to figure out what these things are before we can start to understand how to use it or repair it. \"OK, I'll assign some people to start researching. Want to volunteer?\" The crew member beamed with pride. \"Nothing would make me more happy! Well, other than getting off this rock...\" ",
+  "shipinterior2": "",
+  "shipfirstattack": "\"Will you give me a break!\" you cry as the dust settles from the K'ru attack. \"These bastards won't leave us alone here either.\" A tired crew member walked up to you. \"Captain, we can use parts from the ship to set up a defensive barricade around the ship and assign guards to protect us.\" \"Do it!\" you say. \"I'll assign guard duties.\"",
+
+
 
 
   "building.hut.name": "Small Hut",
@@ -102,6 +110,9 @@
   "research.alienshipdatadevice.name": "Alien Data Device",
   "research.aliencrash.name": "Hefn Crash",
   "research.aliencargo.name": "Hefn Cargo",
+
+  "shipresearch.exterior.name": "Ship Exterior",
+  "shipresearch.interior.name": "Ship Interior",
 
 
   "quest.nearbyjungle.name": "Scout Nearby Jungle",
@@ -166,6 +177,7 @@
   "ui.heading.crew.building": "Building",
   "ui.heading.crew.research": "Research",
   "ui.heading.crew.guards": "Guards",
+  "ui.heading.crew.researchers": "Researchers",
   "ui.heading.expeditions": "Expeditions",
   "ui.heading.research": "Research",
   "ui.heading.build": "Build",
@@ -176,6 +188,8 @@
   "ui.heading.inventory.datadevices": "Alien Data Devices",
   "ui.heading.discoveries": "Discoveries",
   "ui.heading.discoveries.points": "Items",
+  "ui.heading.shipresearch": "Ship Research",
+
 
   "notenoughcrewavailable": "Not enough crew available",
 

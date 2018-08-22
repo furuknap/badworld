@@ -21,6 +21,9 @@ var questsListSelector = ".questsList";
 
 var discoveriesAvailableListSelector = ".discoveriesAvailableList";
 var discoveriesPointsSelector = ".discoveriesList";
+var shipResearchAvailableListSelector = ".shipResearchAvailableList";
+var shipResearchListSelector = ".shipResearchList";
+var shipResearchListMoreSelector = ".shipResearchListMore";
 
 var detailsSelector = ".details";
 var inventorySelector = ".inventoryControls";
@@ -67,12 +70,14 @@ function registerServices() {
     services.push(new Services.DiscoveryService());
     services.push(new Services.EventService());
     services.push(new Services.CrewService());
+    services.push(new Services.ShipResearchService());
 }
 function setupButtons() {
     $(document).on("click", ".btnWakeUp", function () {
         game.night = false;
         game.startGame = false;
         refreshView();
+        track("click", "Wake Up!");
     });
 
     $(document).on("click", ".exportSave", function () {
@@ -91,6 +96,7 @@ function setupButtons() {
     $(document).on("click", ".importButton", function () {
         var gameString = $("#importGame").val();
         loadGame(gameString);
+        game.lastupdate = new Date();
     })
     //importButton
 
@@ -107,9 +113,17 @@ function setupButtons() {
         Services.CrewService.changeGuards(game, -1);
     })
 
+    $(document).on("click", ".addResearchers", function () {
+        Services.CrewService.changeResearchers(game, 1);
+    })
+    $(document).on("click", ".removeResearchers", function () {
+        Services.CrewService.changeResearchers(game, -1);
+    })
+
 
     $(document).on("click", ".storyToggle", function () {
         $("#storyDialog").modal('show');
+        track("click", "The Story");
     })
 
     $(document).on("click", ".toggleUpdates", function () {
@@ -133,6 +147,11 @@ function setupButtons() {
         var target = $(sender.target);
         var definitionid = target.data("questdefinitionid");
         Services.QuestService.startQuest(game, definitionid);
+    })
+    $(document).on("click", ".startShipResearchButton", function (sender) {
+        var target = $(sender.target);
+        var definitionid = target.data("researchdefinitionid");
+        Services.ShipResearchService.startResearch(game, definitionid);
     })
     $(document).on("click", ".setActiveDiscoveryButton", function (sender) {
         var target = $(sender.target);
@@ -211,6 +230,7 @@ function refreshView() {
         updateBuildings();
         updateQuests();
         updateDiscoveries();
+        updateShipResearch();
 
         updateDetails();
         updateInventory();
@@ -248,10 +268,19 @@ function updateDetails() {
         "<strong>" + Utilities.Language.getText("ui.heading.crew") + "</strong><br/>" +
         Utilities.Language.getText("ui.heading.crew.available") + ": " + Services.CrewService.getAvailable(game) + "<br/>" +
         (game.texts.some(t => t.id == 8) ? Utilities.Language.getText("ui.heading.crew.wounded") + ": " + game.crew.sick + "<br/>" : "") +
-        (game.texts.some(t => t.id == 7) ? Utilities.Language.getText("ui.heading.crew.quests") + ": " + Services.QuestService.getCrewAllocated(game) + "<br/>" : "") +
-        Utilities.Language.getText("ui.heading.crew.building") + ": " + game.crew.building + "<br/>" +
-        (game.buildings.some(b => b.definition.id == "largerhut" && b.iscomplete()) ? Utilities.Language.getText("ui.heading.crew.research") + ": " + game.crew.research + "<br/>" : "") +
-        (game.buildings.some(b => b.definition.id == "guardpost" && b.iscomplete()) ? Utilities.Language.getText("ui.heading.crew.guards") + ": " + game.crew.guards + " <a href=\"#\" class=\"addGuard btn btn-xs\">+</a> <a href=\"#\" class=\"removeGuard btn btn-xs\">-</a><br/>" : "") +
+        (!game.state.part1complete || Services.QuestService.getCrewAllocated(game) > 0 ?
+
+            (game.texts.some(t => t.id == 7 || game.crew.quest > 0) ? Utilities.Language.getText("ui.heading.crew.quests") + ": " + Services.QuestService.getCrewAllocated(game) + "<br/>" : "") +
+            Utilities.Language.getText("ui.heading.crew.building") + ": " + game.crew.building + "<br/>" +
+            (game.research.some(r => r.definition.id == "surroundings") ? Utilities.Language.getText("ui.heading.crew.research") + ": " + game.crew.research + "<br/>" : "") +
+            (game.buildings.some(b => b.definition.id == "guardpost" && b.iscomplete()) ? Utilities.Language.getText("ui.heading.crew.guards") + ": " + game.crew.guards + " <a href=\"#\" class=\"addGuard btn btn-xs\">+</a> <a href=\"#\" class=\"removeGuard btn btn-xs\">-</a><br/>" : "")
+            :
+        (game.shipresearch.some(r => r.definition.id == "shipinterior" && r.iscomplete()) ? Utilities.Language.getText("ui.heading.crew.researchers") + ": " + game.crew.research + " <a href=\"#\" class=\"addResearchers btn btn-xs\">+</a> <a href=\"#\" class=\"removeResearchers btn btn-xs\">-</a><br/>" : "") + 
+        (game.texts.some(t => t.id == 71) ? Utilities.Language.getText("ui.heading.crew.guards") + ": " + game.crew.guards + " <a href=\"#\" class=\"addGuard btn btn-xs\">+</a> <a href=\"#\" class=\"removeGuard btn btn-xs\">-</a><br/>" : "") +
+
+
+            "") +
+
         "<br/>" +
         "</div>"
         ;
@@ -310,11 +339,22 @@ function updateDiscoveries() {
 
 function updateUnlockedElements() {
     var unlocksHTML = "";
+    var locksHTML = "";
     var unlocks = [];
+    var locks = [];
+
+    if (game.state.part1complete) {
+        locks.push(".part1");
+    }
+    
+    $(".unlockable").hide();
     game.buildings.concat(game.research).filter(e => e.iscomplete()) //.concat(game.research.filter(e => e.iscomplete())).concat(game.texts)
         .forEach(function (element) {
             if (element.definition.unlockelements) {
                 unlocks.push(element.definition.unlockelements);
+            }
+            if (element.definition.lockelements) {
+                locks.push(element.definition.lockelements);
             }
         });
     game.texts //.concat(game.research.filter(e => e.iscomplete())).concat(game.texts)
@@ -322,12 +362,14 @@ function updateUnlockedElements() {
             if (element.unlockelements) {
                 unlocks.push(element.unlockelements);
             }
+            if (element.lockelements) {
+                locks.push(element.lockelements);
+            }
         });
     unlocksHTML = unlocks.join(", ");
+    locksHTML = locks.join(", ");
     $(unlocksHTML).removeClass("unlockable").show();
-    if (game.state.part1complete) {
-        $(".part1").hide();
-    }
+    $(locksHTML).hide();
 }
 
 function updateQuests() {
@@ -411,6 +453,55 @@ function updateResearch() {
 
 }
 
+
+function updateShipResearch() {
+    let available = Services.ShipResearchService.availableDefinitions(game);
+    let availableHTML = ""
+    for (var i = 0; i < available.length; i++) {
+        let research = available[i];
+        availableHTML += "<div class=\"researchAvailableCard card\">" +
+            "<div data-researchdefinitionid=\"" + research.id + "\" class=\"researchHeader\">" + research.name + "</div>" +
+            "<div class=\"\"><a href=\"#\" data-researchdefinitionid=\"" + research.id + "\" class=\"btn btn-xs startShipResearchButton\">" + Utilities.Language.getText("ui.start") + "</a></div>" +
+
+            "</div>";
+
+    }
+    $(shipResearchAvailableListSelector).html(availableHTML)
+
+    var researchHTML = "";
+    var listCount = 0;
+    var list = "";
+    for (var i = game.shipresearch.length - 1; i >= 0; i--) {
+        var research = game.shipresearch[i];
+        if (listCount < 4) {
+            var html = "<div class=\"researchCard card\">" +
+                "<div data-researchdefinitionid=\"" + research.id + "\" class=\"researchHeader\">" + research.name + "</div>" +
+                (research.iscomplete() ? "" : "<div class=\"progress\"><div class=\"bar\" style=\"width: " + (research.pointsproduced / research.definition.pointsrequired) * 100 + "%\"></div>") +
+
+                "<div class=\"\"></div>" +
+
+                "</div>";
+            html = research.definition.postrender(game, html, research);
+            listCount++;
+            researchHTML += html;
+        }
+        else {
+            list += research.name + "\n";
+            $(shipResearchListMoreSelector).show();
+        }
+
+
+    }
+
+    $(shipResearchListSelector).html(researchHTML);
+    $(shipResearchListMoreSelector).attr("title", list);
+
+
+}
+
+
+
+
 function updateBuildings() {
     var available = Services.BuildingService.availableDefinitions(game);
     var availableHTML = "";
@@ -483,6 +574,7 @@ function saveGame() {
     window.localStorage.setItem(savegamepath, JSON.stringify(game));
     loadGame();
     $(".saveIcon").hide();
+    track("save", "Save");
 }
 
 function loadGame(gameString) {
@@ -561,6 +653,11 @@ function loadGame(gameString) {
                     var e = Entities.Notification.toClass(game.notifications[i], Entities.Notification.prototype);
                     game.notifications[i] = e;
                 }
+                for (var i = 0; i < game.shipresearch.length; i++) {
+                    var e = Entities.ShipResearch.toClass(game.shipresearch[i], Entities.ShipResearch.prototype);
+                    e.definition = Entities.ShipResearchDefinition.toClass(Services.ShipResearchService.allDefinitions().find(d => d.id == e.definition.id), Entities.ShipResearchDefinition.prototype);
+                    game.shipresearch[i] = e;
+                }
                 for (var i = 0; i < game.events.length; i++) {
                     var e = {};
                     if (e.type == "attack") {
@@ -579,6 +676,14 @@ function loadGame(gameString) {
         game = getDefaultGame();
     }
     //    console.info(game);
+}
+
+function track(event, value) {
+    if ("ga" in window) {
+        var tracker = ga.getAll()[0];
+        if (tracker)
+            tracker.send("event", event, value);
+    }
 }
 
 function deleteGame() {

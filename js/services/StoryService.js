@@ -248,16 +248,18 @@ export class StoryService extends GameService {
         movetohefnship4.unlockcondition = (game) => { return game.texts.some(t => t.id == 56); }
         this.entities.push(movetohefnship4);
 
-        var part1complete = new StoryElement("", 58, "part1complete");
-        part1complete.unlockcondition = (game) => { return game.texts.some(t => t.id == 59) && game.state.part1complete; }
-        part1complete.unlockelements = ".credits";
-        part1complete.part2 = true;
-        this.entities.push(part1complete);
+        //var part1complete = new StoryElement("", 58, "part1complete");
+        //part1complete.unlockcondition = (game) => { return game.texts.some(t => t.id == 59) && game.state.part1complete; }
+        //part1complete.unlockelements = ".credits";
+        //part1complete.part2 = true;
+        //this.entities.push(part1complete);
 
         var movetohefnship5 = new StoryElement("", 59, "movetohefnship5");
         movetohefnship5.unlockcondition = (game) => { return game.texts.some(t => t.id == 57) && game.state.part1complete; }
         movetohefnship5.part2 = true;
         this.entities.push(movetohefnship5);
+
+
 
         var kruphysiology1 = new StoryElement("", 60, "kruphysiology1");
         kruphysiology1.prerequisiteresearch = [{ id: "kruattitude" } ];
@@ -286,6 +288,39 @@ export class StoryService extends GameService {
         var kruphysiologydone2 = new StoryElement("", 66, "kruphysiologydone2");
         kruphysiologydone2.unlockcondition = (game) => { return game.texts.some(t => t.id == 65); }
         this.entities.push(kruphysiologydone2);
+
+
+        var hefnshipexterior1 = new StoryElement("", 67, "hefnshipexterior1");
+        hefnshipexterior1.unlockcondition = (game) => { return game.texts.some(t => t.id == 59) && game.quests.length==0; }
+        hefnshipexterior1.part2 = true;
+        this.entities.push(hefnshipexterior1);
+
+        var hefnshipexterior2 = new StoryElement("", 68, "hefnshipexterior2");
+        hefnshipexterior2.unlockcondition = (game) => { return game.texts.some(t => t.id == 67); }
+        hefnshipexterior2.part2 = true;
+        hefnshipexterior2.unlockelements = ".shipResearchControls";
+        this.entities.push(hefnshipexterior2);
+
+        var shipexterior = new StoryElement("", 69, "shipexterior");
+        shipexterior.prerequisiteshipresearch.push({ id: "shipexterior" });
+        shipexterior.part2 = true;
+        this.entities.push(shipexterior);
+
+        var shipinterior = new StoryElement("", 70, "shipinterior");
+        shipinterior.prerequisiteshipresearch.push({ id: "shipinterior" });
+        shipinterior.part2 = true;
+        shipinterior.lockelements = ".shipResearchControls";
+        this.entities.push(shipinterior);
+
+        var shipfirstattack = new StoryElement("", 71, "shipfirstattack");
+        shipfirstattack.unlockcondition = (game) => { return game.state.firstkruattackship; }
+        shipfirstattack.part2 = true;
+        this.entities.push(shipfirstattack);
+
+        var shipinterior2 = new StoryElement("", 72, "shipinterior2");
+        shipinterior2.unlockcondition = (game) => { return game.texts.some(t => t.id == 70) }
+        shipinterior2.part2 = true;
+        this.entities.push(shipinterior2);
 
     }
 

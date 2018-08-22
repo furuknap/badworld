@@ -196,6 +196,10 @@ export class QuestService extends GameService {
                 quest.crew = Services.CrewService.getTotalCrew(game); // Need to account for expeditions, research, and buildings.
                 return game;
             }
+            moveBase.oncompleted = (game, quest)=> {
+                game.state.part1complete = true;
+                return game;
+            }
             QuestService.definitions.push(moveBase);
 
 

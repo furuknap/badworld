@@ -97,7 +97,7 @@ body {
     width: 70%;
 }
 
-.researchListMore, .buildingsListMore {
+.researchListMore, .buildingsListMore, .shipResearchListMore {
     display: none;
     font-weight: bold;
 }
