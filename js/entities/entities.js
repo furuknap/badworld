@@ -7,5 +7,3 @@ export { QuestDefinition } from "./Quest.js";
 export { Discovery } from "./Discovery.js";
 export { DiscoveryDefinition } from "./Discovery.js";
 export { Notification } from "./Notification.js";
-export { ShipResearch } from "./ShipResearch.js";
-export { ShipResearchDefinition } from "./ShipResearch.js";

@@ -135,8 +135,9 @@ export class AttackEventDefinition extends EventDefinition {
             }
 
             oddsOfWound /= Math.max(1, game.crew.guards);
-
-
+            if (game.state.part1complete) {
+                oddsOfWound = 0; /// TODO: temporary until part 2 gets started.
+            }
             for (var i = 0; i < Services.CrewService.getAvailable(game); i++) {
                 if (Math.random() * 100 < oddsOfWound) {
                     Services.CrewService.changeWounded(game, 1);
@@ -170,10 +171,6 @@ export class AttackEventDefinition extends EventDefinition {
                         game.notifications.push(new Notification("ui.notifications.recapturedkru", null, 3));
                     }
                 }
-            }
-
-            if (!game.state.firstkruattackship && game.texts.some(t=>t.id==67)) {
-                game.state.firstkruattackship = true;
             }
 
 
